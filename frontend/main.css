@@ -1,0 +1,21 @@
+.bluebar{
+  height: 64px;
+  background-color: #1976d2;
+  margin-bottom: 20px
+}
+
+.logo{
+  margin: 10px;
+}
+
+.progress{
+  padding-top: 20px;
+  padding-left: 40px;
+  color: #ffff;
+  height: 64px !important;
+  background-color: transparent !important;
+}
+
+.bg-1{
+  background-color: #dedee2;
+}
