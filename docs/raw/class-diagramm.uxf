@@ -33,12 +33,6 @@
     <panel_attributes>&lt;&lt;abstract&gt;&gt;
 Test
 --
--id: Long
--title: String
--description String
--error text
--successful text
---
 /void runTest()/
 /String getresult()/
 </panel_attributes>
