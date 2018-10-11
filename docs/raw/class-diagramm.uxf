@@ -14,11 +14,8 @@
 -id: Long
 -title: String
 -description String
--error text
--successful text
 --
-/void runTest()/
-/String getresult()/
+/runTest()/
 </panel_attributes>
     <additional_attributes/>
   </element>
@@ -33,29 +30,7 @@
     <panel_attributes>&lt;&lt;abstract&gt;&gt;
 Test
 --
-/void runTest()/
-/String getresult()/
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>350</x>
-      <y>320</y>
-      <w>210</w>
-      <h>150</h>
-    </coordinates>
-    <panel_attributes>SingleTest
---
--id: Long
--title: String
--description String
--error text
--successful text
---
-/void runTest()/
-/String getresult()/
+/runTest()/
 </panel_attributes>
     <additional_attributes/>
   </element>
@@ -107,11 +82,8 @@ m2=2...*</panel_attributes>
 -id: Long
 -title: String
 -description String
--error text
--successful text
 --
-/void runTest()/
-/String getresult()/
+/runTest()/
 </panel_attributes>
     <additional_attributes/>
   </element>
@@ -125,5 +97,23 @@ m2=2...*</panel_attributes>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>110.0;10.0;10.0;80.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>360</x>
+      <y>320</y>
+      <w>210</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>SingleTest
+--
+-id: Long
+-title: String
+-description String
+--
+/runTest()/
+</panel_attributes>
+    <additional_attributes/>
   </element>
 </diagram>
