@@ -7,7 +7,7 @@
       <x>500</x>
       <y>450</y>
       <w>260</w>
-      <h>310</h>
+      <h>230</h>
     </coordinates>
     <panel_attributes>MultiTest
 --
@@ -17,18 +17,13 @@
 -election_data: Dict
 -test_list : List&lt;Test&gt;
 --
-/run_test()/
-/add_test(Test test)/
-/get_id()/
-/get_title()/
-/get_description()/
-/get_data()/
-/get_test_list()/
-/set_id(long id)/
-/set_title(String title)/
-/set_description(string descruption)/
-/set_data(Dict data)/
-/set_test_list(List&lt;Test&gt; test_list)/</panel_attributes>
+/runTest()/
+/addTest()/
+/getId()/
+/getTitle()/
+/getDescription()/
+/getData()/
+/getTestList()/</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -37,7 +32,7 @@
       <x>350</x>
       <y>110</y>
       <w>240</w>
-      <h>270</h>
+      <h>200</h>
     </coordinates>
     <panel_attributes>&lt;&lt;abstract&gt;&gt;
 Test
@@ -47,38 +42,34 @@ Test
 -description: String
 -election_data: Dict
 --
-/run_test()/
-/get_id()/
-/get_title()/
-/get_description()/
-/get_data()/
-/set_id(long id)/
-/set_title(String title)/
-/set_description(string descruption)/
-/set_data(Dict data)/</panel_attributes>
+/runTest()/
+/getId()/
+/getTitle()/
+/getDescription()/
+/getData()/</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>360</x>
-      <y>370</y>
+      <y>300</y>
       <w>70</w>
-      <h>100</h>
+      <h>170</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>50.0;10.0;10.0;80.0</additional_attributes>
+    <additional_attributes>50.0;10.0;10.0;150.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>510</x>
-      <y>370</y>
+      <y>300</y>
       <w>70</w>
-      <h>100</h>
+      <h>170</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;50.0;80.0</additional_attributes>
+    <additional_attributes>10.0;10.0;50.0;150.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
@@ -99,7 +90,7 @@ m2=0...*</panel_attributes>
       <x>230</x>
       <y>450</y>
       <w>230</w>
-      <h>300</h>
+      <h>220</h>
     </coordinates>
     <panel_attributes>SingleTest
 --
@@ -107,19 +98,14 @@ m2=0...*</panel_attributes>
 -title: String
 -description: String
 -election_data: Dict
--data_key: String
+-key_chain: List&lt;String&gt;
 --
-/run_test()/
-/get_id()/
-/get_title()/
-/get_description()/
-/get_data()/
-/get_data_key()/
-/set_id(long id)/
-/set_title(String title)/
-/set_description(string descruption)/
-/set_data(Dict data)/
-/set_data_key(String key)/</panel_attributes>
+/runTest()/
+/getId()/
+/getTitle()/
+/getDescription()/
+/getData()/
+/getKeyChain()/</panel_attributes>
     <additional_attributes/>
   </element>
 </diagram>
