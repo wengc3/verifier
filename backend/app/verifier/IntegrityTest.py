@@ -1,11 +1,13 @@
+from app.verifier.SingleTest import SingleTest
+
 class VotingCircleIntegrityTest(SingleTest):
     """docstring for ."""
-    def __init__(self,id,title,description,election_data,key_chain):
-        SingleTest.__init__(self, id,title,description,election_data,key_chain)
+    def __init__(self,id,title,description,key):
+        SingleTest.__init__(self, id,title,description,key)
 
-    def runTest(self):
-        key = self.getKeyChain()[0]
-        w_bold = self.getData().get(key,False)
+    def runTest(self,election_data):
+        key = self.getKey()
+        w_bold = election_data.get(key,False)
         res = False
         if w_bold:
             res = max(w_bold) >= 1

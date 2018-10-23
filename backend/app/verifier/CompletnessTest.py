@@ -2,12 +2,12 @@ from app.verifier.SingleTest import SingleTest
 
 class SingleCompletnessTest(SingleTest):
     """Class for a Single CompletnessTest"""
-    def __init__(self,id,title,description,election_data,key_chain):
-        SingleTest.__init__(self, id,title,description,election_data,key_chain)
+    def __init__(self,id,title,description,key):
+        SingleTest.__init__(self, id,title,description,key)
 
-    def runTest(self):
-        key = self.getKeyChain()[0]
-        result = self.getData().get(key,False)
+    def runTest(self,election_data):
+        key = self.getKey()
+        result = election_data.get(key,False)
         if result:
             result = True
         return result

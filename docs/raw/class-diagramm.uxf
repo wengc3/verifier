@@ -4,8 +4,8 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>760</x>
-      <y>460</y>
+      <x>670</x>
+      <y>280</y>
       <w>240</w>
       <h>230</h>
     </coordinates>
@@ -29,8 +29,8 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>480</x>
-      <y>120</y>
+      <x>490</x>
+      <y>20</y>
       <w>240</w>
       <h>200</h>
     </coordinates>
@@ -52,43 +52,43 @@ Test
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>610</x>
-      <y>310</y>
-      <w>30</w>
-      <h>170</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;150.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>640</x>
-      <y>310</y>
-      <w>200</w>
-      <h>170</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;180.0;150.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>710</x>
+      <x>510</x>
       <y>210</y>
-      <w>250</w>
-      <h>270</h>
+      <w>50</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>30.0;10.0;10.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>650</x>
+      <y>210</y>
+      <w>100</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;80.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>720</x>
+      <y>110</y>
+      <w>150</w>
+      <h>190</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-
 Test
 m2=0...*</panel_attributes>
-    <additional_attributes>200.0;250.0;200.0;10.0;10.0;10.0</additional_attributes>
+    <additional_attributes>100.0;170.0;100.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>500</x>
-      <y>460</y>
+      <x>400</x>
+      <y>280</y>
       <w>250</w>
       <h>230</h>
     </coordinates>
@@ -112,8 +112,8 @@ SingleTest
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>220</x>
-      <y>460</y>
+      <x>330</x>
+      <y>590</y>
       <w>250</w>
       <h>250</h>
     </coordinates>
@@ -138,32 +138,32 @@ SingleTest
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>340</x>
-      <y>160</y>
-      <w>160</w>
-      <h>320</h>
+      <x>270</x>
+      <y>370</y>
+      <w>150</w>
+      <h>350</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-
-Test
+SingleTest
 m2=0,1</panel_attributes>
-    <additional_attributes>10.0;300.0;10.0;10.0;140.0;10.0</additional_attributes>
+    <additional_attributes>60.0;330.0;10.0;330.0;10.0;10.0;130.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>420</x>
-      <y>310</y>
-      <w>140</w>
-      <h>170</h>
+      <x>460</x>
+      <y>500</y>
+      <w>60</w>
+      <h>110</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>120.0;10.0;10.0;150.0</additional_attributes>
+    <additional_attributes>40.0;10.0;10.0;90.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1060</x>
-      <y>120</y>
+      <x>920</x>
+      <y>20</y>
       <w>240</w>
       <h>200</h>
     </coordinates>
@@ -181,14 +181,49 @@ result: List&lt;Tuples&gt;
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>710</x>
-      <y>170</y>
-      <w>370</w>
+      <x>720</x>
+      <y>70</y>
+      <w>220</w>
       <h>50</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-
 Report
 m2=0,1</panel_attributes>
-    <additional_attributes>10.0;20.0;350.0;20.0</additional_attributes>
+    <additional_attributes>10.0;20.0;200.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>590</x>
+      <y>590</y>
+      <w>250</w>
+      <h>220</h>
+    </coordinates>
+    <panel_attributes>SingleTest
+--
+-id: String
+-title: String
+-description: String
+-key: String
+-report: Report
+--
+/runTest(election_data)/
+/getId()/
+/getTitle()/
+/getDescription()/
+/getReport()/
+/getKey()/</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>600</x>
+      <y>500</y>
+      <w>50</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;30.0;90.0</additional_attributes>
   </element>
 </diagram>

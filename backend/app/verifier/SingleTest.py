@@ -2,13 +2,13 @@ import abc
 from app.verifier.Test import Test
 class SingleTest(Test,metaclass=abc.ABCMeta):
     """docstring for abstract class """
-    def __init__(self,id,title,description,election_data,key_chain):
-        Test.__init__(self, id,title,description,election_data)
-        self.key_chain = key_chain
+    def __init__(self,id,title,description,key):
+        Test.__init__(self, id,title,description)
+        self.key = key
 
-    def getKeyChain(self):
-        return self.key_chain
+    def getKey(self):
+        return self.key
 
     @abc.abstractmethod
-    def runTest(self):
+    def runTest(self,election_data):
         pass

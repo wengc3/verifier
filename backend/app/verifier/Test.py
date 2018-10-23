@@ -4,17 +4,15 @@ class Test(metaclass=abc.ABCMeta):
     Implement default behavior for the interface common to all classes,
     as appropriate.
     ."""
-    current_test = None
-    return_methode = print
-    
-    def __init__(self, id,title,description,election_data):
+    report = None #pointer to Report object
+
+    def __init__(self, id,title,description):
         self.id = id
         self.title = title
         self.description = description
-        self.election_data = election_data
 
     @abc.abstractmethod
-    def runTest(self):
+    def runTest(self,election_data):
         pass
 
     def getId(self):
@@ -26,5 +24,5 @@ class Test(metaclass=abc.ABCMeta):
     def getDescription(self):
         return self.description
 
-    def getData(self):
-        return self.election_data
+    def getReport(self):
+        return Test.report
