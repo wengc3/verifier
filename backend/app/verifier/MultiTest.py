@@ -4,15 +4,15 @@ class MultiTest(Test):
     """ Define behavior for Test having a List of Testsself.
         Store in test_list.
         Implement child-related operations like addTest."""
-    def __init__(self, self, id,title,description,election_data):
+    def __init__(self,id,title,description,election_data):
         Test.__init__(self, id,title,description,election_data)
-        self._test_list = List()
+        self._test_list = list()
 
     def getTestList(self):
         return self._test_list
 
     def addTest(self,test):
-        self.getTestList().add(test)
+        self.getTestList().append(test)
 
     def runTest(self):
         for test in self.getTestList():

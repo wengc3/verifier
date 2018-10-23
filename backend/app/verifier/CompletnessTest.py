@@ -1,13 +1,9 @@
-from app.verifier.Test import Test
+from app.verifier.SingleTest import SingleTest
 
-class SingleCompletnessTest(Test):
+class SingleCompletnessTest(SingleTest):
     """Class for a Single CompletnessTest"""
     def __init__(self,id,title,description,election_data,key_chain):
-        Test.__init__(self, id,title,description,election_data)
-        self.key_chain = key_chain
-
-    def getKeyChain(self):
-        return self.key_chain
+        SingleTest.__init__(self, id,title,description,election_data,key_chain)
 
     def runTest(self):
         key = self.getKeyChain()[0]
