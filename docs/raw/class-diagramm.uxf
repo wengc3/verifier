@@ -115,7 +115,7 @@ SingleTest
       <x>330</x>
       <y>590</y>
       <w>250</w>
-      <h>250</h>
+      <h>260</h>
     </coordinates>
     <panel_attributes>IterationTest
 --
@@ -132,7 +132,8 @@ SingleTest
 /getDescription()/
 /getReport()/
 /getKey()/
-/getTest()/</panel_attributes>
+/getTest()/
+/checkResult()/</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -175,7 +176,7 @@ result: List&lt;Tuples&gt;
 --
 /addResult(res)/
 /getResult()/
-/getStats()/</panel_attributes>
+/getStat(id)/</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
