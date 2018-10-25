@@ -38,4 +38,6 @@ def printResult(res):
 
 
 report = Report(electionID1,printResult)
+data_dict['ballots'][2].pop('voterId')
 verify_svc.verify(data_dict,report)
+#pprint(report.getResult())

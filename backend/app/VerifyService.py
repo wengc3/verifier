@@ -13,6 +13,7 @@ from app.verifier.Test import Test
 from app.verifier.MultiTest import MultiTest
 from app.verifier.CompletnessTest import SingleCompletnessTest
 from app.verifier.IntegrityTest import VotingCircleIntegrityTest
+from app.verifier.IterationTest import IterationTest
 
 class VerifyService(object):
     """docstring for VerifyService."""
@@ -23,7 +24,10 @@ class VerifyService(object):
     def setUpTests(self):
 
         test_electionID = SingleCompletnessTest("1.1","Check Election ID","Check if ElectionID is in election_data",'electionID')
+        test_voterID = SingleCompletnessTest("1.10.1","Check Voter ID","For all ballots check if they have e voterID ",'voterId')
+        iteration_test_voterID= IterationTest('ballots',test_voterID)
         completness_tests = MultiTest("1","Completness Tests","Test which conntains all completness tests")
+        completness_tests.addTest(iteration_test_voterID)
         completness_tests.addTest(test_electionID)
 
         test_voting_circle = VotingCircleIntegrityTest("2.2","Check Voting Circle","Check integrity of voting circle",'countingCircles')

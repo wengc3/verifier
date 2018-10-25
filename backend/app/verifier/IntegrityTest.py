@@ -7,8 +7,13 @@ class VotingCircleIntegrityTest(SingleTest):
 
     def runTest(self,election_data):
         key = self.getKey()
-        w_bold = election_data.get(key,False)
-        res = False
-        if w_bold:
-            res = max(w_bold) >= 1
-        return res
+        try:
+            w_bold = election_data[key]
+            return (max(w_bold) >= 1,w_bold)
+        except KeyError:
+            return (False,None)
+
+class ClassName(object):
+    """docstring for ."""
+    def __init__(self, arg):
+        pass

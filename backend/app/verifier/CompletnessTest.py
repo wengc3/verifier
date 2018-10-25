@@ -7,7 +7,8 @@ class SingleCompletnessTest(SingleTest):
 
     def runTest(self,election_data):
         key = self.getKey()
-        result = election_data.get(key,False)
-        if result:
-            result = True
-        return result
+        try:
+            result = election_data[key]
+            return (True,result)
+        except KeyError:
+            return (False,None)
