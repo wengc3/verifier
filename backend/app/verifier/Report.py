@@ -1,8 +1,9 @@
 class Report(object):
     """docstring for Report."""
-    def __init__(self, election_id,callback_function):
+    def __init__(self, election_id,callback_function,secparams):
         self.election_id = election_id
         self.callback_function = callback_function
+        self.secparams=secparams
         self.result = dict()
 
     def addResult(self,res):
@@ -15,6 +16,9 @@ class Report(object):
 
     def getResult(self):
         return self.result
+
+    def getSecurityParams(self):
+        return self.secparams
 
     def getStat(self,id):
         res_arr = self.result.get(int(id)).values()

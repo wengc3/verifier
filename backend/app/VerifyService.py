@@ -37,6 +37,13 @@ class VerifyService(object):
         self.root_test.addTest(completness_tests)
         self.root_test.addTest(integrity_tests)
 
-    def verify(self,election_data,report):
+    def prepareData(self,data_dict):
+        vector = data_dict['publicKeyShares']
+        for index,item in enumerate(vector):
+            vector[index]={'pk_j':item}
+        data_dict['publicKeyShares'] = vector
+
+    def verify(self,data_dict,report):
         Test.report = report
+        election_data = self.prepareData(data_dict)
         self.root_test.runTest(election_data)
