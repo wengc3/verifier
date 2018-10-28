@@ -173,10 +173,12 @@ m2=0,1</panel_attributes>
 election_Id: String
 callback_function: function
 result: List&lt;Tuples&gt;
+secparams: SecurityParams
 --
 /addResult(res)/
 /getResult()/
-/getStat(id)/</panel_attributes>
+/getStat(id)/
+/getSecurityParams()/</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
