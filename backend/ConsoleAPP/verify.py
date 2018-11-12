@@ -2,12 +2,14 @@ from socketIO_client import SocketIO
 from pprint import pprint
 import os, sys
 import json
+from gmpy2 import mpz
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from chvote.Common.SecurityParams import secparams_l1,secparams_l2,secparams_l3
 from app.VerifyService import VerifyService
 from app.verifier.Report import Report
 from app.verifier.MultiTest import MultiTest
+from app.verifier.ConsoleView import ConsoleView
 socketio = SocketIO('localhost',5000)
 data_dict = dict()
 electionID1="5bc6062b6d19d200125b3fb7"
@@ -25,17 +27,11 @@ verify_svc = VerifyService()
 socketio = SocketIO('127.0.0.1',5000)
 data_dict = dict()
 getData(electionID1)
-socketio.on('connect',connect)
-socketio.on('SyncBulletinBoard',updateData)
-socketio.on('syncElectionAdministrator',updateData)
+socketio.once('connect',connect)
+socketio.once('SyncBulletinBoard',updateData)
+socketio.once('syncElectionAdministrator',updateData)
 socketio.wait(seconds=1)
 
-def printResult(res):
-    test = res[0]
-    if not isinstance(test,MultiTest):
-        print(test.getId(),test.getTitle(),":", res[1])
-    else:
-        print(test.getId(),test.getTitle(),":", res[1],"are correct")
 
 seclevel = data_dict['securityLevel']
 
@@ -46,9 +42,23 @@ elif seclevel == 2:
 else:
     secparams = secparams_l3
 
-#report = Report(electionID1,printResult,secparams)
+report = Report(electionID1,secparams)
+console = ConsoleView(0.2)
+report.attach(console)
 #data_dict['ballots'][2].pop('voterId')
-#verify_svc.verify(data_dict,report)
-#pprint(report.getResult())
+verify_svc.verify(data_dict,report)
+pprint(report.result)
 #print(data_dict['securityLevel'])
 #print(data_dict['publicKeyShares'][0]['pk_j'])
+# print(data_dict['ballots'][0])
+# print("_____________________________")
+# print(data_dict['ballots'][0]['ballot']['a_bold'])
+# print("_____________________________")
+# print(str(data_dict['publicKey']))
+
+# a_bold = data_dict['ballots'][0]['ballot']['a_bold']
+# a_bold_s = [[a_bold[x][y] for y in range(len(a_bold[0]))] for x in range(len(a_bold))]
+# for i,item in enumerate(a_bold):
+#     for j,str in enumerate(item):
+#         a_bold[i][j]= mpz(str)
+# print(a_bold_s)

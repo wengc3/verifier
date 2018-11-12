@@ -1,32 +1,43 @@
+import os, sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+
 from app.verifier.SingleTest import SingleTest
+from app.verifier.TestResult import TestResult
 
 class IterationTest(SingleTest):
     """docstring for IterationTest."""
-    def __init__(self,key,test):
-        SingleTest.__init__(self, test.getId(),test.getTitle(),test.getDescription(),key)
-        self.test = test
+    def __init__(self,key,title,test):
+        SingleTest.__init__(self, test.id,title+test.title,test.description,key)
+        self._test = test
 
-    def getTest(self):
-        return self.test
+    @property
+    def test(self):
+        return self._test
 
-    def checkResult(self,results):
-        for result in results.values():
-            if not result[0]:
-                return False
-        return True
-
-    def runTest(self,election_data):
-        key = self.getKey()
+    def runTest(self,election_data,report):
+        self._notify("TestRunning")
+        self.progress = 0
+        key = self.key
+        test_data = dict()
         try:
             vector = election_data[key]
-            test = self.getTest()
-            test_id=test.getId()
-            results = dict()
+            test_data[key]=vector
+            test = self.test
+            test.election_data = election_data
+            test_id=test.id
+            test_result = "successful"
             for index,item in enumerate(vector):
-                res=test.runTest(item)
-                results[test_id+"."+str(index+1)]=res
-            if not self.checkResult(results):
-                return (False,results)
-            return (True,results)
+                test.id = test_id+"."+str(index+1)
+                res = test.runTest(item,report)
+                test.old_progress = 0
+                report.addTestResult(res)
+                if res.test_result in {"failed","skipped"}:
+                        test_result = "failed"
+                prg = (index+1) / len(vector)
+                self.progress = prg
+
+            self.progress = 1
+            return TestResult(self,test_result,test_data)
         except KeyError:
-            return (False,None)
+            self.progress = 1
+            return TestResult(self,"skipped",test_data)

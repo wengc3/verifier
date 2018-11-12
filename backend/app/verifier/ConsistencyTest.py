@@ -1,6 +1,8 @@
 import os, sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+
 from app.verifier.SingleTest import SingleTest
+from app.verifier.TestResult import TestResult
 
 class LenghtEqualityConsistenyTest(SingleTest):
     """
@@ -8,25 +10,44 @@ class LenghtEqualityConsistenyTest(SingleTest):
     """
     def __init__(self,id,title,description,key, test_key):
         SingleTest.__init__(self, id,title,description,key)
-        self.test_key = test_key
+        self.refer_key = test_key
 
-    def runTest(self,election_data):
+    def runTest(self,election_data,report):
         """
-        >>> lect.runTest({'test':[1,1,1,1],'test_val':[2,2,2,2]})
-        (True, [1, 1, 1, 1], [2, 2, 2, 2])
-        >>> lect.runTest({'test':[1,1,1],'test_val':[2,2,2,2]})
-        (False, [1, 1, 1], [2, 2, 2, 2])
-        >>> lect.runTest({'bla':[1,1,1],'test_val':[2,2,2,2]})
-        (False, None)
+        >>> res = lect.runTest({'test':[1,1,1,1],'test_val':[2,2,2,2]},report)
+        >>> res.test_result
+        'successful'
+        >>> res.test_data
+        {'test': [1, 1, 1, 1], 'test_val': [2, 2, 2, 2]}
+        >>> res = lect.runTest({'test':[1,1,1],'test_val':[2,2,2,2]},report)
+        >>> res.test_result
+        'failed'
+        >>> res.test_data
+        {'test': [1, 1, 1], 'test_val': [2, 2, 2, 2]}
+        >>> res = lect.runTest({'test':[1,1,1],'bla':[2,2,2,2]},report)
+        >>> res.test_result
+        'skipped'
+        >>> res.test_data
+        {'test': [1, 1, 1]}
         """
-        key = self.getKey()
+        self._notify("TestRunning")
+        self.progress = 0
+        key = self.key
+        test_data = dict()
         try:
             sec_1 = election_data[key]
-            sec_2 = election_data[self.test_key]
-            return (len(sec_1)==len(sec_2),sec_1,sec_2)
+            test_data[key] = sec_1
+            sec_2 = election_data[self.refer_key]
+            test_data[self.refer_key] = sec_2
+            self.progress = 1
+            test_result = 'successful' if len(sec_1)==len(sec_2) else 'failed'
+            return TestResult(self,test_result,test_data)
         except KeyError:
-            return (False,None)
+            self.progress = 1
+            return TestResult(self,'skipped',test_data)
 
 if __name__ == '__main__':
     import doctest
-    doctest.testmod(extraglobs={'lect': LenghtEqualityConsistenyTest("1.1","TEST","TEST","test","test_val")})
+    from Report import Report
+    doctest.testmod(extraglobs={'lect': LenghtEqualityConsistenyTest("1.1","TEST","TEST","test","test_val"),
+                                'report': Report('id',None)})
