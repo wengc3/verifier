@@ -1,3 +1,5 @@
+import re
+
 class Report(object):
     """docstring for Report."""
     def __init__(self, election_id,secparams):
@@ -10,10 +12,14 @@ class Report(object):
 
     def addTestResult(self,res):
         test_id = res.test.id
-        parent_id = int(test_id[0])
-        child_dict = self._result.get(parent_id,dict())
-        child_dict[test_id]=res
-        self._result[parent_id]=child_dict
+        category = int(test_id[0])
+        phase = test_id[:3]
+        category_dict = self._result.get(category,dict())
+        phase_dict = category_dict.get(phase,dict())
+        if test_id.count('.') < 3:
+            phase_dict[test_id]=res
+            category_dict[phase]=phase_dict
+            self._result[category]=category_dict
         self._last_result=res
         self._notify("newResult")
 

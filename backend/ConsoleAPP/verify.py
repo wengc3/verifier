@@ -4,6 +4,13 @@ import os, sys
 import json
 from gmpy2 import mpz
 
+
+def parseResult(dict,phase,title):
+    results = list()
+    for key, result in dict.items():
+        results.append(result.getJSON(key))
+    return {'id': phase, 'title': title, 'results': results}
+
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from chvote.Common.SecurityParams import secparams_l1,secparams_l2,secparams_l3
 from app.VerifyService import VerifyService
@@ -47,7 +54,14 @@ console = ConsoleView(0.2)
 report.attach(console)
 #data_dict['ballots'][2].pop('voterId')
 verify_svc.verify(data_dict,report)
-pprint(report.result)
+result = report.result
+pre_election = result[1]['1.1']
+election = result[1]['1.2']
+pre_dict = parseResult(pre_election,"1.1","pre election results")
+dict = parseResult(election,"1.2","election results")
+import json
+oneway = json.dumps([pre_dict, dict])
+print(oneway)
 #print(data_dict['securityLevel'])
 #print(data_dict['publicKeyShares'][0]['pk_j'])
 # print(data_dict['ballots'][0])

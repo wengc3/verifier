@@ -43,7 +43,7 @@ class SingleCompletnessTest(SingleTest):
         test_data = dict()
         try:
             data = election_data[key]
-            test_data[key]=data
+            test_data[key] = data
             self.progress = 1
             return TestResult(self,"successful",test_data)
         except KeyError:
