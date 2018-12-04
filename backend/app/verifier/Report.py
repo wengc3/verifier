@@ -1,5 +1,3 @@
-import re
-
 class Report(object):
     """docstring for Report."""
     def __init__(self, election_id,secparams):

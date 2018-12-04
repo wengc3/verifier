@@ -1,5 +1,5 @@
-from app.verifier.Observer import Observer
-from app.verifier.MultiTest import MultiTest
+from chvote.verifier.Observer import Observer
+from chvote.verifier.MultiTest import MultiTest
 
 class ConsoleView(Observer):
     """docstring for ConsoleView."""

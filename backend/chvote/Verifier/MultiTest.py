@@ -1,8 +1,8 @@
 import os, sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
-from app.verifier.Test import Test
-from app.verifier.TestResult import TestResult
+from chvote.verifier.Test import Test
+from chvote.verifier.TestResult import TestResult
 
 class MultiTest(Test):
     """ Define behavior for Test having a List of Tests.
@@ -18,6 +18,10 @@ class MultiTest(Test):
 
     def addTest(self,test):
         self.test_list.append(test)
+
+    def addTests(self,*args):
+        for test in args:
+            self.addTest(test)
 
     def runTest(self,election_data,report):
         self._notify("TestRunning")

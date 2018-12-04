@@ -1,5 +1,5 @@
 import abc
-from app.verifier.Test import Test
+from chvote.verifier.Test import Test
 from app.verifier.Report import Report
 
 class SingleTest(Test,metaclass=abc.ABCMeta):
@@ -8,7 +8,7 @@ class SingleTest(Test,metaclass=abc.ABCMeta):
         Test.__init__(self, id,title,description)
         self._key = key
 
-    @property     
+    @property
     def key(self):
         return self._key
 

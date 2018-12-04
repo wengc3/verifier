@@ -8,15 +8,16 @@ import pickle
 import inspect
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from app.utils.prepareData import prepareData
 from chvote.Common.SecurityParams import secparams_l1, secparams_l2, secparams_l3
-from app.verifier.Test import Test
-from app.verifier.MultiTest import MultiTest
-from app.verifier.CompletnessTest import SingleCompletnessTest
-from app.verifier.IntegrityTest import VotingCircleIntegrityTest, PubKeyIntegritiyTest
-from app.verifier.IterationTest import IterationTest
-from app.verifier.ConsistencyTest import LenghtEqualityConsistenyTest
-from app.verifier.EvidenceTest import BallotProofEvidenceTest
-from app.verifier.AuthenticityTest import CertificateAuthenticityTest
+from chvote.verifier.Test import Test
+from chvote.verifier.MultiTest import MultiTest
+from chvote.verifier.CompletnessTest import SingleCompletnessTest
+from chvote.verifier.IntegrityTest import ListBiggerThanIntegrityTest, PubKeyIntegritiyTest
+from chvote.verifier.IterationTest import IterationTest
+from chvote.verifier.ConsistencyTest import LenghtEqualityConsistenyTest
+from chvote.verifier.EvidenceTest import BallotProofEvidenceTest
+from chvote.verifier.AuthenticityTest import CertificateAuthenticityTest
 
 class VerifyService(object):
     """docstring for VerifyService."""
@@ -25,62 +26,114 @@ class VerifyService(object):
         self.setUpTests()
 
     def setUpTests(self):
-
         completness_tests = MultiTest("1","Completness Tests","Test which conntains all completness tests")
-        com_test_electionID = SingleCompletnessTest("1.1.1","Check Election ID","Check if ElectionID is in election_data",'electionID')
-        com_test_numberOfCandidates =SingleCompletnessTest("1.1.2","Check Number of candidates","Check if vector numberOfCandidates is in election_data",'numberOfCandidates')
-        com_test_candidates= SingleCompletnessTest("1.1.3","Check Candidates","Check if vector candidates is in election_data",'candidates')
-        com_test_numberOfSelections = SingleCompletnessTest("1.1.4","Check Number of selections","Check if vector numberOfSelections is in election_data",'numberOfSelections')
-        com_test_voters = SingleCompletnessTest("1.1.5","Check Voters","Check if vector voters is in election_data",'voters')
-        com_test_countingCircles = SingleCompletnessTest("1.1.6","Check CountingCircles","Check if vector countingCircles is in election_data",'countingCircles')
-        com_test_eligibilityMatrix = SingleCompletnessTest("1.1.6","Check EligibilityMatrix","Check if eligibilityMatrix is in election_data",'eligibilityMatrix')
-        com_test_publicVotingCredentials = SingleCompletnessTest("1.1.7","Check Public voting credentials","Check if vector partialPublicVotingCredentials is in election_data",'partialPublicVotingCredentials')
-        com_test_ballots = SingleCompletnessTest("1.2.1","Check Ballots","Check if vector ballots is in election_data",'ballots')
-
-        com_multi_test_ballot = MultiTest("1.2.2","Ballot Tests","Test which conntains all ballot tests")
-        com_iteration_test_ballots = IterationTest('ballots',"For all Ballots: ",com_multi_test_ballot)
-        com_test_voterID = SingleCompletnessTest("1.2.3","Check Voter ID","Check if voterId is in VoterBallot",'voterId')
-        com_test_ballot = SingleCompletnessTest("1.2.4","Check Ballot","Check if ballot is in VoterBallot",'ballot')
-        com_test_responses = SingleCompletnessTest("1.2.5","Check Responses","Check if vector responses is in VoterBallot",'responses')
-        com_multi_test_resbonse = MultiTest("1.2.6","Ballot Tests","Test which conntains all ballot tests")
-        com_multi_test_ballot.addTest(com_test_voterID)
-        com_multi_test_ballot.addTest(com_test_ballot)
-        com_multi_test_ballot.addTest(com_test_responses)
-        com_multi_test_ballot.addTest(com_multi_test_resbonse)
-        com_iteration_test_responses = IterationTest('responses',"For all Responses: ",com_multi_test_resbonse)
-        com_test_ot = SingleCompletnessTest("1.2.5.1","Check OT-Response","Check if OT-Response is in responses",'b')
-        com_test_confirmations = SingleCompletnessTest("1.2.6.1","Check Confirmations","Check if vector confirmations is in response",'C_bold')
-
-        # TODO: Add Tests
-        completness_tests.addTest(com_test_electionID)
-        completness_tests.addTest(com_test_numberOfCandidates)
-        completness_tests.addTest(com_test_candidates)
-        completness_tests.addTest(com_test_numberOfSelections)
-        completness_tests.addTest(com_test_voters)
-        completness_tests.addTest(com_test_eligibilityMatrix)
-        completness_tests.addTest(com_test_publicVotingCredentials)
-        completness_tests.addTest(com_test_countingCircles)
-        completness_tests.addTest(com_test_ballots)
-
+        # 1.1 pre election
+        com_pre_election_tests = MultiTest("1.1","pre_election Tests","Test which conntains all pre_election tests")
+        com_pre_election_tests.addTests(
+            SingleCompletnessTest("1.1.1","Check Election ID","Check if ElectionID is in election_data",'electionID'),
+            SingleCompletnessTest("1.1.2","Check Number of candidates","Check if vector numberOfCandidates is in election_data",'numberOfCandidates'),
+            SingleCompletnessTest("1.1.2","Check Number of candidates","Check if vector numberOfCandidates is in election_data",'numberOfCandidates'),
+            SingleCompletnessTest("1.1.3","Check Candidates","Check if vector candidates is in election_data",'candidates'),
+            SingleCompletnessTest("1.1.4","Check Number of selections","Check if vector numberOfSelections is in election_data",'numberOfSelections'),
+            SingleCompletnessTest("1.1.5","Check Voters","Check if vector voters is in election_data",'voters'),
+            SingleCompletnessTest("1.1.6","Check CountingCircles","Check if vector countingCircles is in election_data",'countingCircles'),
+            SingleCompletnessTest("1.1.7","Check EligibilityMatrix","Check if eligibilityMatrix is in election_data",'eligibilityMatrix'),
+            SingleCompletnessTest("1.1.8","Check Public voting credentials","Check if vector partialPublicVotingCredentials is in election_data",'partialPublicVotingCredentials'),
+            SingleCompletnessTest("1.1.9","Check Public keys","Check if vector publicKeyShares is in election_data",'publicKeyShares'),
+            SingleCompletnessTest("1.1.10","Check Full Signatur","Check if Signatur of full election parameters is in election_data",'sigParam1'),
+            SingleCompletnessTest("1.1.11","Check Partial Signatur","Check if Signatur of part of election parameters is in election_data",'sigParam2'),
+            SingleCompletnessTest("1.1.12","Check other part Signatur","Check if Signatur of  other part of election parameters is in election_data",'sigParam3'),
+            SingleCompletnessTest("1.1.13","Check Public credentials Signatur","Check if vector of Signatur of Public credentials is in election_data",'sigPrep'),
+            SingleCompletnessTest("1.1.13","Check Public keys Signatur","Check if vector of Signatur of Public keys is in election_data",'sigKgen')
+        )
+        # 1.2 election
+        com_election_tests = MultiTest("1.2","election Tests","Test which conntains all election tests")
+        com_multi_test_ballot = MultiTest("no id","Ballot Tests","Test which conntains all ballot tests")
+        com_multi_test_ballot.addTests(
+            SingleCompletnessTest("1.2.2","Check Voter ID","Check if voterId is in VoterBallot",'voterId'),
+            SingleCompletnessTest("1.2.3","Check Ballot","Check if ballot is in VoterBallot",'ballot')
+        )
+        com_multi_test_resbonse = MultiTest("no id","Response Tests","Test which conntains all response tests")
+        com_multi_test_resbonse.addTests(
+            SingleCompletnessTest("1.2.5","Check Voter ID","Check if voterId is in response_dict",'voterId'),
+            SingleCompletnessTest("1.2.6","Check OT-Responses","Check if vector OT-Responses is in response_dict",'beta_j'),
+            SingleCompletnessTest("1.2.7","Check OT-Signatur","Check if OT-Signatur is in response_dict",'sigCast')
+        )
+        com_multi_test_confirmation = MultiTest("no id","Confirmation Tests","Test which conntains all confirmation tests")
+        com_multi_test_confirmation.addTests(
+            SingleCompletnessTest("1.2.9","Check Voter ID","Check if voterId is in confirmation_dict",'voterId'),
+            SingleCompletnessTest("1.2.10","Check Confirmation","Check if confirmation is in confirmation_dict",'confirmation')
+        )
+        com_multi_test_randomization = MultiTest("no id","Randomization Tests","Test which conntains all randomization tests")
+        com_multi_test_randomization.addTests(
+            SingleCompletnessTest("1.2.12","Check Voter ID","Check if voterId is in randomization_dict",'voterId'),
+            SingleCompletnessTest("1.2.13","Check Randomization","Check if randomization is in randomization_dict",'randomization'),
+            SingleCompletnessTest("1.2.14","Check Randomization-Signatur","Check if Randomization-Signatur is in randomization_dict",'sigConf')
+        )
+        com_election_tests.addTests(
+            SingleCompletnessTest("1.2.1","Check Ballots","Check if vector ballots is in election_data",'ballots'),
+            IterationTest('ballots',"For all elements Ballots: ",com_multi_test_ballot),
+            SingleCompletnessTest("1.2.4","Check Responses","Check if vector responses is in election_data",'responses'),
+            IterationTest('responses',"For all elements in responses: ",com_multi_test_resbonse),
+            SingleCompletnessTest("1.2.8","Check Confirmations","Check if vector confirmations is in election_data",'confirmations'),
+            IterationTest('confirmations',"For all elements in confirmations: ",com_multi_test_confirmation),
+            SingleCompletnessTest("1.2.11","Check Randomizations","Check if vector randomizations_list is in election_data",'randomizations'),
+            IterationTest('randomizations',"For all elements in randomizations: ",com_multi_test_randomization),
+        )
+        # 1.3 post_election
+        com_post_election_tests = MultiTest("1.3","post_election Tests","Test which conntains all post_election tests")
+        com_post_election_tests.addTests(
+            SingleCompletnessTest("1.3.1","Check Encryptions","Check if vector of mixed an encrypted ballot is in election_data",'encryptions'),
+            SingleCompletnessTest("1.3.2","Check Shuffel Proofs","Check if vector of Shuffel Proofs is in election_data",'shuffleProofs'),
+            SingleCompletnessTest("1.3.3","Check Decryptions","Check if vector of partial decrypted ballots is in election_data",'decryptions'),
+            SingleCompletnessTest("1.3.4","Check Decryption Proofs","Check if vector of decryption Proofs is in election_data",'decryptionProofs'),
+            SingleCompletnessTest("1.3.5","Check Election Result","Check if matrix of election result is in election_data",'votes'),
+            SingleCompletnessTest("1.3.6","Check Counting Circles","Check if matrix of counting Circle is in election_data",'w_bold'),
+            SingleCompletnessTest("1.3.7","Check Tallying Signatur","Check if tallying signatur is in election_data",'sigTally'),
+            SingleCompletnessTest("1.3.8","Check Mixing Signatur","Check if mixing signatur is in election_data",'sigMix'),
+            SingleCompletnessTest("1.3.9","Check Decryption Signatur","Check if decryption signatur is in election_data",'sigDec'),
+        )
+        completness_tests.addTests(com_pre_election_tests,com_election_tests,com_post_election_tests)
+        # 2. Integrity Tests
         integrity_tests = MultiTest("2","Integrity Tests","Test which conntains all integrity tests")
-        int_test_voting_circle = VotingCircleIntegrityTest("2.1.2","Check Voting Circle","Check integrity of voting circle",'countingCircles')
+        # 2.1 pre_election Tests
+        int_pre_election_tests = MultiTest("2.1","pre_election Tests","Test which conntains all pre_election tests")
+        # Tests for IterationTests
+        int_test_numberOfCandidates = ListBiggerThanIntegrityTest("2.1.7","Check NumberOfCandidates","Check if n_j >= 2",'n_j',2)
+        int_test_numberOfSelections = ListBiggerThanIntegrityTest("2.1.8","Check NumberOfSelections","Check if k_j >= 1",'k_j',1)
         int_test_pk = PubKeyIntegritiyTest("2.1.15","Check Public key","For all authority test it's Public key",'pk_j')
-        int_iteration_test_pk = IterationTest("publicKeyShares","For j in {1,...,s} ",int_test_pk)
-        integrity_tests.addTest(int_test_voting_circle)
-        integrity_tests.addTest(int_iteration_test_pk)
+        int_pre_election_tests.addTests(
+            ListBiggerThanIntegrityTest("2.1.2","Check CountingCircles lenght","Check if w >= 1",'w',1),
+            ListBiggerThanIntegrityTest("2.1.3","Check NumberOfCandidates lenght","Check if t >= 1",'t',1),
+            ListBiggerThanIntegrityTest("2.1.4","Check Voters lenght","Check if Ne >= 1",'Ne',0),
+            ListBiggerThanIntegrityTest("2.1.6","Check partialPublicVotingCredentials lenght","Check if s >= 1",'s',1),
+            IterationTest("NumberOfCandidates","For j in {1,...,t} ",int_test_numberOfCandidates),
+            IterationTest("NumberOfSelections","For j in {1,...,t} ",int_test_numberOfSelections),
+        )
+        integrity_tests.addTests(int_pre_election_tests)
 
         consistency_tests = MultiTest("3","Consistency Tests","Test which conntains all consistency tests")
-        cons_test_numberOfSelection=LenghtEqualityConsistenyTest("3.1.1","Check Number of selections","Check if numberOfSelections has the same lenght as numberOfCandidates","numberOfSelections","numberOfCandidates")
-        consistency_tests.addTest(cons_test_numberOfSelection)
+        cons_pre_election_tests = MultiTest("3.1","pre_election Tests","Test which conntains all pre_election tests")
+        cons_pre_election_tests.addTests(
+            LenghtEqualityConsistenyTest("3.1.1","Check Number of selections","Check if numberOfSelections has the same lenght as numberOfCandidates","numberOfSelections","numberOfCandidates")
+        )
+        consistency_tests.addTests(cons_pre_election_tests)
 
         evidence_tests = MultiTest("4","Evidence Tests","Test which conntains all evidence tests")
-        ev_test_ballotproof = BallotProofEvidenceTest("4.1","Check BallotProof","Check proof of Ballot","ballot")
-        ev_iteration_test_ballotproof = IterationTest('ballots',"For all Ballots: ",ev_test_ballotproof)
-        evidence_tests.addTest(ev_iteration_test_ballotproof)
+        ev_check_proofs = MultiTest("4.1","Check all Proofs","Test which conntains all proofs tests")
+        # Tests for IterationTests
+        ev_test_ballotproof = BallotProofEvidenceTest("4.1.1","Check BallotProof","Check proof of Ballot","ballot")
+        ev_check_proofs.addTests(
+            IterationTest('ballots',"For all Ballots: ",ev_test_ballotproof)
+        )
+        evidence_tests.addTests(ev_check_proofs)
 
         authenticity_tests = MultiTest("5","Authenticiy Tests","Test which conntains all authenticiy tests")
-        au_test_admin_cert = CertificateAuthenticityTest("5.1.1","Check AdminCert","Check validity of Certificate of election administrator","certAdmin")
-        authenticity_tests.addTest(au_test_admin_cert)
+        au_cert_tests = MultiTest("5.1","Check all Certificates","Test which conntains all certificate tests")
+        au_cert_tests.addTests(
+            CertificateAuthenticityTest("5.1.1","Check AdminCert","Check validity of Certificate of election administrator","certAdmin")
+        )
+        authenticity_tests.addTests(au_cert_tests)
 
         self.root_test.addTest(completness_tests)
         self.root_test.addTest(integrity_tests)
@@ -88,14 +141,7 @@ class VerifyService(object):
         self.root_test.addTest(evidence_tests)
         self.root_test.addTest(authenticity_tests)
 
-    def prepareData(self,data_dict):
-        vector = data_dict['publicKeyShares']
-        for index,item in enumerate(vector):
-            vector[index]={'pk_j':item}
-        data_dict['publicKeyShares'] = vector
-        return data_dict
-
     def verify(self,data_dict,report):
-        election_data = self.prepareData(data_dict)
+        prepareData(data_dict)
         self.root_test.attachAll(report.observers)
         self.root_test.runTest(election_data,report)

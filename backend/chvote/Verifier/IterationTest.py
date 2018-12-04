@@ -1,8 +1,8 @@
 import os, sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
-from app.verifier.SingleTest import SingleTest
-from app.verifier.TestResult import TestResult
+from chvote.verifier.SingleTest import SingleTest
+from chvote.verifier.TestResult import TestResult
 
 class IterationTest(SingleTest):
     """docstring for IterationTest."""
