@@ -33,7 +33,9 @@ class LenghtEqualityConsistenyTest(SingleTest):
         """
         key = self.key
         sec_1 = election_data[key]
-        size = election_data[self.refer_key]
+        size = election_data.get(self.refer_key)
+        if not size:
+            size = self.election_data[self.refer_key]
         self.test_result.addTestData(self.refer_key,size)
         return 'successful' if len(sec_1)== size else 'failed'
 

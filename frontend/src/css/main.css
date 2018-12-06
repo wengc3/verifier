@@ -1,0 +1,268 @@
+body{
+  color: rgb(12,12,12);
+  font-size: 16px;
+  font-weight: 300;
+}
+.application--wrap{
+/*background: url("https://www.toptal.com/designers/subtlepatterns/patterns/brushed.png");*/
+  background: url("https://www.toptal.com/designers/subtlepatterns/patterns/debut_light.png");
+  /*background: #E5E5E5 -webkit-gradient(linear, 0% 0%, 0% 100%, from(#E5E5E5), to(#EFEFEF));
+  background: #E5E5E5 -moz-linear-gradient(top, #E5E5E5, #EFEFEF);*/
+
+  background: #EFEFEF -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FAFAFA), to(#E5E5E5));
+  background: #EFEFEF -moz-linear-gradient(top, #FAFAFA, #E5E5E5);
+}
+
+.application .theme--light.stepper, .theme--light .stepper {
+  background-color: transparent;
+}
+
+.blue{
+background-color: #2684c0 !important;
+  border-color: #2684c0 !important;
+}
+
+.blue--text {
+  color: #2684c0 !important;
+}
+
+.chip--active:not(.chip--disabled):after, .chip--selected:not(.chip--disabled):after, .chip:focus:not(.chip--disabled):after{
+  display: none;
+}
+
+.chip.chip--outline {
+  padding: 4px;
+}
+
+.application .theme--light.tabs__bar .tabs__li, .theme--light .tabs__bar .tabs__li {
+  color: white;
+}
+
+.tabs .icon {
+  color: white;
+}
+
+ul, li{
+  list-style-type:  none;
+}
+
+h5{
+  font-size: 18px !important;
+  font-weight: 600 !important;
+}
+
+header.siteHeader{
+  box-shadow: 0 2px 4px -1px rgba(0,0,0,.2), 0 4px 5px rgba(0,0,0,.14), 0 1px 10px rgba(0,0,0,.12);
+}
+
+.toolbar__title img{
+  margin-top: 4px;
+}
+
+.container {
+  margin: 0 auto !important;
+}
+
+
+.intro {
+  display: flex;
+  justify-content: center;
+  margin: 4rem 0;
+}
+
+a {
+  color: inherit;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.tabs__item{
+  text-transform: capitalize !important;
+}
+
+.alert.grey.lighten-3 { background-color: #fff !important; }
+
+
+/* Badge */
+
+.tabs  .badge--overlap:after {
+  top: -4px !important;
+}
+
+.tabs .badge:after {
+  height: 17px !important;
+  width: 17px !important;
+}
+
+.tabs .badge__badge{
+  height: 32px !important;
+  width: 32px !important;
+}
+
+.tabs .badge__badge .icon{
+  font-size: 24px !important;
+}
+
+.label{
+font-size: 14px;
+}
+
+.label i{
+  margin-top: -3px;
+}
+
+.infoCard .value{
+  text-align: left;
+  font-size: 22px;
+  clear: both;
+}
+
+.infoCard .label{
+  text-align: left;
+  float: left;
+  width: 100%;
+}
+
+.card{
+  /*box-shadow: 0 1px 5px rgba(0,0,0,0.1), 0 2px 2px rgba(0,0,0,0.1), 0 2px 1px -2px rgba(0,0,0,0.22) !important;*/
+  box-shadow: 0px 5px 20px lightgrey;
+
+}
+
+/* NProgress overrides */
+#nprogress .bar {
+  background: white !important;
+}
+
+#nprogress .peg{
+  box-shadow: 0 0 10px white, 0 0 5px white;
+}
+
+#nprogress .spinner-icon {
+  border-top-color: white !important;
+  border-left-color: white !important;
+}
+
+.toasted-container.top-right {
+  right: 10px !important;
+  top: 140px !important;
+  width: 400px;
+}
+
+.toasted-container.bottom-right .toasted, .toasted-container.top-right .toasted{
+  padding: 15px !important;
+}
+
+.alert.grey.lighten-3 div{
+  color: rgba(0,0,0,0.87);
+}
+
+.tabNotificationBadge {
+  font-size: 26px;
+}
+
+.icon.pending{
+  color: rgba(206, 206, 206, 0.54) !important;
+}
+
+.siteHeader .chip {
+  background: #1ea3f3 !important;
+  color: rgba(255, 255, 255, 1) !important;
+}
+
+.chip .icon{
+  opacity: 1 !important;
+}
+
+.loadingOverlay{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: #2684c0;
+  color: white;
+  top: 0px;
+  left: 0;
+  z-index: 1; /* Sit on top */
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.loadingOverlay div.loadingInner{
+  margin: 0 auto;
+  top: 42%;
+  left: 45%;
+  position: absolute;
+}
+
+.expansion-panel__header{
+  font-size: 16px !important;
+}
+
+.card__text{
+  font-size: 16px !important;
+}
+
+/* custom icons in buttons */
+.btn img{
+  width: 20px;
+  margin-right: 5px;
+}
+
+.application--light .stepper {
+  background: transparent !important;
+}
+
+.stepper {
+  box-shadow: none !important;
+  margin-top: -20px;
+}
+.application--light .stepper .stepper__step__step{
+  box-shadow: 0 0 2px 2px rgba(0,0,0,.2), 0px 0px 0px 0px rgba(0,0,0,.14), 0 1px 10px rgba(0,0,0,.12);
+
+}
+
+.stepper__step--active .stepper__step__step, .stepper__step--complete .stepper__step__step {
+  background: #505050 !important;
+}
+.application--light .stepper .stepper__step:not(.stepper__step--active):not(.stepper__step--complete):not(.stepper__step--error) .stepper__step__step {
+  background: rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Transitions */
+
+
+.bounce-enter-active {
+  animation: bounce-in .8s;
+}
+
+.bounce-leave-active {
+  animation: bounce-in .5s reverse;
+}
+
+@keyframes bounce-in {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.alert.info{
+  background-color: rgba(255, 255, 255, 0.45);
+  border: 0px !important;
+  margin-bottom:40px;
+  margin-top: -20px;
+}
+
+.toasted-container.bottom-right .toasted, .toasted-container.top-right .toasted {
+  font-family: Roboto, sans-serif;
+}
+
+.tabs__container--centered .tabs__div, .tabs__container--fixed-tabs .tabs__div, .tabs__container--icons-and-text .tabs__div {
+  min-width: 120px !important;
+}

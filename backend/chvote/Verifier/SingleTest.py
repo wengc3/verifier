@@ -1,6 +1,5 @@
 import abc
 from chvote.verifier.Test import Test
-from app.verifier.Report import Report
 
 class SingleTest(Test,metaclass=abc.ABCMeta):
     """docstring for abstract class """
@@ -13,5 +12,5 @@ class SingleTest(Test,metaclass=abc.ABCMeta):
         return self._key
 
     @abc.abstractmethod
-    def runTest(self,election_data,report):
+    def runTest(self,election_data):
         pass

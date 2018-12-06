@@ -1,12 +1,12 @@
 <template>
-  <v-btn @click="$emit('get-info', phase_id)" fab v-bind:color="getColor" class="verfier-phase">{{phase_id}}</v-btn>
+  <v-btn @click="$emit('get-info', category_id)" fab v-bind:color="getColor" class="verfier-catogory">{{category_id}}</v-btn>
 </template>
 
 <script>
 export default {
   computed: {
     getColor: function () {
-      let state = this.$store.state.Verifier[this.phase_id]
+      let state = this.$store.state.Verifier.categories[this.category_id - 1]
       let rgb = '42,229,23,'
       let opacity = '0'
       if (state.failed) {
@@ -22,7 +22,7 @@ export default {
     }
   },
   props: {
-    phase_id: {
+    category_id: {
       type: Number,
       required: true,
       default: 1
@@ -32,7 +32,7 @@ export default {
 </script>
 
 <style media="screen">
-  .verfier-phase{
+  .verfier-catogory{
     font-size: 3em;
     height: 100px;
     width: 100px;

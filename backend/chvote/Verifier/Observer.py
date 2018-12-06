@@ -1,18 +1,33 @@
-class Observer(object):
+import abc
+
+class Observer(metaclass=abc.ABCMeta):
     """docstring for Observer."""
-    def __init__(self,step):
-        self._report = None
-        self._test = None
+    def __init__(self,step,depth,report):
+        self._report = report
+        self._result = None
         self._step = step
-        self._old_progress = 0
+        self._depth = depth
+
+    @abc.abstractmethod
+    def update(self, state):
+        pass
+
+
+    @property
+    def depth(self):
+        return self._depth
 
     @property
     def report(self):
         return self._report
 
-    @report.setter
-    def report(self,report):
-        self._report = report
+    @property
+    def result(self):
+        return self._result
+
+    @result.setter
+    def result(self,result):
+        self._result = result
 
     @property
     def test(self):

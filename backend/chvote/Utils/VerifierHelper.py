@@ -32,3 +32,12 @@ def completness_decorate(func):
         else:
             return "skipped"
     return func_wrapper
+
+def checkResult(res):
+    if res.test_result in {"failed","skipped"}:
+         return "failed"
+    return "successful"
+
+def updateProgress(res,index,vector):
+    prg = (index+1) / len(vector)
+    res.progress = prg

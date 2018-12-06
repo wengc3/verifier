@@ -2,7 +2,7 @@ import os, sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
 from chvote.verifier.Test import Test
-from chvote.verifier.TestResult import TestResult
+from chvote.Utils.VerifierHelper import test_run_decorate, checkResult, updateProgress
 
 class MultiTest(Test):
     """ Define behavior for Test having a List of Tests.
@@ -23,17 +23,14 @@ class MultiTest(Test):
         for test in args:
             self.addTest(test)
 
-    def runTest(self,election_data,report):
-        self._notify("TestRunning")
-        self.progress = 0
-        test_result = "successful"
+    @test_run_decorate
+    def runTest(self,election_data):
+        multi_result = "successful"
         for index,test in enumerate(self.test_list):
-            res = test.runTest(election_data,report)
-            report.addTestResult(res)
-            if res.test_result in {"failed","skipped"}:
-                    test_result = "failed"
-            prg = (index+1) / len(self.test_list)
-            self.progress = prg
-        if self.id != "0":
-            self.progress = 1
-            return TestResult(self,test_result,None)
+            if self.id == "no id":
+                test.id = test.id[:-1] + str(index+1)
+            res = test.runTest(election_data)
+            self.test_result.addChild(res)
+            multi_result = checkResult(res)
+            updateProgress(self.test_result,index,self.test_list)
+        return multi_result

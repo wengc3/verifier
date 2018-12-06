@@ -13,7 +13,7 @@ class Test(metaclass=abc.ABCMeta):
 
 
     @abc.abstractmethod
-    def runTest(self,election_data,report):
+    def runTest(self,election_data):
         pass
 
     @property

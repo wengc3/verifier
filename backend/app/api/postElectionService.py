@@ -7,6 +7,7 @@ from flask_cors import CORS, cross_origin
 from app.api.syncService import syncPatches, SyncType
 from app.utils.errorhandling import make_error
 
+
 import json
 
 # LISTENERS
@@ -158,7 +159,7 @@ def verifyElection():
     electionId = data["election"]
 
     try:
-        # prepare voteService
+        # prepare VerifyService
         voteSvc = VoteService(electionId)
 
         # perform action

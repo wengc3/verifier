@@ -16,6 +16,7 @@ from app.utils.prepareData import prepareData
 from app.VerifyService import VerifyService
 from app.verifier.Report import Report
 from chvote.Common.SecurityParams import secparams_l1,secparams_l2,secparams_l3
+from chvote.verifier.TestResult import TestResult
 from chvote.verifier.MultiTest import MultiTest
 from ConsoleView import ConsoleView
 socketio = SocketIO('localhost',5000)
@@ -50,11 +51,11 @@ elif seclevel == 2:
 else:
     secparams = secparams_l3
 
-# report = Report(electionID1,secparams)
-# console = ConsoleView(0.2)
-# report.attach(console)
+report = Report(electionID1)
+console = ConsoleView(step=0.2,depth = 0,report=report)
+TestResult.attach(console)
 # #data_dict['ballots'][2].pop('voterId')
-# verify_svc.verify(data_dict,report)
+verify_svc.verify(data_dict,report,secparams)
 # result = report.result
 # pre_election = result[1]['1.1']
 # election = result[1]['1.2']
@@ -65,7 +66,7 @@ else:
 # print(oneway)
 # print(data_dict['securityLevel'])
 # print(data_dict['publicKeyShares'][0])
-data_dict = prepareData(data_dict)
+#data_dict = prepareData(data_dict)
 # print(data_dict['responses'][0]['voterId'])
 # print("_____________________________")
 # print(data_dict['responses'][0]['beta_j'])

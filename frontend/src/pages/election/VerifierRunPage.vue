@@ -3,7 +3,7 @@
     <v-layout row wrap>
       <v-flex mx-2 text-xs-center v-for="category in categories" :key="`category_${category.id}`" xs2>
         <h3>{{category.title}}</h3>
-        <verfier-category @get-info="getInfo" :phase_id="category.id" :disabled="!isCompleted"></verfier-category>
+        <verifier-category @get-info="getInfo" :category_id="category.id" :disabled="!isCompleted"></verifier-category>
       </v-flex>
       <v-flex mx-5 v-if="!hideBarAndStatus" xs10>
         <v-progress-linear height="10" v-model="progress"></v-progress-linear>
@@ -16,10 +16,16 @@
           <v-radio label="Failed results" value="failed"></v-radio>
         </v-radio-group>
         <v-flex xs10>
-          <v-flex v-for="phase in currentResults" :key="phase.id">
-            <h4>{{phase.title}}</h4>
-            <verfier-result-tree :results="phase.results"></verfier-result-tree>
-          </v-flex>
+          <v-tabs>
+            <v-tab v-for="phase in currentResults" :key="`tab_${phase.id}`" ripple>
+              {{phase.title}}
+            </v-tab>
+            <v-tab-item v-for="phase in currentResults" :key="`item_${phase.id}`">
+              <v-flex v-for="result in phase.results" :key="`res_${result.id}`">
+              <verifier-result :result="result"></verifier-result>
+              </v-flex>
+            </v-tab-item>
+          </v-tabs>
         </v-flex>
       </v-layout>
     </v-layout>
@@ -32,15 +38,14 @@ export default {
     hideBarAndStatus: false,
     isCompleted: false,
     filter: 'all',
-    currentCategory: 0,
-    items: []
+    currentCategory: 0
   }),
   methods: {
     getInfo: function (id) {
       this.hideBarAndStatus = true
       this.currentCategory = id
       let isFailed = this.$store.state.Verifier.categories[id - 1].failed
-      if (isFailed){
+      if (isFailed) {
         this.filter = 'failed'
       } else {
         this.filter = 'successful'
@@ -48,10 +53,11 @@ export default {
       this.filterChanged()
     },
     filterChanged: function () {
-      this.$store.state.Verifier.commit('calcResult',{
+      this.$store.commit('calcResult', {
         id: this.currentCategory,
         filter: this.filter
-    )}
+      })
+    }
   },
   computed: {
     getStatus: function () {
@@ -65,13 +71,14 @@ export default {
       let progress = this.$store.state.Verifier.progress
       if (progress === 100) {
         this.isCompleted = true
+        this.$store.commit('testData')
       }
       return progress
     },
-    categories: function() {
+    categories: function () {
       return this.$store.state.Verifier.categories
     },
-    currentResults: function() {
+    currentResults: function () {
       return this.$store.state.Verifier.currentResults
     }
   }

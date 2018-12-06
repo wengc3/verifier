@@ -1,5 +1,3 @@
-
-
 class TestResult(object):
     _observers = set()
     """docstring for TestResult."""
@@ -10,7 +8,7 @@ class TestResult(object):
         self._test_data = list()
         self._children = list()
         self._old_progress = 0
-        self._notify('TestRunning')
+        self._notify('testRunning')
 
     @property
     def test(self):
@@ -46,13 +44,40 @@ class TestResult(object):
     def getJSON(self):
         test = self.test
         children = list()
-        for child in self.children.items():
-            children.append(child.getJSON())
-        return {'id': slef.id, 'title': test.title, 'description': test.description, 'value': self.test_result, 'data': self.test_data, 'children': children}
+        for child in self.children:
+            if child.test.id == "no id":
+                iter_results = child.extractTests()
+                for iter_result in iter_results:
+                    children.append(iter_result.getJSON())
+            else:
+                children.append(child.getJSON())
+        return {'id': self.id, 'title': test.title, 'description': test.description, 'value': self.test_result, 'data': self.test_data, 'children': children}
+
+    def extractTests(self):
+        iter_res_list = list()
+        for child in self.children:
+            for sub_child in child.children:
+                test = sub_child.test
+                res = TestResult(test,"",self.test_data)
+                res.id = test.id[:-2]
+                res.children = self.getChildsById(res.id)
+                res.test_result = 'successful' if all(r.test_result == "successful" for r in res.children) else 'failed'
+                iter_res_list.append(res)
+        return iter_res_list
+
+    def getChildsById(self,id):
+        children_list = list()
+        for child in self.children:
+            for sub_child in child.children:
+                if id in sub_child.id:
+                    children_list.append(sub_child)
+        return children_list
+
 
     def addChild(self,child):
         self.children.append(child)
-        self._notify("newResult")
+        self.last_child = child
+        child._notify("newResult")
 
     @property
     def progress(self):
@@ -71,11 +96,18 @@ class TestResult(object):
     def old_progress(self,old_prg):
         self._old_progress = old_prg
 
+    def reportCreated(self):
+        self._notify("reportCreated")
+
 #observer methods
     def _notify(self,state):
-        for observer in TestResult._observers:
-            observer.test = self.test
+        for observer in self.observers:
+            observer.result = self
             observer.update(state)
+
+    @property
+    def observers(self):
+        return self._observers
 
     @staticmethod
     def attach(observer):

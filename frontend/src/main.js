@@ -55,8 +55,8 @@ import DataCard from './utils/DataCard.vue'
 import ContentTitle from './utils/ContentTitle.vue'
 
 import VerifierCategory from './utils/VerifierCategory.vue'
-import VerifierResultNode from './utils/VerifierResultNode.vue'
-import VerifierResultTree from './utils/VerifierResultTree.vue'
+import VerifierResult from './utils/VerifierResult.vue'
+import VerifierResultCardText from './utils/VerifierResultCardText.vue'
 
 // css
 import 'vuetify/dist/vuetify.min.css'
@@ -73,8 +73,8 @@ const routes = [
   { path: '/election/:electionId/printing', name: 'printingauth', component: PrintingAuthPage },
   { path: '/election/:electionId/voter/:voterId', name: 'voter', component: VoterPage },
   { path: '/election/:electionId/bulletinBoard', name: 'bulletinboard', component: BulletinBoardPage },
-  { path: '/election/:electionId/verifier', name: 'verifier_dev', component: VerifierPage },
-  { path: '/election/:electionId/verifier', name: 'verifier', component: VerifierRunPage },
+  { path: '/election/:electionId/verifier', name: 'verifier', component: VerifierPage },
+  { path: '/election/:electionId/verifierrun', name: 'verifierrun', component: VerifierRunPage },
   { path: '/election/:electionId/electionAuthority/:authid', name: 'electionauthority', component: ElectionAuthorityPage },
   { path: '*', redirect: { name: 'home' } }
 ]
@@ -116,9 +116,9 @@ Vue.component('DonutChart', DonutChart)
 Vue.component('BallotList', BallotList)
 Vue.component('ElectionResult', ElectionResult)
 
-Vue.component('verfier-category', VerifierCategory)
-Vue.component('verfier-result-node', VerifierResultNode)
-Vue.component('verfier-result-tree', VerifierResultTree)
+Vue.component('verifier-category', VerifierCategory)
+Vue.component('verifier-result', VerifierResult)
+Vue.component('verifier-result-card-text', VerifierResultCardText)
 
 Vue.url.options.root = process.env.URL_ROOT
 Vue.use(VueSocketio, process.env.SOCKETIO_BASE_URL, store)

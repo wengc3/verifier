@@ -21,7 +21,8 @@ def addKeyToVector(vector,key):
         vector[index]={key:item}
     return vector
 
-def prepareData(data_dict):
+def prepareData(data_dict,secparams):
+    data_dict['secparams'] = secparams
     data_dict['w']=prepareElectrorateParams(data_dict['countingCircles'],max)
     data_dict['t']=prepareElectrorateParams(data_dict['numberOfCandidates'],len)
     data_dict['Ne']=prepareElectrorateParams(data_dict['voters'],len)
@@ -32,4 +33,5 @@ def prepareData(data_dict):
     data_dict['publicKeyShares'] = addKeyToVector(data_dict['publicKeyShares'],'pk_j')
     data_dict['numberOfCandidates'] = addKeyToVector(data_dict['numberOfCandidates'],'n_j')
     data_dict['numberOfSelections'] = addKeyToVector(data_dict['numberOfSelections'],'k_j')
+    data_dict['partialPublicVotingCredentials'] = addKeyToVector(data_dict['partialPublicVotingCredentials'],'d_hat_j')
     return data_dict

@@ -22,6 +22,11 @@ import app.utils.jsonpatch as jsonpatch
 import json
 from chvote.Common.IsMember                    import IsMember
 
+from app.verifier.VerifierView import VerifierView
+from app.VerifyService import VerifyService
+from app.verifier.Report import Report
+from chvote.verifier.TestResult import TestResult
+
 class VoteService(object):
 
     # *************************************************************************************
@@ -381,23 +386,29 @@ class VoteService(object):
         self.updateStatus(7)
 
     def verifyElection(self):
-        res = VerificationResult()
-
-        # Shuffle Proofs Check
-        res.shuffleProofsCheck = CheckAllShuffleProofs(self.bulletinBoard.shuffleProofs, self.authorities[0].encryptions, self.bulletinBoard.encryptions, self.bulletinBoard.publicKey, self.secparams)
-
-        # Shuffle vector dimensions check
-        shuffleDimensionCheck = True
-        for auth in self.authorities:
-            if len(auth.encryptions) != len(auth.encryptionsShuffled):
-                shuffleDimensionCheck == False
-        res.shuffleDimensionCheck = shuffleDimensionCheck
-
-        # Decryption Proofs Check
-        res.decryptionProofsCheck = CheckDecryptionProofs(self.bulletinBoard.decryptionProofs, self.bulletinBoard.publicKeyShares, self.bulletinBoard.encryptions[-1], self.bulletinBoard.decryptions, self.secparams )
-
-
-        self.bulletinBoard.verificationResult = res
+        report = Report(self.electionID)
+        view = VerifierView(step=6,depth=3,report=report)
+        verify_svc = VerifyService()
+        data_dict = vars(self.bulletinBoard)
+        data_dict.update(vars(self.electionAdministrator))
+        verify_svc.verify(data_dict,report,secparams)
+        # res = VerificationResult()
+        #
+        # # Shuffle Proofs Check
+        # res.shuffleProofsCheck = CheckAllShuffleProofs(self.bulletinBoard.shuffleProofs, self.authorities[0].encryptions, self.bulletinBoard.encryptions, self.bulletinBoard.publicKey, self.secparams)
+        #
+        # # Shuffle vector dimensions check
+        # shuffleDimensionCheck = True
+        # for auth in self.authorities:
+        #     if len(auth.encryptions) != len(auth.encryptionsShuffled):
+        #         shuffleDimensionCheck == False
+        # res.shuffleDimensionCheck = shuffleDimensionCheck
+        #
+        # # Decryption Proofs Check
+        # res.decryptionProofsCheck = CheckDecryptionProofs(self.bulletinBoard.decryptionProofs, self.bulletinBoard.publicKeyShares, self.bulletinBoard.encryptions[-1], self.bulletinBoard.decryptions, self.secparams )
+        #
+        #
+        # self.bulletinBoard.verificationResult = res
 
     def revealCode(self, voterId, codeIndex):
         voter = self.voters[voterId]

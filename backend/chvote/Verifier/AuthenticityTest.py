@@ -10,7 +10,7 @@ class CertificateAuthenticityTest(SingleTest):
         SingleTest.__init__(self, id,title,description,key)
 
     @completness_decorate
-    def runTest(self,election_data,report):
+    def runTest(self,election_data):
         """
         Certificates are not in election_data
         >>> res = cauth.runTest({})

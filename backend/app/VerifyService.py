@@ -13,7 +13,7 @@ from chvote.Common.SecurityParams import secparams_l1, secparams_l2, secparams_l
 from chvote.verifier.Test import Test
 from chvote.verifier.MultiTest import MultiTest
 from chvote.verifier.CompletnessTest import SingleCompletnessTest
-from chvote.verifier.IntegrityTest import ListBiggerThanIntegrityTest, PubKeyIntegritiyTest
+from chvote.verifier.IntegrityTest import BiggerThanIntegrityTest, MathGroupeIntegritiyTest
 from chvote.verifier.IterationTest import IterationTest
 from chvote.verifier.ConsistencyTest import LenghtEqualityConsistenyTest
 from chvote.verifier.EvidenceTest import BallotProofEvidenceTest
@@ -32,7 +32,6 @@ class VerifyService(object):
         com_pre_election_tests.addTests(
             SingleCompletnessTest("1.1.1","Check Election ID","Check if ElectionID is in election_data",'electionID'),
             SingleCompletnessTest("1.1.2","Check Number of candidates","Check if vector numberOfCandidates is in election_data",'numberOfCandidates'),
-            SingleCompletnessTest("1.1.2","Check Number of candidates","Check if vector numberOfCandidates is in election_data",'numberOfCandidates'),
             SingleCompletnessTest("1.1.3","Check Candidates","Check if vector candidates is in election_data",'candidates'),
             SingleCompletnessTest("1.1.4","Check Number of selections","Check if vector numberOfSelections is in election_data",'numberOfSelections'),
             SingleCompletnessTest("1.1.5","Check Voters","Check if vector voters is in election_data",'voters'),
@@ -50,25 +49,25 @@ class VerifyService(object):
         com_election_tests = MultiTest("1.2","election Tests","Test which conntains all election tests")
         com_multi_test_ballot = MultiTest("no id","Ballot Tests","Test which conntains all ballot tests")
         com_multi_test_ballot.addTests(
-            SingleCompletnessTest("1.2.2","Check Voter ID","Check if voterId is in VoterBallot",'voterId'),
-            SingleCompletnessTest("1.2.3","Check Ballot","Check if ballot is in VoterBallot",'ballot')
+            SingleCompletnessTest("1.2.2.0","Check Voter ID","Check if voterId is in VoterBallot",'voterId'),
+            SingleCompletnessTest("1.2.3.0","Check Ballot","Check if ballot is in VoterBallot",'ballot')
         )
         com_multi_test_resbonse = MultiTest("no id","Response Tests","Test which conntains all response tests")
         com_multi_test_resbonse.addTests(
-            SingleCompletnessTest("1.2.5","Check Voter ID","Check if voterId is in response_dict",'voterId'),
-            SingleCompletnessTest("1.2.6","Check OT-Responses","Check if vector OT-Responses is in response_dict",'beta_j'),
-            SingleCompletnessTest("1.2.7","Check OT-Signatur","Check if OT-Signatur is in response_dict",'sigCast')
+            SingleCompletnessTest("1.2.5.0","Check Voter ID","Check if voterId is in response_dict",'voterId'),
+            SingleCompletnessTest("1.2.6.0","Check OT-Responses","Check if vector OT-Responses is in response_dict",'beta_j'),
+            SingleCompletnessTest("1.2.7.0","Check OT-Signatur","Check if OT-Signatur is in response_dict",'sigCast')
         )
         com_multi_test_confirmation = MultiTest("no id","Confirmation Tests","Test which conntains all confirmation tests")
         com_multi_test_confirmation.addTests(
-            SingleCompletnessTest("1.2.9","Check Voter ID","Check if voterId is in confirmation_dict",'voterId'),
-            SingleCompletnessTest("1.2.10","Check Confirmation","Check if confirmation is in confirmation_dict",'confirmation')
+            SingleCompletnessTest("1.2.9.0","Check Voter ID","Check if voterId is in confirmation_dict",'voterId'),
+            SingleCompletnessTest("1.2.10.0","Check Confirmation","Check if confirmation is in confirmation_dict",'confirmation')
         )
         com_multi_test_randomization = MultiTest("no id","Randomization Tests","Test which conntains all randomization tests")
         com_multi_test_randomization.addTests(
-            SingleCompletnessTest("1.2.12","Check Voter ID","Check if voterId is in randomization_dict",'voterId'),
-            SingleCompletnessTest("1.2.13","Check Randomization","Check if randomization is in randomization_dict",'randomization'),
-            SingleCompletnessTest("1.2.14","Check Randomization-Signatur","Check if Randomization-Signatur is in randomization_dict",'sigConf')
+            SingleCompletnessTest("1.2.12.0","Check Voter ID","Check if voterId is in randomization_dict",'voterId'),
+            SingleCompletnessTest("1.2.13.0","Check Randomization","Check if randomization is in randomization_dict",'randomization'),
+            SingleCompletnessTest("1.2.14.0","Check Randomization-Signatur","Check if Randomization-Signatur is in randomization_dict",'sigConf')
         )
         com_election_tests.addTests(
             SingleCompletnessTest("1.2.1","Check Ballots","Check if vector ballots is in election_data",'ballots'),
@@ -99,14 +98,14 @@ class VerifyService(object):
         # 2.1 pre_election Tests
         int_pre_election_tests = MultiTest("2.1","pre_election Tests","Test which conntains all pre_election tests")
         # Tests for IterationTests
-        int_test_numberOfCandidates = ListBiggerThanIntegrityTest("2.1.7","Check NumberOfCandidates","Check if n_j >= 2",'n_j',2)
-        int_test_numberOfSelections = ListBiggerThanIntegrityTest("2.1.8","Check NumberOfSelections","Check if k_j >= 1",'k_j',1)
-        int_test_pk = PubKeyIntegritiyTest("2.1.15","Check Public key","For all authority test it's Public key",'pk_j')
+        int_test_numberOfCandidates = BiggerThanIntegrityTest("2.1.7.0","Check NumberOfCandidates","Check if n_j >= 2",'n_j',2)
+        int_test_numberOfSelections = BiggerThanIntegrityTest("2.1.8.0","Check NumberOfSelections","Check if k_j >= 1",'k_j',1)
+        int_test_pk = MathGroupeIntegritiyTest("2.1.15.0","Check Public key","For all authority test it's Public key",'pk_j','p')
         int_pre_election_tests.addTests(
-            ListBiggerThanIntegrityTest("2.1.2","Check CountingCircles lenght","Check if w >= 1",'w',1),
-            ListBiggerThanIntegrityTest("2.1.3","Check NumberOfCandidates lenght","Check if t >= 1",'t',1),
-            ListBiggerThanIntegrityTest("2.1.4","Check Voters lenght","Check if Ne >= 1",'Ne',0),
-            ListBiggerThanIntegrityTest("2.1.6","Check partialPublicVotingCredentials lenght","Check if s >= 1",'s',1),
+            BiggerThanIntegrityTest("2.1.2","Check CountingCircles lenght","Check if w >= 1",'w',1),
+            BiggerThanIntegrityTest("2.1.3","Check NumberOfCandidates lenght","Check if t >= 1",'t',1),
+            BiggerThanIntegrityTest("2.1.4","Check Voters lenght","Check if Ne >= 1",'Ne',0),
+            BiggerThanIntegrityTest("2.1.6","Check partialPublicVotingCredentials lenght","Check if s >= 1",'s',1),
             IterationTest("NumberOfCandidates","For j in {1,...,t} ",int_test_numberOfCandidates),
             IterationTest("NumberOfSelections","For j in {1,...,t} ",int_test_numberOfSelections),
         )
@@ -114,15 +113,24 @@ class VerifyService(object):
 
         consistency_tests = MultiTest("3","Consistency Tests","Test which conntains all consistency tests")
         cons_pre_election_tests = MultiTest("3.1","pre_election Tests","Test which conntains all pre_election tests")
+        # Tests for Integrity Tests
+        cons_test_pvc = LenghtEqualityConsistenyTest("3.1.8.0","Check PartialPublicVotingCredential","Check if |d_hat_j| = Ne","d_hat_j","Ne")
         cons_pre_election_tests.addTests(
-            LenghtEqualityConsistenyTest("3.1.1","Check Number of selections","Check if numberOfSelections has the same lenght as numberOfCandidates","numberOfSelections","numberOfCandidates")
+            LenghtEqualityConsistenyTest("3.1.1","Check Number of Candidates","Check if |numberOfCandidates| = t","numberOfCandidates","t"),
+            LenghtEqualityConsistenyTest("3.1.2","Check Number of selections","Check if |numberOfSelections| = t","numberOfSelections","t"),
+            LenghtEqualityConsistenyTest("3.1.4","Check Candidates","Check if |candidates| = n","candidates","n"),
+            LenghtEqualityConsistenyTest("3.1.5","Check Voters","Check if |votes| = Ne","voters","Ne"),
+            LenghtEqualityConsistenyTest("3.1.6","Check CountingCircles","Check if |countingCircles| = Ne","countingCircles","Ne"),
+            LenghtEqualityConsistenyTest("3.1.7","Check PartialPublicVotingCredentials","Check if |partialPublicVotingCredentials| = s","partialPublicVotingCredentials","s"),
+            IterationTest("partialPublicVotingCredentials","For j in {1,...,s} ",cons_test_pvc),
+            LenghtEqualityConsistenyTest("3.1.9","Check PublicKeyShares","Check if |publicKeyShares| = s","publicKeyShares","s"),
         )
         consistency_tests.addTests(cons_pre_election_tests)
 
         evidence_tests = MultiTest("4","Evidence Tests","Test which conntains all evidence tests")
         ev_check_proofs = MultiTest("4.1","Check all Proofs","Test which conntains all proofs tests")
         # Tests for IterationTests
-        ev_test_ballotproof = BallotProofEvidenceTest("4.1.1","Check BallotProof","Check proof of Ballot","ballot")
+        ev_test_ballotproof = BallotProofEvidenceTest("4.1.1.0","Check BallotProof","Check proof of Ballot","ballot")
         ev_check_proofs.addTests(
             IterationTest('ballots',"For all Ballots: ",ev_test_ballotproof)
         )
@@ -141,7 +149,7 @@ class VerifyService(object):
         self.root_test.addTest(evidence_tests)
         self.root_test.addTest(authenticity_tests)
 
-    def verify(self,data_dict,report):
-        prepareData(data_dict)
-        self.root_test.attachAll(report.observers)
-        self.root_test.runTest(election_data,report)
+    def verify(self,data_dict,report,secparams):
+        election_data = prepareData(data_dict,secparams)
+        root_result = self.root_test.runTest(election_data)
+        report.result = root_result

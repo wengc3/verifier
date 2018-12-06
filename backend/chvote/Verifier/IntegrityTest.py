@@ -7,7 +7,7 @@ from chvote.Utils.VerifierHelper import completness_decorate
 
 from chvote.Common.IsMemberOfGroupe import IsMemberOfGroupe
 
-class ListBiggerThanIntegrityTest(SingleTest):
+class BiggerThanIntegrityTest(SingleTest):
     """docstring for ListBiggerThanIntegrityTest."""
     def __init__(self,id,title,description,key,min_size):
         SingleTest.__init__(self, id,title,description,key)
@@ -16,26 +16,26 @@ class ListBiggerThanIntegrityTest(SingleTest):
     @completness_decorate
     def runTest(self,election_data):
         """
-        >>> res = vsct.runTest({'test':[1,1,1]})
+        >>> res = btit.runTest({'test': 1})
         >>> res.test_result
         'successful'
         >>> res.test_data
-        [{'test': [1, 1, 1]}, {'min_size': 1}]
-        >>> res = vsct.runTest({'test':[]})
+        [{'test': 1}, {'min_size': 1}]
+        >>> res = btit.runTest({'test': 0})
         >>> res.test_result
         'failed'
         >>> res.test_data
-        [{'test': []}, {'min_size': 1}]
-        >>> res = vsct.runTest({'bla':123})
+        [{'test': 0}, {'min_size': 1}]
+        >>> res = btit.runTest({'bla': 1})
         >>> res.test_result
         'skipped'
         >>> res.test_data
         []
         """
         key = self.key
-        data = election_data[key]
+        value = election_data[key]
         self.test_result.addTestData('min_size',self.min_size)
-        return 'successful' if  len(data) >= self.min_size else 'failed'
+        return 'successful' if  value >= self.min_size else 'failed'
 
 
 class MathGroupeIntegritiyTest(SingleTest):
@@ -76,5 +76,5 @@ if __name__ == '__main__':
     from chvote.Common.SecurityParams import secparams_l1,secparams_l2,secparams_l3
     pktest= MathGroupeIntegritiyTest("1.1","TEST","TEST","test","p")
     pktest.election_data = {'secparams': secparams_l3}
-    doctest.testmod(extraglobs={'vsct': ListBiggerThanIntegrityTest("1.1","TEST","TEST","test",1),
+    doctest.testmod(extraglobs={'btit': BiggerThanIntegrityTest("1.1","TEST","TEST","test",1),
                                 'pkit':pktest})
