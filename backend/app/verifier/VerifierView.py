@@ -1,39 +1,40 @@
 from chvote.verifier.Observer import Observer
-from app.api.syncService import emitToClient
+from app.api.syncService import emitToClient, SyncType
 
-class VerifierView(observer):
+class VerifierView(Observer):
     """docstring for VerifierView."""
+
     def update(self,state):
         id = self.result.test.id
-        if  id not in ["0","no id"] and id.count('.') <= self.depth :
+        if  id not in ['0','no id'] and id.count('.') <= self.depth :
             try:
                 func = self._functions[state]
                 func(self)
             except KeyError:
-                raise AttributeError('this function is not defined')
+                raise AttributeError('this function is not defined:'+state)
 
         if state == 'reportCreated':
             self._reportCreated()
 
 
     def _testRunning(self):
-        emitToClient("testRunning",self.result.test.title,SyncType.ROOM,report.electionID)
+        emitToClient('testRunning',self.result.test.title,SyncType.ROOM,self.report.electionID)
 
     def _newProgress(self):
-        id self.result.test.id
+        id = self.result.test.id
         if id.count('.') == 0:
             prg = self.result.progress
             newprg = int(20*prg) + ((int(id) - 1)*20)
-            emitToClient("newProgress",str(newprg),SyncType.ROOM,report.electionID)
+            emitToClient('newProgress',str(newprg),SyncType.ROOM,self.report.electionID)
 
 
     def _newResult(self):
         result = self.result
         if result.test_result == 'failed':
             id = result.test.id[0]
-            emitToClient("resultFailed",id,SyncType.ROOM,report.electionID)
+            emitToClient('resultFailed',id,SyncType.ROOM,self.report.electionID)
 
     def _reportCreated(self):
-        emitToClient("allResults",self.report.final_result,SyncType.ROOM,report.electionID)
+        emitToClient('allResults',self.report.final_result,SyncType.ROOM,self.report.electionID)
 
-    _functions = {'testRunning': _testRunning ,'newProgress': _newProgress, 'newResult': _newResult}
+    _functions = {'testRunning': _testRunning ,'newProgress': _newProgress, 'newResult': _newResult, 'reportCreated': _reportCreated}

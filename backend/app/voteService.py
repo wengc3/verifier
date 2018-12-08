@@ -15,7 +15,6 @@ from chvote.VotingClient.GetPointMatrix import GetPointMatrix
 from chvote.VotingClient.GetReturnCodes import GetReturnCodes
 from chvote.VotingClient.GetFinalizationCode import GetFinalizationCode
 from chvote.VotingClient.GenConfirmation import GenConfirmation
-from chvote.Verifier.CheckAllShuffleProofs import CheckAllShuffleProofs
 from chvote.ElectionAuthority.CheckDecryptionProofs import CheckDecryptionProofs
 from app.utils.JsonParser import mpzconverter
 import app.utils.jsonpatch as jsonpatch
@@ -388,10 +387,15 @@ class VoteService(object):
     def verifyElection(self):
         report = Report(self.electionID)
         view = VerifierView(step=6,depth=3,report=report)
+        TestResult.attach(view)
         verify_svc = VerifyService()
-        data_dict = vars(self.bulletinBoard)
-        data_dict.update(vars(self.electionAdministrator))
-        verify_svc.verify(data_dict,report,secparams)
+        data_dict =  dict()
+        bb = self.bulletinBoard.state.toJSON()
+        ea = self.electionAdministrator.state.toJSON()
+        data_dict.update(json.loads(bb))
+        data_dict.update(json.loads(ea))
+        # import pdb; pdb.set_trace()
+        verify_svc.verify(data_dict,report,self.secparams)
         # res = VerificationResult()
         #
         # # Shuffle Proofs Check
