@@ -19,11 +19,15 @@ class VerifierView(Observer):
 
     def _testRunning(self):
         emitToClient('testRunning',self.result.test.title,SyncType.ROOM,self.report.electionID)
+        if id.count('.') == 0:
+            emitToClient('newState',{'id': id,'value': 'running'},SyncType.ROOM,self.report.electionID)
 
     def _newProgress(self):
         id = self.result.test.id
         if id.count('.') == 0:
             prg = self.result.progress
+            if prg == 1:
+                emitToClient('newState',{'id': id,'value': 'completed'},SyncType.ROOM,self.report.electionID)
             newprg = int(20*prg) + ((int(id) - 1)*20)
             emitToClient('newProgress',str(newprg),SyncType.ROOM,self.report.electionID)
 
