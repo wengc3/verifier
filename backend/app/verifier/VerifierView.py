@@ -22,7 +22,7 @@ class VerifierView(Observer):
         test = self.result.test
         emitToClient('testRunning',test.title,SyncType.ROOM,self.report.electionID)
         if test.id.count('.') == 0:
-            data = json.dumps({'id': id,'value': 'running'})
+            data = json.dumps({'id': test.id,'value': 'running'})
             emitToClient('newState',data,SyncType.ROOM,self.report.electionID)
 
     def _newProgress(self):
