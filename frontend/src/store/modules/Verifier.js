@@ -25,12 +25,12 @@ const mutations = {
   SOCKET_NEWSTATE: (state, data) => {
     let runningState = JSON.parse(data)
     state.categories[Number(runningState.id) - 1] = runningState.value
-    console.log('newState:',runningState)
+    console.log('newState:', runningState)
   },
 
   SOCKET_CURRENTTEST: (state, title) => {
     state.currentTest = title
-    console.log('currentTest:',title)
+    console.log('currentTest:', title)
   },
 
   SOCKET_ALLRESULTS: (state, data) => {
@@ -38,17 +38,17 @@ const mutations = {
     results.forEach(function (result) {
       state.categories[result.id - 1].results = result.results
     })
-    console.log('allResults:',results)
+    console.log('allResults:', results)
   },
 
   SOCKET_NEWPROGRESS: (state, prg) => {
     state.progress = Number(prg)
-    console.log('newProgress:',prg);
+    console.log('newProgress:', prg)
   },
 
   SOCKET_RESULTFAILED: (state, id) => {
     state.categories[Number(id) - 1].failed = true
-    console.log('resultFailed:',id);
+    console.log('resultFailed:', id)
   },
 
   // testData: function () {
