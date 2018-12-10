@@ -6,7 +6,7 @@ class VerifierView(Observer):
     """docstring for VerifierView."""
 
     def update(self,state):
-        id = self.result.test.id
+        id = self.result.id
         if  ':' not in id and id.count('.') <= self.depth :
             try:
                 func = self._functions[state]
@@ -26,7 +26,7 @@ class VerifierView(Observer):
             emitToClient('newState',data,SyncType.ROOM,self.report.electionID)
 
     def _newProgress(self):
-        id = self.result.test.id
+        id = self.result.id
         if id.count('.') == 0:
             prg = self.result.progress
             if prg == 1:

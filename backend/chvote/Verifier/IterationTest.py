@@ -8,7 +8,7 @@ class IterationTest(SingleTest):
     """docstring for IterationTest."""
     def __init__(self,key,title,test):
         SingleTest.__init__(self, test.id,title+test.title,test.description,key)
-        if 'multi' not in self.id:
+        if 'multi' not in test.id:
             self.id = self.id[:-2]
         self._test = test
 
