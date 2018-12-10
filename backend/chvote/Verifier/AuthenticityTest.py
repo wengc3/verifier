@@ -17,7 +17,7 @@ class CertificateAuthenticityTest(SingleTest):
         >>> res.test_result
         'skipped'
         >>> res.test_data
-        []
+        {}
         >>> res.progress
         1
         """
