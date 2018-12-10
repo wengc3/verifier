@@ -17,12 +17,12 @@ class SingleCompletnessTest(SingleTest):
         >>> res.test_result
         'successful'
         >>> sct.test_result.test_data
-        [{'test': 123}]
+        {'test': 123}
         >>> res = sct.runTest({'bla':123})
         >>> res.test_result
         'failed'
         >>> sct.test_result.test_data
-        []
+        {}
         """
         key = self.key
         try:

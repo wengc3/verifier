@@ -4,7 +4,7 @@
       <v-flex xs8 md8>{{result.description}}:</v-flex>
       <div xs12 v-for="value,key in result.data" >
         <v-layout row wrap fill-hight>
-          <v-flex v-if="!isBigData(value)" xs3 md3>{{key}}:</v-flex>
+          <v-flex xs3 md3>{{key}}:</v-flex>
           <v-flex v-if="!isBigData(value)" xs9 md9>{{value}}</v-flex>
             <v-flex :grow="true" d-flex v-if="isBigData(value)" :max-width="600">
             <v-data-iterator

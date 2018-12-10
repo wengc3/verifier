@@ -19,17 +19,17 @@ class LenghtEqualityConsistenyTest(SingleTest):
         >>> res.test_result
         'successful'
         >>> res.test_data
-        [{'test': [1, 1, 1, 1]}, {'t': 4}]
+        {'test': [1, 1, 1, 1], 't': 4}
         >>> res = lect.runTest({'test':[1,1,1],'t': 4})
         >>> res.test_result
         'failed'
         >>> res.test_data
-        [{'test': [1, 1, 1]}, {'t': 4}]
+        {'test': [1, 1, 1], 't': 4}
         >>> res = lect.runTest({'bla':[1,1,1],'t': 4})
         >>> res.test_result
         'skipped'
         >>> res.test_data
-        []
+        {}
         """
         key = self.key
         sec_1 = election_data[key]

@@ -43,7 +43,7 @@ class VerifyService(object):
             SingleCompletnessTest("1.1.11","Check Partial Signatur","Check if Signatur of part of election parameters is in election_data",'sigParam2'),
             SingleCompletnessTest("1.1.12","Check other part Signatur","Check if Signatur of  other part of election parameters is in election_data",'sigParam3'),
             SingleCompletnessTest("1.1.13","Check Public credentials Signatur","Check if vector of Signatur of Public credentials is in election_data",'sigPrep'),
-            SingleCompletnessTest("1.1.13","Check Public keys Signatur","Check if vector of Signatur of Public keys is in election_data",'sigKgen')
+            SingleCompletnessTest("1.1.14","Check Public keys Signatur","Check if vector of Signatur of Public keys is in election_data",'sigKgen')
         )
         # 1.2 election
         com_election_tests = MultiTest("1.2","election Tests","Test which conntains all election tests")
