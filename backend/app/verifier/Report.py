@@ -3,7 +3,7 @@ import json
 
 class Report(object):
     """docstring for Report."""
-    def __init__(self, election_id,secparams):
+    def __init__(self, election_id):
         self._election_id = election_id
         self._json_result = None
         self._result = None

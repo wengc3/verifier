@@ -22,7 +22,7 @@ from chvote.verifier.AuthenticityTest import CertificateAuthenticityTest
 class VerifyService(object):
     """docstring for VerifyService."""
     def __init__(self):
-        self.root_test = MultiTest("0","Root Test","Test which conntains all Tests")
+        self.root_test = MultiTest("0:","Root Test","Test which conntains all Tests")
         self.setUpTests()
 
     def setUpTests(self):
@@ -47,23 +47,23 @@ class VerifyService(object):
         )
         # 1.2 election
         com_election_tests = MultiTest("1.2","election Tests","Test which conntains all election tests")
-        com_multi_test_ballot = MultiTest("no id","Ballot Tests","Test which conntains all ballot tests")
+        com_multi_test_ballot = MultiTest("multi:0","Ballot Tests","Test which conntains all ballot tests")
         com_multi_test_ballot.addTests(
             SingleCompletnessTest("1.2.2.0","Check Voter ID","Check if voterId is in VoterBallot",'voterId'),
             SingleCompletnessTest("1.2.3.0","Check Ballot","Check if ballot is in VoterBallot",'ballot')
         )
-        com_multi_test_resbonse = MultiTest("no id","Response Tests","Test which conntains all response tests")
+        com_multi_test_resbonse = MultiTest("multi:0","Response Tests","Test which conntains all response tests")
         com_multi_test_resbonse.addTests(
             SingleCompletnessTest("1.2.5.0","Check Voter ID","Check if voterId is in response_dict",'voterId'),
             SingleCompletnessTest("1.2.6.0","Check OT-Responses","Check if vector OT-Responses is in response_dict",'beta_j'),
             SingleCompletnessTest("1.2.7.0","Check OT-Signatur","Check if OT-Signatur is in response_dict",'sigCast')
         )
-        com_multi_test_confirmation = MultiTest("no id","Confirmation Tests","Test which conntains all confirmation tests")
+        com_multi_test_confirmation = MultiTest("multi:0","Confirmation Tests","Test which conntains all confirmation tests")
         com_multi_test_confirmation.addTests(
             SingleCompletnessTest("1.2.9.0","Check Voter ID","Check if voterId is in confirmation_dict",'voterId'),
             SingleCompletnessTest("1.2.10.0","Check Confirmation","Check if confirmation is in confirmation_dict",'confirmation')
         )
-        com_multi_test_randomization = MultiTest("no id","Randomization Tests","Test which conntains all randomization tests")
+        com_multi_test_randomization = MultiTest("multi:0","Randomization Tests","Test which conntains all randomization tests")
         com_multi_test_randomization.addTests(
             SingleCompletnessTest("1.2.12.0","Check Voter ID","Check if voterId is in randomization_dict",'voterId'),
             SingleCompletnessTest("1.2.13.0","Check Randomization","Check if randomization is in randomization_dict",'randomization'),

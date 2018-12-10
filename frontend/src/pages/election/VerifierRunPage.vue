@@ -21,8 +21,8 @@
               {{phase.title}}
             </v-tab>
             <v-tab-item v-for="phase in currentResults" :key="`item_${phase.id}`">
-              <v-flex v-for="result in phase.results" :key="`res_${result.id}`">
-              <verifier-result :result="result"></verifier-result>
+              <v-flex v-for="child in phase.children" :key="`res_${child.id}`">
+              <verifier-result :result="child"></verifier-result>
               </v-flex>
             </v-tab-item>
           </v-tabs>
@@ -53,7 +53,8 @@ export default {
       this.filterChanged()
     },
     filterChanged: function () {
-      this.$store.commit('calcResult', {
+      this.$store.commit({
+        type: 'calcResult',
         id: this.currentCategory,
         filter: this.filter
       })
@@ -71,7 +72,7 @@ export default {
       let progress = this.$store.state.Verifier.progress
       if (progress === 100) {
         this.isCompleted = true
-        this.$store.commit('testData')
+        // this.$store.commit('testData')
       }
       return progress
     },

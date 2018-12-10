@@ -21,7 +21,7 @@ from chvote.verifier.MultiTest import MultiTest
 from ConsoleView import ConsoleView
 socketio = SocketIO('localhost',5000)
 data_dict = dict()
-electionID1="5bc6062b6d19d200125b3fb7"
+electionID1="5c0bb43740b1e1001273984f"
 
 def connect():
     print('connected')

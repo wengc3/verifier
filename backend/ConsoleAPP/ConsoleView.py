@@ -1,11 +1,12 @@
 from chvote.verifier.Observer import Observer
+import json
 
 class ConsoleView(Observer):
     """docstring for ConsoleView."""
 
     def update(self,state):
         id = self.result.test.id
-        if  id not in ["0","no id"] and id.count('.') <= self.depth :
+        if  ':' not in id and id.count('.') <= self.depth :
             try:
                 func = self._functions[state]
                 func(self)
@@ -34,6 +35,7 @@ class ConsoleView(Observer):
         print(test.id,test.title,"is finished",":",result.test_result)
 
     def _reportCreated(self):
-        print(self.report.final_result[0:500])
+        results = json.loads(self.report.final_result)
+        import pdb; pdb.set_trace()
 
     _functions = {'testRunning': _testRunning ,'newProgress': _newProgress, 'newResult': _newResult}

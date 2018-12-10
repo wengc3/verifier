@@ -45,7 +45,7 @@ class TestResult(object):
         test = self.test
         children = list()
         for child in self.children:
-            if child.test.id == "no id":
+            if 'multi' in child.id:
                 iter_results = child.extractTests()
                 for iter_result in iter_results:
                     children.append(iter_result.getJSON())
@@ -55,14 +55,14 @@ class TestResult(object):
 
     def extractTests(self):
         iter_res_list = list()
-        for child in self.children:
-            for sub_child in child.children:
-                test = sub_child.test
-                res = TestResult(test,"",self.test_data)
-                res.id = test.id[:-2]
-                res.children = self.getChildsById(res.id)
-                res.test_result = 'successful' if all(r.test_result == "successful" for r in res.children) else 'failed'
-                iter_res_list.append(res)
+        child = self.children[0]
+        for sub_child in child.children:
+            test = sub_child.test
+            res = TestResult(test,"",self.test_data)
+            res.id = test.id[:-2]
+            res.children = self.getChildsById(res.id)
+            res.test_result = 'successful' if all(r.test_result == "successful" for r in res.children) else 'failed'
+            iter_res_list.append(res)
         return iter_res_list
 
     def getChildsById(self,id):

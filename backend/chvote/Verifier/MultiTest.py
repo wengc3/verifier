@@ -27,8 +27,8 @@ class MultiTest(Test):
     def runTest(self,election_data):
         multi_result = "successful"
         for index,test in enumerate(self.test_list):
-            if self.id == "no id":
-                test.id = test.id[:-1] + str(index+1)
+            if 'multi' in self.id:
+                test.id = test.id[:-1] + self.id[-1]
             res = test.runTest(election_data)
             self.test_result.addChild(res)
             multi_result = checkResult(res)

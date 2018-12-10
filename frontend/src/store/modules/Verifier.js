@@ -1,6 +1,6 @@
 // filter function
 function filterItems (result, filter) {
-  return result.results.filter(function (elem) {
+  return result.children.filter(function (elem) {
     return filter.includes(elem.value)
   })
 }
@@ -24,7 +24,7 @@ const mutations = {
 
   SOCKET_NEWSTATE: (state, data) => {
     let runningState = JSON.parse(data)
-    state.categories[Number(runningState.id) - 1] = runningState.value
+    state.categories[Number(runningState.id) - 1].state = runningState.value
     console.log('newState:', runningState)
   },
 
@@ -36,9 +36,10 @@ const mutations = {
   SOCKET_ALLRESULTS: (state, data) => {
     let results = JSON.parse(data)
     results.forEach(function (result) {
-      state.categories[result.id - 1].results = result.results
+      state.categories[result.id - 1].results = result.children
     })
     console.log('allResults:', results)
+    console.log('categories:', state.categories)
   },
 
   SOCKET_NEWPROGRESS: (state, prg) => {
@@ -62,11 +63,12 @@ const mutations = {
       filter.push('skipped')
     }
     let results = JSON.parse(JSON.stringify(state.categories[payload.id - 1].results)) // a coppy of results
+    // let results = state.categories[payload.id - 1].results
     if (filter.includes('all')) {
       state.currentResults = results
     } else {
       results.forEach(function (elem, index) {
-        elem.results = filterItems(elem, filter)
+        elem.children = filterItems(elem, filter)
         state.currentResults[index] = elem
       })
     }
