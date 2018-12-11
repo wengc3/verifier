@@ -1,4 +1,3 @@
-from app.utils.JsonParser import mpzconverter
 import json
 
 class Report(object):
@@ -23,17 +22,17 @@ class Report(object):
     @result.setter
     def result(self,result):
         self._result = result
-        self.generateReport()
+        self.generateJSONResult()
 
     @property
     def electionID(self):
         return self._election_id
 
-    def generateReport(self):
+    def generateJSONResult(self):
         report = list()
         for category in self.result.children:
             report.append(category.getJSON())
-        self.final_result = json.dumps(report, default=mpzconverter)
+        self.json_result = json.dumps(report, default=str)
         self._notify('reportCreated')
 
     def _notify(self,state):

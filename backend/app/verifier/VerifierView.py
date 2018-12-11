@@ -43,6 +43,6 @@ class VerifierView(Observer):
             emitToClient('resultFailed',id,SyncType.ROOM,self.report.electionID)
 
     def _reportCreated(self):
-        emitToClient('allResults',self.report.final_result,SyncType.ROOM,self.report.electionID)
+        emitToClient('allResults',self.report.json_result,SyncType.ROOM,self.report.electionID)
 
     _functions = {'testRunning': _testRunning ,'newProgress': _newProgress, 'newResult': _newResult, 'reportCreated': _reportCreated}

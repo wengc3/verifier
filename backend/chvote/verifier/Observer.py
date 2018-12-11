@@ -12,6 +12,22 @@ class Observer(metaclass=abc.ABCMeta):
     def update(self, state):
         pass
 
+    @abc.abstractmethod
+    def _testRunning(self):
+        pass
+
+    @abc.abstractmethod
+    def _newProgress(self):
+        pass
+
+    @abc.abstractmethod
+    def _newResult(self):
+        pass
+
+    @abc.abstractmethod
+    def _reportCreated(self):
+        pass
+
 
     @property
     def depth(self):

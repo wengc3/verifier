@@ -35,7 +35,7 @@ class ConsoleView(Observer):
         print(test.id,test.title,"is finished",":",result.test_result)
 
     def _reportCreated(self):
-        results = json.loads(self.report.final_result)
+        results = json.loads(self.report.json_result)
         import pdb; pdb.set_trace()
 
     _functions = {'testRunning': _testRunning ,'newProgress': _newProgress, 'newResult': _newResult}
