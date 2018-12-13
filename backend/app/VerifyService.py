@@ -16,8 +16,8 @@ from chvote.verifier.CompletnessTest import SingleCompletnessTest
 from chvote.verifier.IntegrityTest import BiggerThanIntegrityTest, MathGroupeIntegritiyTest
 from chvote.verifier.IterationTest import IterationTest
 from chvote.verifier.ConsistencyTest import LenghtEqualityConsistenyTest
-from chvote.verifier.EvidenceTest import BallotProofEvidenceTest
-from chvote.verifier.AuthenticityTest import CertificateAuthenticityTest
+from chvote.verifier.EvidenceTest import BallotProofEvidenceTest, ConfirmationProofEvidenceTest, ShuffleProofEveidenceTest, DecryptionProofEvidenceTest
+from chvote.verifier.AuthenticityTest import CertificateAuthenticityTest, SignaturAuthenticityTest
 
 class VerifyService(object):
     """docstring for VerifyService."""
@@ -71,13 +71,13 @@ class VerifyService(object):
         )
         com_election_tests.addTests(
             SingleCompletnessTest("1.2.1","Check Ballots","Check if vector ballots is in election_data",'ballots'),
-            IterationTest('ballots',"For all elements Ballots: ",com_multi_test_ballot),
+            IterationTest('ballots',"For all elements Ballots: ",com_multi_test_ballot,'Ne'),
             SingleCompletnessTest("1.2.4","Check Responses","Check if vector responses is in election_data",'responses'),
-            IterationTest('responses',"For all elements in responses: ",com_multi_test_resbonse),
+            IterationTest('responses',"For all elements in responses: ",com_multi_test_resbonse,'Ne'),
             SingleCompletnessTest("1.2.8","Check Confirmations","Check if vector confirmations is in election_data",'confirmations'),
-            IterationTest('confirmations',"For all elements in confirmations: ",com_multi_test_confirmation),
+            IterationTest('confirmations',"For all elements in confirmations: ",com_multi_test_confirmation,'Ne'),
             SingleCompletnessTest("1.2.11","Check Randomizations","Check if vector randomizations_list is in election_data",'randomizations'),
-            IterationTest('randomizations',"For all elements in randomizations: ",com_multi_test_randomization),
+            IterationTest('randomizations',"For all elements in randomizations: ",com_multi_test_randomization,'Ne'),
         )
         # 1.3 post_election
         com_post_election_tests = MultiTest("1.3","post_election Tests","Test which conntains all post_election tests")
@@ -106,8 +106,8 @@ class VerifyService(object):
             BiggerThanIntegrityTest("2.1.3","Check NumberOfCandidates lenght","Check if t >= 1",'t',1),
             BiggerThanIntegrityTest("2.1.4","Check Voters lenght","Check if Ne >= 1",'Ne',0),
             BiggerThanIntegrityTest("2.1.6","Check partialPublicVotingCredentials lenght","Check if s >= 1",'s',1),
-            IterationTest("NumberOfCandidates","For j in {1,...,t} ",int_test_numberOfCandidates),
-            IterationTest("NumberOfSelections","For j in {1,...,t} ",int_test_numberOfSelections),
+            IterationTest("NumberOfCandidates","For j in {1,...,t} ",int_test_numberOfCandidates,'t'),
+            IterationTest("NumberOfSelections","For j in {1,...,t} ",int_test_numberOfSelections,'t'),
         )
         integrity_tests.addTests(int_pre_election_tests)
 
@@ -122,7 +122,7 @@ class VerifyService(object):
             LenghtEqualityConsistenyTest("3.1.5","Check Voters","Check if |votes| = Ne","voters","Ne"),
             LenghtEqualityConsistenyTest("3.1.6","Check CountingCircles","Check if |countingCircles| = Ne","countingCircles","Ne"),
             LenghtEqualityConsistenyTest("3.1.7","Check PartialPublicVotingCredentials","Check if |partialPublicVotingCredentials| = s","partialPublicVotingCredentials","s"),
-            IterationTest("partialPublicVotingCredentials","For j in {1,...,s} ",cons_test_pvc),
+            IterationTest("partialPublicVotingCredentials","For j in {1,...,s} ",cons_test_pvc,'s'),
             LenghtEqualityConsistenyTest("3.1.9","Check PublicKeyShares","Check if |publicKeyShares| = s","publicKeyShares","s"),
         )
         consistency_tests.addTests(cons_pre_election_tests)
@@ -130,16 +130,48 @@ class VerifyService(object):
         evidence_tests = MultiTest("4","Evidence Tests","Test which conntains all evidence tests")
         ev_check_proofs = MultiTest("4.1","Check all Proofs","Test which conntains all proofs tests")
         # Tests for IterationTests
-        ev_test_ballotproof = BallotProofEvidenceTest("4.1.1.0","Check BallotProof","Check proof of Ballot","ballot")
+        ev_test_ballot= BallotProofEvidenceTest("4.1.1.0","Check BallotProof","Check proof of Ballot","ballot")
+        ev_test_conf = ConfirmationProofEvidenceTest("4.1.2.0","Check ConfirmationProof","Check proof of Confirmation","confirmation")
+        ev_test_shuffle = ShuffleProofEveidenceTest("4.1.3.0","Check ConfirmationProof","Check proof of Confirmation","shuffleProof")
+        ev_test_decrytion = DecryptionProofEvidenceTest("4.1.4.0","Check DecryptionProof","Check proof of Decryption","decryptionProof")
         ev_check_proofs.addTests(
-            IterationTest('ballots',"For all Ballots: ",ev_test_ballotproof)
+            IterationTest('ballots',"For all Ballots: ",ev_test_ballot,'Ne'),
+            IterationTest('confirmations',"For all Confirmations: ",ev_test_conf,'Ne'),
+            IterationTest('shuffleProofs',"For j in {1,...s}: ",ev_test_shuffle,'s'),
+            IterationTest('decryptionProofs',"For j in {1,...s}: ",ev_test_decrytion,'s')
         )
-        evidence_tests.addTests(ev_check_proofs)
+        evidence_tests.addTest(ev_check_proofs)
 
         authenticity_tests = MultiTest("5","Authenticiy Tests","Test which conntains all authenticiy tests")
         au_cert_tests = MultiTest("5.1","Check all Certificates","Test which conntains all certificate tests")
+        # Test for IterationTest
+        au_test_c_auth = CertificateAuthenticityTest("5.1.2.0","Check AuthorityCert","Check validity of Certificate of election authority","c_auth_j")
         au_cert_tests.addTests(
-            CertificateAuthenticityTest("5.1.1","Check AdminCert","Check validity of Certificate of election administrator","certAdmin")
+            CertificateAuthenticityTest("5.1.1","Check AdminCert","Check validity of Certificate of election administrator","certAdmin"),
+            IterationTest('C_auths',"For j in {1,...s}: ",au_test_c_auth,'s'),
+        )
+        au_sig_tests = MultiTest("5.2","Check all Signaturs","Test which conntains all signatur tests")
+        # Test for IterationTest
+        aut_test_sigPrep = SignaturAuthenticityTest("5.2.5.0", "Check Public Credential","Check Signatur of public credential","sigPrep_j")
+        aut_test_sigKgen = SignaturAuthenticityTest("5.2.6.0", "Check Public Keys","Check Signatur of public keys","sigKgen_j")
+        aut_test_sigCast_i = SignaturAuthenticityTest("5.2.7.0", "Check OT Response","Check Signatur of OT response","sigCast_i")
+        aut_test_sigCast_j = IterationTests('sigCast_j',"For i in {1,...Ne}: ",aut_test_sigCast_i,'Ne')
+        aut_test_sigConf_i = SignaturAuthenticityTest("5.2.8.0", "Check Finalization","Check Signatur of finalization","sigConf_i")
+        aut_test_sigConf_j = IterationTests('sigConf_j',"For i in {1,...Ne}: ",aut_test_sigConf_i,'Ne')
+        aut_test_sigMix = SignaturAuthenticityTest("5.2.9.0", "Check Mixed Result","Check Signatur of mixed and re-encrypton","sigMix_j")
+        aut_test_sigDec = SignaturAuthenticityTest("5.2.8.0", "Check Decryption","Check Signatur of decryption","sigDec_j")
+
+        au_sig_tests.addTests(
+            SignaturAuthenticityTest("5.2.1", "Check Full Params","Check Signatur of full election parameters","sigParam1"),
+            SignaturAuthenticityTest("5.2.2", "Check Part Params","Check Signatur of part of election parameters","sigParam2"),
+            SignaturAuthenticityTest("5.2.3", "Check other Part Params","Check Signatur of other part of election parameters","sigParam3"),
+            SignaturAuthenticityTest("5.2.4", "Check Tallying Result","Check Signatur of tallying result","sigTally"),
+            IterationTest('sigPrep',"For j in {1,...s}: ",aut_test_sigPrep,'s'),
+            IterationTest('sigKgen',"For j in {1,...s}: ",aut_test_sigKgen,'s'),
+            IterationTest('sigCast',"For j in {1,...s}: ",aut_test_sigCast_j,'s'),
+            IterationTest('sigConf',"For j in {1,...s}: ",aut_test_sigConf_j,'s'),
+            IterationTest('sigMix',"For j in {1,...s}: ",aut_test_sigMix,'s'),
+            IterationTest('sigDec',"For j in {1,...s}: ",aut_test_sigDec,'s'),
         )
         authenticity_tests.addTests(au_cert_tests)
 

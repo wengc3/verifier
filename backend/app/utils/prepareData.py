@@ -35,6 +35,37 @@ def createVectorWithVoterId(items,voterId,key):
         vector.append({'voterId': voterId, key: item})
     return vector
 
+def prepareShufleProofs(shuffle_proofs,e_bold,e_prime_bold,secparams):
+    try:
+        shuffle_proof_list = [{
+            'shuffleProof': shuffle_proofs[0],
+            'e_bold': e_bold,
+            'e_prime_bold': e_prime_bold[0]}]
+
+        for j in range(secparams.s):
+            j = j + 1
+            shuffle_proof_list.append({
+                'shuffleProof': shuffle_proofs[j],
+                'e_bold': e_prime_bold[j - 1],
+                'e_prime_bold': e_prime_bold[j]})
+
+        return shuffle_proof_list
+    except IndexError:
+        return shuffle_proof_list
+
+def prepareDecryptenProofs(decryption_proofs,publicKeyShares,e_bold,decryptions):
+    decryption_proof_list = list()
+    for index in range(len(publicKeyShares)):
+        decryption_dict = {
+            'decryptionProof': decryption_proofs[index],
+            'e_bold' : e_bold,
+            'decryption': decryptions[index]
+        }
+        decryption_dict.update(publicKeyShares[index])
+        decryption_proof_list.append(decryption_dict)
+    return decryption_proof_list
+
+
 
 def prepareData(data_dict,secparams):
     data_dict['secparams'] = secparams
@@ -49,4 +80,15 @@ def prepareData(data_dict,secparams):
     data_dict['numberOfCandidates'] = addKeyToVector(data_dict.get('numberOfCandidates',[]),'n_j')
     data_dict['numberOfSelections'] = addKeyToVector(data_dict.get('numberOfSelections',[]),'k_j')
     data_dict['partialPublicVotingCredentials'] = addKeyToVector(data_dict.get('partialPublicVotingCredentials',[]),'d_hat_j')
+    data_dict['shuffleProofs'] = prepareShufleProofs(
+                                data_dict.get('shuffleProofs',[]),
+                                data_dict.get('e_bold',[]),
+                                data_dict.get('encryptions',[]),secparams
+                                )
+    data_dict['decryptionProofs'] = prepareDecryptenProofs(
+                                data_dict.get('decryptionProofs',[]),
+                                data_dict.get('publicKeyShares',[]),
+                                data_dict.get('encryptions',[])[-1],
+                                data_dict.get('decryptions',[])
+                                )
     return data_dict

@@ -26,6 +26,11 @@ electionID1="5c0bb43740b1e1001273984f"
 def connect():
     print('connected')
 
+def addAuthorities(*args):
+    json_data = json.loads(args[0])
+    data_dict.update({'e_bold': json_data[0]['encryptions']})
+
+
 def updateData(*args):
     data_dict.update(json.loads(args[0]))
 
@@ -39,6 +44,7 @@ getData(electionID1)
 socketio.once('connect',connect)
 socketio.once('SyncBulletinBoard',updateData)
 socketio.once('syncElectionAdministrator',updateData)
+socketio.once('syncElectionAuthorities',addAuthorities)
 socketio.wait(seconds=1)
 
 
@@ -51,11 +57,11 @@ elif seclevel == 2:
 else:
     secparams = secparams_l3
 
-report = Report(electionID1)
-console = ConsoleView(step=0.2,depth = 0,report=report)
-TestResult.attach(console)
-# #data_dict['ballots'][2].pop('voterId')
-verify_svc.verify(data_dict,report,secparams)
+# report = Report(electionID1)
+# console = ConsoleView(step=0.2,depth = 0,report=report)
+# TestResult.attach(console)
+# data_dict['ballots'][2].pop('voterId')
+# verify_svc.verify(data_dict,report,secparams)
 # result = report.result
 # pre_election = result[1]['1.1']
 # election = result[1]['1.2']
@@ -66,12 +72,12 @@ verify_svc.verify(data_dict,report,secparams)
 # print(oneway)
 # print(data_dict['securityLevel'])
 # print(data_dict['publicKeyShares'][0])
-#data_dict = prepareData(data_dict)
+data_dict = prepareData(data_dict,secparams)
 # print(data_dict['responses'][0]['voterId'])
 # print("_____________________________")
 # print(data_dict['responses'][0]['beta_j'])
 # print("_____________________________")
-# print(data_dict['confirmations'][0]['voterId'])
+print(data_dict['decryptionProofs'][0]['decryptionProof'][1])
 # print("_____________________________")
 # print(data_dict['confirmations'][0]['confirmation'])
 # print(str(data_dict['publicKey']))

@@ -5,7 +5,7 @@ class TestResult(object):
         self.id = test.id
         self._test = test
         self._test_result = result
-        self._test_data = dict()
+        self._test_data = list()
         self._children = list()
         self._old_progress = 0
         self._notify('testRunning')
@@ -28,11 +28,10 @@ class TestResult(object):
         return self._test_data
 
     def addTestData(self,key,data):
-        if data and isinstance(data,list) and all(isinstance(x, dict) for x in data):
-            for item in data:
-                self.test_data.update(item)
+        if data and isinstance(data,str) and all(isinstance(x, dict) for x in data):
+            self.test_data.extend(data)
         else:
-            self.test_data[key] = data
+            self.test_data.append({key: data})
 
     @property
     def children(self):

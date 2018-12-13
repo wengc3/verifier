@@ -6,8 +6,6 @@ from chvote.Utils.VerifierHelper import completness_decorate
 
 class CertificateAuthenticityTest(SingleTest):
     """docstring for CertificateTest."""
-    def __init__(self,id,title,description,key):
-        SingleTest.__init__(self, id,title,description,key)
 
     @completness_decorate
     def runTest(self,election_data):
@@ -17,7 +15,24 @@ class CertificateAuthenticityTest(SingleTest):
         >>> res.test_result
         'skipped'
         >>> res.test_data
-        {}
+        []
+        >>> res.progress
+        1
+        """
+        pass
+
+class SignaturAuthenticityTest(SingleTest):
+    """docstring for SignaturAuthenticityTest."""
+
+    @completness_decorate
+    def runTest(self,election_data):
+        """
+        Certificates are not in election_data
+        >>> res = sigauth.runTest({})
+        >>> res.test_result
+        'skipped'
+        >>> res.test_data
+        []
         >>> res.progress
         1
         """
@@ -25,4 +40,5 @@ class CertificateAuthenticityTest(SingleTest):
 
 if __name__ == '__main__':
     import doctest
-    doctest.testmod(extraglobs = {'cauth': CertificateAuthenticityTest("1.1","TEST","TEST","adminCert")})
+    doctest.testmod(extraglobs = {'cauth': CertificateAuthenticityTest("1.1","TEST","TEST","adminCert"),
+                                  'sigauth': SignaturAuthenticityTest("1.1","TEST","TEST","sigParam1")})
