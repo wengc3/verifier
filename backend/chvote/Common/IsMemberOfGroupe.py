@@ -3,7 +3,7 @@ import sys
 import unittest
 from gmpy2 import jacobi
 
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
 from chvote.Utils.Utils           import AssertNumeric, AssertClass
 from chvote.Common.SecurityParams import SecurityParams
@@ -36,15 +36,15 @@ class GetPrimesTest(unittest.TestCase):
                 11,
                 5,
                 2,4,9,787,131,6,64,131,8,True)
-        self.assertTrue(IsMember(1,dummySecParams.p))
-        self.assertFalse(IsMember(2, dummySecParams.p))
-        self.assertTrue(IsMember(3, dummySecParams.p))
-        self.assertTrue(IsMember(4, dummySecParams.p))
-        self.assertTrue(IsMember(5, dummySecParams.p))
-        self.assertFalse(IsMember(6, dummySecParams.p))
-        self.assertFalse(IsMember(7, dummySecParams.p))
-        self.assertFalse(IsMember(8, dummySecParams.p))
-        self.assertTrue(IsMember(9, dummySecParams.p))
+        self.assertTrue(IsMemberOfGroupe(1,dummySecParams.p))
+        self.assertFalse(IsMemberOfGroupe(2, dummySecParams.p))
+        self.assertTrue(IsMemberOfGroupe(3, dummySecParams.p))
+        self.assertTrue(IsMemberOfGroupe(4, dummySecParams.p))
+        self.assertTrue(IsMemberOfGroupe(5, dummySecParams.p))
+        self.assertFalse(IsMemberOfGroupe(6, dummySecParams.p))
+        self.assertFalse(IsMemberOfGroupe(7, dummySecParams.p))
+        self.assertFalse(IsMemberOfGroupe(8, dummySecParams.p))
+        self.assertTrue(IsMemberOfGroupe(9, dummySecParams.p))
 
 if __name__ == '__main__':
     unittest.main()

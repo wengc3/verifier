@@ -57,11 +57,12 @@ elif seclevel == 2:
 else:
     secparams = secparams_l3
 
-# report = Report(electionID1)
-# console = ConsoleView(step=0.2,depth = 0,report=report)
-# TestResult.attach(console)
+report = Report(electionID1)
+console = ConsoleView(step=0.2,depth = 5,report=report)
+TestResult.attach(console)
+verify_svc.verify(data_dict,report,secparams)
+
 # data_dict['ballots'][2].pop('voterId')
-# verify_svc.verify(data_dict,report,secparams)
 # result = report.result
 # pre_election = result[1]['1.1']
 # election = result[1]['1.2']
@@ -72,12 +73,12 @@ else:
 # print(oneway)
 # print(data_dict['securityLevel'])
 # print(data_dict['publicKeyShares'][0])
-data_dict = prepareData(data_dict,secparams)
-# print(data_dict['responses'][0]['voterId'])
+# data_dict = prepareData(data_dict,secparams)
+# print(data_dict['finalizations'][0])
 # print("_____________________________")
 # print(data_dict['responses'][0]['beta_j'])
 # print("_____________________________")
-print(data_dict['decryptionProofs'][0]['decryptionProof'][1])
+# print(data_dict['partialPublicVotingCredentials'][0]['d_hat_i'][0])
 # print("_____________________________")
 # print(data_dict['confirmations'][0]['confirmation'])
 # print(str(data_dict['publicKey']))

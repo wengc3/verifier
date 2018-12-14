@@ -27,7 +27,7 @@ class SignaturAuthenticityTest(SingleTest):
     @completness_decorate
     def runTest(self,election_data):
         """
-        Certificates are not in election_data
+        Signatures are not in election_data
         >>> res = sigauth.runTest({})
         >>> res.test_result
         'skipped'

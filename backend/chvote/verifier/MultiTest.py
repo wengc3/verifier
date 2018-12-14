@@ -29,6 +29,8 @@ class MultiTest(Test):
         for index,test in enumerate(self.test_list):
             if 'multi' in self.id:
                 test.id = test.id[:-1] + self.id[-1]
+            if hasattr(self,'election_data'):
+                test.election_data = self.election_data
             res = test.runTest(election_data)
             self.test_result.addChild(res)
             multi_result = checkResult(res)

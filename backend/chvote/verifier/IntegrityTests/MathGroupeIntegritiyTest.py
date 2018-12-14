@@ -1,46 +1,15 @@
 import os, sys
 from gmpy2 import mpz
-sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))))
 
 from chvote.verifier.SingleTest import SingleTest
 from chvote.Utils.VerifierHelper import completness_decorate
 
 from chvote.Common.IsMemberOfGroupe import IsMemberOfGroupe
 
-class BiggerThanIntegrityTest(SingleTest):
-    """docstring for ListBiggerThanIntegrityTest."""
-    def __init__(self,id,title,description,key,min_size):
-        SingleTest.__init__(self, id,title,description,key)
-        self.min_size = min_size
-
-    @completness_decorate
-    def runTest(self,election_data):
-        """
-        >>> res = btit.runTest({'test': 1})
-        >>> res.test_result
-        'successful'
-        >>> res.test_data
-        [{'test': 1}, {'min_size': 1}]
-        >>> res = btit.runTest({'test': 0})
-        >>> res.test_result
-        'failed'
-        >>> res.test_data
-        [{'test': 0}, {'min_size': 1}]
-        >>> res = btit.runTest({'bla': 1})
-        >>> res.test_result
-        'skipped'
-        >>> res.test_data
-        []
-        """
-        key = self.key
-        value = election_data[key]
-        self.test_result.addTestData('min_size',self.min_size)
-        return 'successful' if  value >= self.min_size else 'failed'
-
-
 class MathGroupeIntegritiyTest(SingleTest):
     """docstring for PubKeyIntegritiyTest."""
-    def __init__(self,id,title,description,key,param):
+    def __init__(self,id,title,description,key,param,pre_key=None):
         SingleTest.__init__(self, id,title,description,key)
         self.param = param
 
@@ -65,16 +34,18 @@ class MathGroupeIntegritiyTest(SingleTest):
         []
         """
         key = self.key
-        param = getattr(self.election_data['secparams'],'p')
-        num = mpz(election_data[key])
+        param = getattr(self.election_data['secparams'],self.param)
+        if self.pre_key:
+            num_s = election_data[pre_key][key]
+        else:
+            num_s = election_data[key]
+        num = mpz(num_s)
         self.test_result.addTestData(self.param,param)
         return 'successful' if IsMemberOfGroupe(num,param) else 'failed'
-
 
 if __name__ == '__main__':
     import doctest
     from chvote.Common.SecurityParams import secparams_l1,secparams_l2,secparams_l3
     pktest= MathGroupeIntegritiyTest("1.1","TEST","TEST","test","p")
     pktest.election_data = {'secparams': secparams_l3}
-    doctest.testmod(extraglobs={'btit': BiggerThanIntegrityTest("1.1","TEST","TEST","test",1),
-                                'pkit':pktest})
+    doctest.testmod(extraglobs={'pkit':pktest})

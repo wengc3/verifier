@@ -25,14 +25,20 @@ class IterationTest(SingleTest):
     def runTest(self,election_data):
         key = self.key
         vector = election_data[key]
-        rng = election_data[self.range_key]
+        if hasattr(self,'election_data'):
+            rng = self.election_data[self.range_key]
+        else:
+            rng = election_data[self.range_key]
         test = self.test
         test.election_data = election_data
         iter_result = "successful"
-        for index in range(rng):
-            test.id = test.id[:-1] + str(index+1)
-            res = test.runTest(vector[index])
-            self.test_result.addChild(res)
-            iter_result = checkResult(res)
-            updateProgress(self.test_result,index,vector)
-        return iter_result
+        try:
+            for index in range(rng):
+                test.id = test.id[:-1] + str(index+1)
+                res = test.runTest(vector[index])
+                self.test_result.addChild(res)
+                iter_result = checkResult(res)
+                updateProgress(self.test_result,index,vector)
+            return iter_result
+        except IndexError:
+            return 'failed'
