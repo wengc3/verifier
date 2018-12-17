@@ -16,10 +16,9 @@ class BitIntegrityTest(SingleTest):
         >>> res.test_result
         'successful'
         """
-        key = self.key
-        bit = election_data[key]
+        bit = self.test_data
         return 'successful' if isinstance(bit,bool) else 'failed'
 
 if __name__ == '__main__':
     import doctest
-    doctest.testmod(extraglobs={'biit': BitIntegrityTest("1.1","TEST","TEST","e_j")})
+    doctest.testmod(extraglobs={'biit': BitIntegrityTest("1.1","TEST","TEST",["e_j"])})

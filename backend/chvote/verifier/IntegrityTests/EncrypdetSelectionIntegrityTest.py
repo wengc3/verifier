@@ -18,8 +18,7 @@ class EncrypdetSelectionIntegrityTest(SingleTest):
         >>> res.test_result
         'successful'
         """
-        key = self.key
-        a_bold = election_data['ballot'][key]
+        a_bold = self.test_data
         param = self.election_data['secparams']
         for item in a_bold:
             if not multiMathGroupeHelper(item,2,param.p):
@@ -29,6 +28,6 @@ class EncrypdetSelectionIntegrityTest(SingleTest):
 if __name__ == '__main__':
     import doctest
     from chvote.Common.SecurityParams import secparams_l1,secparams_l2,secparams_l3
-    esi_test = EncrypdetSelectionIntegrityTest("1.1","TEST","TEST","a_bold")
+    esi_test = EncrypdetSelectionIntegrityTest("1.1","TEST","TEST",["a_bold"])
     esi_test.election_data = {'secparams': secparams_l3}
     doctest.testmod(extraglobs={'esit': esi_test})

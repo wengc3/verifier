@@ -29,8 +29,7 @@ class OTResponseIntegrityTest(SingleTest):
         >>> res.test_result
         'successful'
         """
-        key = self.key
-        beta_j = election_data[key]
+        beta_j = self.test_data
         voterId = election_data['voterId']
         eligMatrix = self.election_data['eligibilityMatrix'][int(voterId)]['e_i']
         k = self.election_data['k']
@@ -45,6 +44,6 @@ class OTResponseIntegrityTest(SingleTest):
 if __name__ == '__main__':
     import doctest
     from chvote.Common.SecurityParams import secparams_l1,secparams_l2,secparams_l3
-    ori_test = OTResponseIntegrityTest("1.1","TEST","TEST","beta_j")
+    ori_test = OTResponseIntegrityTest("1.1","TEST","TEST",["beta_j"])
     ori_test.election_data = {'eligibilityMatrix': [{'e_i': [{'e_j': True}]}, {'e_i': [{'e_j': True}]}, {'e_i': [{'e_j': True}]}], 'k': 1, 'n': 3, 'secparams': secparams_l3}
     doctest.testmod(extraglobs = {'orit': ori_test})

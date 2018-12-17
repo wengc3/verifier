@@ -18,9 +18,8 @@ class BallotProofIntegrityTest(SingleTest):
         >>> res.test_result
         'successful'
         """
-        key = self.key
         param = self.election_data['secparams']
-        pi = election_data['ballot'][key]
+        pi = self.test_data
         pi_s = pi[0] #pi s as string array
         pi_t = pi[1] #pi t as string array
         pi_s_res = IsMemberOfGroupe(mpz(pi_s[0]),param.p_hat) and multiMathGroupeHelper([mpz(pi_s[1]),mpz(pi_s[2])],2,param.p)
@@ -31,6 +30,6 @@ class BallotProofIntegrityTest(SingleTest):
 if __name__ == '__main__':
     import doctest
     from chvote.Common.SecurityParams import secparams_l1,secparams_l2,secparams_l3
-    bpi_test = BallotProofIntegrityTest("1.1","TEST","TEST","pi")
+    bpi_test = BallotProofIntegrityTest("1.1","TEST","TEST",["pi"])
     bpi_test.election_data = {'secparams': secparams_l3}
     doctest.testmod(extraglobs={'bpit': bpi_test})

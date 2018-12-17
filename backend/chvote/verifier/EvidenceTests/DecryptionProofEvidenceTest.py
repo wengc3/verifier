@@ -28,20 +28,18 @@ class DecryptionProofEvidenceTest(SingleTest):
         >>> res.test_result
         'successful'
         """
-        key = self.key
-        au_id = int(self.id[-1]) -1
-        decryptionProof = election_data['decryptionProof']
+        decryptionProof = self.test_data
         pi_prime = generateDecryptionProof(decryptionProof)
-        pk_j = mpz(election_data['pk_j'])
-        e_bold = generateElgamal(election_data['e_bold'])
-        decryption = mpzList(election_data['decryption'])
-        secparams= self.election_data['secparams']
+        pk_j = mpz(election_data.get('pk_j'))
+        e_bold = generateElgamal(election_data.get('e_bold'))
+        decryption = mpzList(election_data.get('decryption'))
+        secparams= self.election_data.get('secparams')
         res = CheckDecryptionProof(pi_prime, pk_j, e_bold, decryption, secparams)
         return 'successful' if res else 'failed'
 
 if __name__ == '__main__':
     import doctest
     from chvote.Common.SecurityParams import secparams_l1,secparams_l2,secparams_l3
-    dpe_test = DecryptionProofEvidenceTest("1.1","TEST","TEST","decryptionProof")
+    dpe_test = DecryptionProofEvidenceTest("1.1","TEST","TEST",["decryptionProof"])
     dpe_test.election_data = {'secparams': secparams_l3}
     doctest.testmod(extraglobs = {'dpet': dpe_test})

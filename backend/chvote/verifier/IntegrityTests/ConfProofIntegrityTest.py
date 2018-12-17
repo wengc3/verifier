@@ -19,16 +19,15 @@ class ConfProofIntegrityTest(SingleTest):
         >>> res.test_result
         'successful'
         """
-        key = self.key
         param = self.election_data['secparams']
-        pi = election_data['confirmation']['pi']
+        pi = self.test_data
         res_pi_t = IsMemberOfGroupe(mpz(pi[0]),param.p_hat)
-        res_pi_s = int(pi[1]) in range(param.q) # is not q_hat
+        res_pi_s = int(pi[1]) in range(param.q_hat)
         return 'successful' if res_pi_t and res_pi_s else 'failed'
 
 if __name__ == '__main__':
     import doctest
     from chvote.Common.SecurityParams import secparams_l1,secparams_l2,secparams_l3
-    cpi_test = ConfProofIntegrityTest("1.1","TEST","TEST","pi")
+    cpi_test = ConfProofIntegrityTest("1.1","TEST","TEST",["pi"])
     cpi_test.election_data = {'secparams': secparams_l3}
     doctest.testmod(extraglobs = {'cpit': cpi_test})

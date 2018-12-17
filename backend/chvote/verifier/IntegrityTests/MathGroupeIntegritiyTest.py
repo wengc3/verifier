@@ -9,8 +9,8 @@ from chvote.Common.IsMemberOfGroupe import IsMemberOfGroupe
 
 class MathGroupeIntegritiyTest(SingleTest):
     """docstring for PubKeyIntegritiyTest."""
-    def __init__(self,id,title,description,key,param,pre_key=None):
-        SingleTest.__init__(self, id,title,description,key)
+    def __init__(self,id,title,description,keys,param):
+        SingleTest.__init__(self, id,title,description,keys)
         self.param = param
 
 
@@ -33,12 +33,8 @@ class MathGroupeIntegritiyTest(SingleTest):
         >>> res.test_data
         []
         """
-        key = self.key
         param = getattr(self.election_data['secparams'],self.param)
-        if self.pre_key:
-            num_s = election_data[pre_key][key]
-        else:
-            num_s = election_data[key]
+        num_s = self.test_data
         num = mpz(num_s)
         self.test_result.addTestData(self.param,param)
         return 'successful' if IsMemberOfGroupe(num,param) else 'failed'
@@ -46,6 +42,6 @@ class MathGroupeIntegritiyTest(SingleTest):
 if __name__ == '__main__':
     import doctest
     from chvote.Common.SecurityParams import secparams_l1,secparams_l2,secparams_l3
-    pktest= MathGroupeIntegritiyTest("1.1","TEST","TEST","test","p")
+    pktest= MathGroupeIntegritiyTest("1.1","TEST","TEST",["test"],"p")
     pktest.election_data = {'secparams': secparams_l3}
     doctest.testmod(extraglobs={'pkit':pktest})

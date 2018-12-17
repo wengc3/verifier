@@ -26,10 +26,9 @@ electionID1="5c0bb43740b1e1001273984f"
 def connect():
     print('connected')
 
-def addAuthorities(*args):
+def addEBold(*args):
     json_data = json.loads(args[0])
     data_dict.update({'e_bold': json_data[0]['encryptions']})
-
 
 def updateData(*args):
     data_dict.update(json.loads(args[0]))
@@ -37,15 +36,14 @@ def updateData(*args):
 def getData(electionID):
     socketio.emit('requestFullSync',{'election':electionID})
 
-verify_svc = VerifyService()
+verify_svc = VerifyService.getInstance()
 socketio = SocketIO('127.0.0.1',5000)
 data_dict = dict()
 getData(electionID1)
-socketio.once('connect',connect)
 socketio.once('SyncBulletinBoard',updateData)
 socketio.once('syncElectionAdministrator',updateData)
-socketio.once('syncElectionAuthorities',addAuthorities)
-socketio.wait(seconds=1)
+socketio.once('syncElectionAuthorities',addEBold)
+socketio.wait(seconds=3)
 
 
 seclevel = data_dict['securityLevel']
@@ -74,7 +72,7 @@ verify_svc.verify(data_dict,report,secparams)
 # print(data_dict['securityLevel'])
 # print(data_dict['publicKeyShares'][0])
 # data_dict = prepareData(data_dict,secparams)
-# print(data_dict['finalizations'][0])
+# print(data_dict['ballots'][0]['ballot'])
 # print("_____________________________")
 # print(data_dict['responses'][0]['beta_j'])
 # print("_____________________________")
@@ -82,8 +80,8 @@ verify_svc.verify(data_dict,report,secparams)
 # print("_____________________________")
 # print(data_dict['confirmations'][0]['confirmation'])
 # print(str(data_dict['publicKey']))
-# print(data_dict['encryptions'][0])
-# print(data_dict['n'])
+# print(len(data_dict['encryptions'][0]))
+# print(len(data_dict['n'])
 # print("_____________________________")
 
 # a_bold = data_dict['ballots'][0]['ballot']['a_bold']

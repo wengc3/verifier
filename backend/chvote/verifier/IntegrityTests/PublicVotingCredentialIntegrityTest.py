@@ -21,14 +21,13 @@ class PublicVotingCredentialIntegrityTest(SingleTest):
         >>> res.test_result
         'failed'
         """
-        key = self.key
-        vector = election_data[key]
+        vector = self.test_data
         param = self.election_data['secparams']
         return 'successful' if multiMathGroupeHelper(vector,2,param.p_hat) else 'failed'
 
 if __name__ == '__main__':
     import doctest
     from chvote.Common.SecurityParams import secparams_l1,secparams_l2,secparams_l3
-    pvci_test = PublicVotingCredentialIntegrityTest("1.1","TEST","TEST","d_hat_j")
+    pvci_test = PublicVotingCredentialIntegrityTest("1.1","TEST","TEST",["d_hat_j"])
     pvci_test.election_data = {'secparams': secparams_l3}
     doctest.testmod(extraglobs={'pvcit': pvci_test})

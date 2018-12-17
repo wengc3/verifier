@@ -2,13 +2,22 @@ from chvote.verifier.TestResult import TestResult
 from functools import wraps
 
 def completness_test(self,election_data):
-    key = self.key
     try:
-        data = election_data[key]
+        key, data = getData(self.keys,election_data)
+        self.test_data = data
         self.test_result.addTestData(key,data)
         return True
     except KeyError:
         return False
+
+def getData(keys,election_data):
+    try:
+        data = election_data
+        for key in keys:
+            data = data[key]
+        return (key,data)
+    except KeyError:
+        raise KeyError('No Data')
 
 def test_run_decorate(func):
     @wraps(func)

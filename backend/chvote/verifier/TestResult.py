@@ -45,33 +45,28 @@ class TestResult(object):
         test = self.test
         children = list()
         for child in self.children:
-            if 'multi' in child.id:
-                iter_results = child.extractTests()
-                for iter_result in iter_results:
-                    children.append(iter_result.getJSON())
-            else:
-                children.append(child.getJSON())
+            children.append(child.getJSON())
         return {'id': self.id, 'title': test.title, 'description': test.description, 'value': self.test_result, 'data': self.test_data, 'children': children}
 
-    def extractTests(self):
-        iter_res_list = list()
-        child = self.children[0]
-        for sub_child in child.children:
-            test = sub_child.test
-            res = TestResult(test,"",self.test_data)
-            res.id = test.id[:-2]
-            res.children = self.getChildsById(res.id)
-            res.test_result = 'successful' if all(r.test_result == "successful" for r in res.children) else 'failed'
-            iter_res_list.append(res)
-        return iter_res_list
-
-    def getChildsById(self,id):
-        children_list = list()
-        for child in self.children:
-            for sub_child in child.children:
-                if id in sub_child.id:
-                    children_list.append(sub_child)
-        return children_list
+    # def extractTests(self):
+    #     iter_res_list = list()
+    #     child = self.children[0]
+    #     for sub_child in child.children:
+    #         test = sub_child.test
+    #         res = TestResult(test,"",self.test_data)
+    #         res.id = test.id[:-2]
+    #         res.children = self.getChildsById(res.id)
+    #         res.test_result = 'successful' if all(r.test_result == "successful" for r in res.children) else 'failed'
+    #         iter_res_list.append(res)
+    #     return iter_res_list
+    #
+    # def getChildsById(self,id):
+    #     children_list = list()
+    #     for child in self.children:
+    #         for sub_child in child.children:
+    #             if id in sub_child.id:
+    #                 children_list.append(sub_child)
+    #     return children_list
 
 
     def addChild(self,child):

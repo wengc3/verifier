@@ -18,8 +18,7 @@ class FinalizationIntegrityTest(SingleTest):
         >>> res.test_result
         'successful'
         """
-        key = self.key
-        delta_j = election_data['delta_j']
+        delta_j = self.test_data
         param = self.election_data['secparams']
         res_f = len(bytearray.fromhex(delta_j[0])) == param.L_F
         res_rand = int(delta_j[1][0]) in range(param.q) and int(delta_j[1][1]) in range(param.q)
@@ -28,6 +27,6 @@ class FinalizationIntegrityTest(SingleTest):
 if __name__ == '__main__':
     import doctest
     from chvote.Common.SecurityParams import secparams_l1,secparams_l2,secparams_l3
-    fini_test = FinalizationIntegrityTest("1.1","TEST","TEST","delta_j")
+    fini_test = FinalizationIntegrityTest("1.1","TEST","TEST",["delta_j"])
     fini_test.election_data = {'secparams': secparams_l3}
     doctest.testmod(extraglobs = {'finit': fini_test})

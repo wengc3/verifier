@@ -7,8 +7,8 @@ from chvote.Utils.VerifierHelper import completness_decorate
 
 class InRangeIntegrityTest(SingleTest):
     """docstring for InRangeIntegrityTest."""
-    def __init__(self,id,title,description,key,param):
-        SingleTest.__init__(self, id,title,description,key)
+    def __init__(self,id,title,description,keys,param):
+        SingleTest.__init__(self, id,title,description,keys)
         self.param = param
 
     @completness_decorate
@@ -19,13 +19,12 @@ class InRangeIntegrityTest(SingleTest):
         >>> res.test_result
         'successful'
         """
-        key = self.key
-        value = election_data[key]
+        value = self.test_data
         param = self.election_data[self.param]
         return 'successful' if value in range(1,param + 1) else 'failed'
 
 if __name__ == '__main__':
     import doctest
-    iri_test = InRangeIntegrityTest("1.1","TEST","TEST","w_i",'w')
+    iri_test = InRangeIntegrityTest("1.1","TEST","TEST",["w_i"],'w')
     iri_test.election_data = {'w': 1}
     doctest.testmod(extraglobs={'irit': iri_test})

@@ -31,8 +31,7 @@ class LenghtEqualityConsistenyTest(SingleTest):
         >>> res.test_data
         []
         """
-        key = self.key
-        sec_1 = election_data[key]
+        sec_1 = self.test_data
         size = election_data.get(self.refer_key)
         if not size:
             size = self.election_data[self.refer_key]
@@ -41,4 +40,4 @@ class LenghtEqualityConsistenyTest(SingleTest):
 
 if __name__ == '__main__':
     import doctest
-    doctest.testmod(extraglobs={'lect': LenghtEqualityConsistenyTest("1.1","TEST","TEST","test","t")})
+    doctest.testmod(extraglobs={'lect': LenghtEqualityConsistenyTest("1.1","TEST","TEST",["test"],"t")})

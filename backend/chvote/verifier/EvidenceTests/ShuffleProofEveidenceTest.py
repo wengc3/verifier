@@ -35,20 +35,19 @@ class ShuffleProofEveidenceTest(SingleTest):
         >>> res.test_result
         'successful'
         """
-        key = self.key
-        shuffle_proof = election_data['shuffleProof']
+        shuffle_proof = self.test_data
         pi = generateShuffleProof(shuffle_proof)
-        e_bold = generateElgamal(election_data['e_bold'])
-        e_prime_bold = generateElgamal(election_data['e_prime_bold'])
-        pk = mpz(self.election_data['publicKey'])
+        e_bold = generateElgamal(election_data.get('e_bold'))
+        e_prime_bold = generateElgamal(election_data.get('e_prime_bold'))
+        pk = mpz(self.election_data.get('publicKey'))
         self.test_result.addTestData('publicKey',pk)
-        secparams = self.election_data['secparams']
+        secparams = self.election_data.get('secparams')
         res = CheckShuffleProof(pi,e_bold,e_prime_bold,pk,secparams)
         return 'successful' if res else 'failed'
 
 if __name__ == '__main__':
     import doctest
     from chvote.Common.SecurityParams import secparams_l1,secparams_l2,secparams_l3
-    spe_test = ShuffleProofEveidenceTest("1.1","TEST","TEST","shuffleProof")
+    spe_test = ShuffleProofEveidenceTest("1.1","TEST","TEST",["shuffleProof"])
     spe_test.election_data = {'publicKey':'3472538235133839389015944286952315604040689209664186848798473856666132978063501893882726951987017755257908514622890077497900974546741464247724823886880667730733405188594502069185279622070855196994013194272006008147824646494376493105061154358635810662414569357908786840704250719607345490347329972445544184889884761990101639889398166900457354032927430720293819401572708052946354591498258180901242459233974472058984500205118770465159273586181411251298575509605329423345517149194725402342450043717416121965054076892084096251250030982637380158431284226139870672610757036743348319579456977554066423727543214711892400027022667701714700709441058774269797372995558483809677719629624858408968124658893731141431698781698062089298666548161926054089972547108604679435478693379203452902238806747999621095534151665940272758131380607186197133272652066276058131595865737110370238537597996086783115670024195575781248547072840030960234570985330','secparams': secparams_l3,}
     doctest.testmod(extraglobs = {'spet': spe_test})

@@ -6,10 +6,9 @@ from chvote.Utils.VerifierHelper import completness_decorate, checkResult, updat
 
 class IterationTest(SingleTest):
     """docstring for IterationTest."""
-    def __init__(self,key,title,test,range_key):
-        SingleTest.__init__(self, test.id,title+test.title,test.description,key)
-        if 'multi' not in test.id:
-            self.id = self.id[:-2]
+    def __init__(self,keys,title,test,range_key):
+        SingleTest.__init__(self, test.id,title+test.title,test.description,keys)
+        self.id = self.id[:-2]
         self._test = test
         self._range_key = range_key
 
@@ -23,12 +22,11 @@ class IterationTest(SingleTest):
 
     @completness_decorate
     def runTest(self,election_data):
-        key = self.key
-        vector = election_data[key]
+        vector = self.test_data
         if hasattr(self,'election_data'):
-            rng = self.election_data[self.range_key]
+            rng = self.election_data.get(self.range_key)
         else:
-            rng = election_data[self.range_key]
+            rng = election_data.get(self.range_key)
         test = self.test
         test.election_data = election_data
         iter_result = "successful"

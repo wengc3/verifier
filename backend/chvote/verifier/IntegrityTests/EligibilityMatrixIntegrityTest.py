@@ -16,10 +16,9 @@ class EligibilityMatrixIntegrityTest(SingleTest):
         >>> res.test_result
         'successful'
         """
-        key = self.key
-        e_j_list = [ item['e_j'] for item in election_data[key]]
+        e_j_list = [ item['e_j'] for item in self.test_data]
         return 'successful' if sum(e_j_list) >= 1 else 'failed'
 
 if __name__ == '__main__':
     import doctest
-    doctest.testmod(extraglobs={'emit': EligibilityMatrixIntegrityTest("1.1","TEST","TEST","e_i")})
+    doctest.testmod(extraglobs={'emit': EligibilityMatrixIntegrityTest("1.1","TEST","TEST",["e_i"])})

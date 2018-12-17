@@ -14,7 +14,6 @@ class NumberOfSelectionsIntegrityTest(SingleTest):
         """
         Test if k = sum(k_j)
         """
-        key = self.key
-        numberOfSelections = [item['k_j'] for item in election_data[key]]
+        numberOfSelections = [item['k_j'] for item in self.test_data]
         k = self.election_data['secparams'].k
         return 'successful' if k == sum(numberOfSelections) else 'failed'
