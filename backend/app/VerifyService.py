@@ -141,7 +141,7 @@ class VerifyService(object):
             )
         int_test_candidate = StringIntegrityTest("2.1.11.0", "Check Candidate","Check if Candidate is in A*_ucs",["C_i"])
         int_test_voter = StringIntegrityTest("2.1.12.0", "Check Voter","Check if Voter is in A*_ucs",["V_i"])
-        int_test_countingCircle = InRangeIntegrityTest("2.1.13.0", "Check CountingCircle","Check if w_i in {1,...,w}",["w_i"],"w")
+        int_test_countingCircle = InRangeIntegrityTest("2.1.13.0", "Check CountingCircle","Check if w_i in {1,...,w}",["w_i"],1,"w")
         int_test_pubc_j = PublicVotingCredentialIntegrityTest("2.1.14.0", "Check PublicVotingCredential","Check if d_hat_ij in G_q_hat^2",["d_hat_j"])
         int_test_pubc_i = IterationTest(['d_i'],"For j in {1,...,s}",int_test_pubc_j,'s')
         int_test_pk = MathGroupeIntegritiyTest("2.1.15.0","Check Public key","For all authority test it's Public key",['pk_j'],'p')
@@ -173,7 +173,7 @@ class VerifyService(object):
 
         int_multi_test_ballots = MultiTest('2.2.1.0',"Ballots Tests","Test which conntains all ballots tests")
         int_multi_test_ballots.addTests(
-            InRangeIntegrityTest("2.2.1.1.0","Check Voter ID","Check if voterId is in {1,...,Ne}",['voterId'],'Ne'),
+            InRangeIntegrityTest("2.2.1.1.0","Check Voter ID","Check if voterId is in {1,...,Ne}",['voterId'],0,'Ne'),
             MathGroupeIntegritiyTest("2.2.1.2.0","Check PublicVotingCredential","Check if x_hat is in G_q_hat",["ballot","x_hat"],"p_hat"),
             EncrypdetSelectionIntegrityTest("2.2.1.3.0","Check Encrypted Selection","Check if a_bold is in G_q^2",['ballot',"a_bold"]),
             BallotProofIntegrityTest("2.2.1.4.0","Check BallotProof","Check if pi is in (G_q_hat x G_q^2) x (Z_q_hat x G_q x Z_q)",['ballot',"pi"])
@@ -181,19 +181,19 @@ class VerifyService(object):
 
         int_multi_test_response = MultiTest("2.2.2.0","Response Tests","Test which conntains all response tests")
         int_multi_test_response.addTests(
-            InRangeIntegrityTest("2.2.2.1.0","Check Voter ID","Check if voterId is in {1,...,Ne}",['voterId'],'Ne'),
+            InRangeIntegrityTest("2.2.2.1.0","Check Voter ID","Check if voterId is in {1,...,Ne}",['voterId'],0,'Ne'),
             OTResponseIntegrityTest("2.2.2.2.0","Check OT Response","Check if beta_j is in G_q^k_i x (Beta_bold^L_M)^n*k_i x G_q",['beta_j'])
         )
 
         int_multi_test_confirmations = MultiTest("2.2.3.0","Confirmations Tests","Test which conntains all confirmations tests")
         int_multi_test_confirmations.addTests(
-            InRangeIntegrityTest("2.2.3.1.0","Check Voter ID","Check if voterId is in {1,...,Ne}",['voterId'],'Ne'),
+            InRangeIntegrityTest("2.2.3.1.0","Check Voter ID","Check if voterId is in {1,...,Ne}",['voterId'],0,'Ne'),
             MathGroupeIntegritiyTest("2.2.3.2.0","Check Confirmation Credential","Check if y_hat in G_q_hat","y_hat",["confirmation","p.hat"]),
             ConfProofIntegrityTest("2.2.3.3.0","Check ConfirmationProof", "Check if pi is in G_q_hat x Z_q_hat",["confirmation","pi"])
         )
         int_multi_test_finalization = MultiTest("2.2.4.0","Finalization Tests","Test which conntains all finalization tests")
         int_multi_test_finalization.addTests(
-            InRangeIntegrityTest("2.2.4.1.0","Check Voter ID","Check if voterId is in {1,...,Ne}",['voterId'],'Ne'),
+            InRangeIntegrityTest("2.2.4.1.0","Check Voter ID","Check if voterId is in {1,...,Ne}",['voterId'],0,'Ne'),
             FinalizationIntegrityTest("2.2.4.2.0","Check Finalization","Check if delta_j is in Beta_bold^L_F x Z_q^2",['delta_j']),
             SignaturIntegrityTest("2.2.4.3.0","Check Finalization Signatur","Check if sigConf in Bit^l x Z_q",["sigConf"])
         )

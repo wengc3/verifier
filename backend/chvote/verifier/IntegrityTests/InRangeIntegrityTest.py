@@ -7,21 +7,22 @@ from chvote.Utils.VerifierHelper import completness_decorate
 
 class InRangeIntegrityTest(SingleTest):
     """docstring for InRangeIntegrityTest."""
-    def __init__(self,id,title,description,keys,param):
+    def __init__(self,id,title,description,keys,min,param):
         SingleTest.__init__(self, id,title,description,keys)
         self.param = param
+        self._min = min
 
     @completness_decorate
     def runTest(self,election_data):
         """
-        Test if element is in range(1,param + 1)
+        Test if element is in range(min,max + 1)
         >>> res = irit.runTest({'w_i': 1})
         >>> res.test_result
         'successful'
         """
         value = self.test_data
-        param = self.election_data[self.param]
-        return 'successful' if value in range(1,param + 1) else 'failed'
+        max = self.election_data[self.param]
+        return 'successful' if value in range(self._min,max + 1) else 'failed'
 
 if __name__ == '__main__':
     import doctest
