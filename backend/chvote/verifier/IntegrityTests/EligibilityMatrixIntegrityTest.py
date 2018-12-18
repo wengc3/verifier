@@ -12,11 +12,11 @@ class EligibilityMatrixIntegrityTest(SingleTest):
     def runTest(self,election_data):
         """
         Test if sum(e_ij) >= 1
-        >>> res = emit.runTest({'e_i': [{'e_j': True}]})
+        >>> res = emit.runTest({'e_i': [True]})
         >>> res.test_result
         'successful'
         """
-        e_j_list = [ item['e_j'] for item in self.test_data]
+        e_j_list = self.test_data
         return 'successful' if sum(e_j_list) >= 1 else 'failed'
 
 if __name__ == '__main__':

@@ -35,7 +35,7 @@ class OTResponseIntegrityTest(SingleTest):
         k = self.election_data['k']
         n = self.election_data['n']
         param = self.election_data['secparams']
-        k_i = sum([item['e_j'] for item in eligMatrix]) * k
+        k_i = sum(eligMatrix) * k
         res_b = multiMathGroupeHelper(mpzList(beta_j[0]),k_i,param.p)
         res_c_bold = multiByteArrayHelper(beta_j[1],n,k_i,param.L_M)
         res_d = IsMemberOfGroupe(mpz(beta_j[2]),param.p)
