@@ -11,6 +11,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from app.utils.prepareData import prepareData
 from chvote.Common.SecurityParams import secparams_l1, secparams_l2, secparams_l3
 from chvote.verifier.Test import Test
+from chvote.verifier.TestResult import TestResult
 from chvote.verifier.MultiTest import MultiTest
 from chvote.verifier.IterationTest import IterationTest
 
@@ -277,6 +278,7 @@ class VerifyService(object):
         self.root_test.addTest(authenticity_tests)
 
     def verify(self,data_dict,report,secparams):
+        TestResult.setReport(report)
         election_data = prepareData(data_dict,secparams)
         root_result = self.root_test.runTest(election_data)
         report.result = root_result
