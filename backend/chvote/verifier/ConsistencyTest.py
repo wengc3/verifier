@@ -40,4 +40,7 @@ class LenghtEqualityConsistenyTest(SingleTest):
 
 if __name__ == '__main__':
     import doctest
+    from chvote.verifier.TestResult import TestResult
+    from app.verifier.Report import Report
+    TestResult.setReport(Report("1"))
     doctest.testmod(extraglobs={'lect': LenghtEqualityConsistenyTest("1.1","TEST","TEST",["test"],"t")})

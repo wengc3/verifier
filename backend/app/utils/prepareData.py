@@ -22,17 +22,6 @@ def addKeyToVector(vector,key):
         vector[index]={key:item}
     return vector
 
-def addKeyToMatrix(matrix,key_1,key_2):
-    for index,vector in enumerate(matrix):
-        vector = addKeyToVector(vector,key_2)
-        matrix[index] = {key_1: vector}
-    return matrix
-
-
-def createVectorWithVoterId(items,voterId,key):
-    vector = list()
-
-    return vector
 
 def prepareShufleProofs(shuffle_proofs,e_bold,e_prime_bold,secparams):
     try:
@@ -78,13 +67,13 @@ def prepareData(data_dict,secparams):
     data_dict['k']=prepareElectrorateParams(data_dict.get('numberOfSelections'),sum)
     data_dict['candidates'] = addKeyToVector(data_dict.get('candidates',[]),'C_i')
     data_dict['voters'] = addKeyToVector(data_dict.get('voters',[]),'V_i')
-    data_dict['eligibilityMatrix'] = addKeyToMatrix(data_dict.get('eligibilityMatrix',[]),'e_i','e_j')
+    data_dict['eligibilityMatrix'] = addKeyToVector(data_dict.get('eligibilityMatrix',[]),'e_i',)
     data_dict['countingCircles'] = addKeyToVector(data_dict.get('countingCircles',[]),'w_i')
     data_dict['responses'] = extractValues(data_dict.get('ballots',[]),'responses','beta_j')
     data_dict['publicKeyShares'] = addKeyToVector(data_dict.get('publicKeyShares',[]),'pk_j')
     data_dict['numberOfCandidates'] = addKeyToVector(data_dict.get('numberOfCandidates',[]),'n_j')
     data_dict['numberOfSelections'] = addKeyToVector(data_dict.get('numberOfSelections',[]),'k_j')
-    data_dict['partialPublicVotingCredentials'] = addKeyToMatrix(data_dict.get('partialPublicVotingCredentials',[]),'d_hat_i','d_hat_j')
+    data_dict['partialPublicVotingCredentials'] = addKeyToVector(data_dict.get('partialPublicVotingCredentials',[]),'d_hat_i')
     data_dict['finalizations'] = extractValues(data_dict.get('confirmations',[]),'finalizations','delta_j')
     data_dict['shuffleProofs'] = prepareShufleProofs(
                                 data_dict.get('shuffleProofs',[]),

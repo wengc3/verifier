@@ -44,6 +44,9 @@ class OTResponseIntegrityTest(SingleTest):
 if __name__ == '__main__':
     import doctest
     from chvote.Common.SecurityParams import secparams_l1,secparams_l2,secparams_l3
+    from chvote.verifier.TestResult import TestResult
+    from app.verifier.Report import Report
+    TestResult.setReport(Report("1"))
     ori_test = OTResponseIntegrityTest("1.1","TEST","TEST",["beta_j"])
     ori_test.election_data = {'eligibilityMatrix': [{'e_i': [{'e_j': True}]}, {'e_i': [{'e_j': True}]}, {'e_i': [{'e_j': True}]}], 'k': 1, 'n': 3, 'secparams': secparams_l3}
     doctest.testmod(extraglobs = {'orit': ori_test})

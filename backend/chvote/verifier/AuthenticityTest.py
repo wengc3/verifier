@@ -40,5 +40,8 @@ class SignaturAuthenticityTest(SingleTest):
 
 if __name__ == '__main__':
     import doctest
+    from chvote.verifier.TestResult import TestResult
+    from app.verifier.Report import Report
+    TestResult.setReport(Report("1"))
     doctest.testmod(extraglobs = {'cauth': CertificateAuthenticityTest("1.1","TEST","TEST","adminCert"),
                                   'sigauth': SignaturAuthenticityTest("1.1","TEST","TEST","sigParam1")})

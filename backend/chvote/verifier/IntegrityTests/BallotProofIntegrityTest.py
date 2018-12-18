@@ -30,6 +30,9 @@ class BallotProofIntegrityTest(SingleTest):
 if __name__ == '__main__':
     import doctest
     from chvote.Common.SecurityParams import secparams_l1,secparams_l2,secparams_l3
+    from chvote.verifier.TestResult import TestResult
+    from app.verifier.Report import Report
+    TestResult.setReport(Report("1"))
     bpi_test = BallotProofIntegrityTest("1.1","TEST","TEST",["pi"])
     bpi_test.election_data = {'secparams': secparams_l3}
     doctest.testmod(extraglobs={'bpit': bpi_test})

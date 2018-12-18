@@ -26,6 +26,9 @@ class InRangeIntegrityTest(SingleTest):
 
 if __name__ == '__main__':
     import doctest
-    iri_test = InRangeIntegrityTest("1.1","TEST","TEST",["w_i"],'w')
+    from chvote.verifier.TestResult import TestResult
+    from app.verifier.Report import Report
+    TestResult.setReport(Report("1"))
+    iri_test = InRangeIntegrityTest("1.1","TEST","TEST",["w_i"],1,'w')
     iri_test.election_data = {'w': 1}
     doctest.testmod(extraglobs={'irit': iri_test})

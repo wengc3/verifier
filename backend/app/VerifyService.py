@@ -18,7 +18,7 @@ from chvote.verifier.IterationTest import IterationTest
 from chvote.verifier.CompletnessTest import SingleCompletnessTest
 from chvote.verifier.IntegrityTests.BiggerThanIntegrityTest import BiggerThanIntegrityTest
 from chvote.verifier.IntegrityTests.BallotProofIntegrityTest import BallotProofIntegrityTest
-from chvote.verifier.IntegrityTests.BitIntegrityTest import BitIntegrityTest
+from chvote.verifier.IntegrityTests.EligibilityMatrixBitIntegrityTest import EligibilityMatrixBitIntegrityTest
 from chvote.verifier.IntegrityTests.EligibilityMatrixIntegrityTest import EligibilityMatrixIntegrityTest
 from chvote.verifier.IntegrityTests.InRangeIntegrityTest import InRangeIntegrityTest
 from chvote.verifier.IntegrityTests.MathGroupeIntegritiyTest import MathGroupeIntegritiyTest
@@ -135,21 +135,17 @@ class VerifyService(object):
         int_test_numberOfCandidates = BiggerThanIntegrityTest("2.1.7.0","Check NumberOfCandidates","Check if n_j >= 2",['n_j'],2)
         int_test_numberOfSelections = BiggerThanIntegrityTest("2.1.8.0","Check NumberOfSelections","Check if k_j >= 1",['k_j'],1)
         int_multi_test_eligibilityMatrix = MultiTest("2.1.9.0","Check EligibilityMatrix","Test which conntains all eligibilityMatrix tests")
-        int_test_eligibilityMatrix_j = BitIntegrityTest("2.1.9.1.0","Check EligibilityMatrix Bit","Check if e_ij in [0,1]",['e_j'])
         int_multi_test_eligibilityMatrix.addTests(
-            IterationTest(['e_i'],'for j in {1,...,t} ',int_test_eligibilityMatrix_j,'t'),
+            EligibilityMatrixBitIntegrityTest("2.1.9.1.0","Check EligibilityMatrix Bit","Check if e_ij in [0,1]",['e_i']),
             EligibilityMatrixIntegrityTest("2.1.9.2.0","Check EligibilityMatrix Vector ","Check if sum(e_ij) >= 1",["e_i"])
             )
         int_test_candidate = StringIntegrityTest("2.1.11.0", "Check Candidate","Check if Candidate is in A*_ucs",["C_i"])
         int_test_voter = StringIntegrityTest("2.1.12.0", "Check Voter","Check if Voter is in A*_ucs",["V_i"])
         int_test_countingCircle = InRangeIntegrityTest("2.1.13.0", "Check CountingCircle","Check if w_i in {1,...,w}",["w_i"],1,"w")
-        int_test_pubc_j = PublicVotingCredentialIntegrityTest("2.1.14.0", "Check PublicVotingCredential","Check if d_hat_ij in G_q_hat^2",["d_hat_j"])
-        int_test_pubc_i = IterationTest(['d_i'],"For j in {1,...,s}",int_test_pubc_j,'s')
+        int_test_pubc = PublicVotingCredentialIntegrityTest("2.1.14.0", "Check PublicVotingCredential","Check if d_hat_ij in G_q_hat^2",["d_hat_i"])
         int_test_pk = MathGroupeIntegritiyTest("2.1.15.0","Check Public key","For all authority test it's Public key",['pk_j'],'p')
-        int_test_sigPrep = SignaturIntegrityTest("2.1.19","Check PublicVotingCredential Signatur","Check if sigPrep_j in Bit x Z_q",["sigPrep_j"])
-        int_test_sigKgen = SignaturIntegrityTest("2.1.20","Check PublicVoting Key Signatur","Check if sigKgen_j in Bit x Z_q",["sigKgen_j"])
-        # k is not defined
-        # NumberOfSelectionsIntegrityTest("2.1.5","Check NumberOfSelections","Check if k = sum(k_j)","numberOfSelections"),
+        int_test_sigPrep = SignaturIntegrityTest("2.1.19.0","Check PublicVotingCredential Signatur","Check if sigPrep_j in Bit x Z_q",["sigPrep_j"])
+        int_test_sigKgen = SignaturIntegrityTest("2.1.20.0","Check PublicVoting Key Signatur","Check if sigKgen_j in Bit x Z_q",["sigKgen_j"])
         int_pre_election_tests.addTests(
             StringIntegrityTest("2.1.1", "Check electionID","Check if electionID is in A*_ucs",["electionID"]),
             BiggerThanIntegrityTest("2.1.2","Check CountingCircles lenght","Check if w >= 1",['w'],1),
@@ -162,7 +158,7 @@ class VerifyService(object):
             IterationTest(["candidates"],"for i in {1,...,n} ", int_test_candidate,'n'),
             IterationTest(["voters"],"for i in {1,...,Ne} ", int_test_voter,'Ne'),
             IterationTest(["countingCircles"],"for i in {1,...,Ne} ", int_test_countingCircle,'Ne'),
-            IterationTest(["partialPublicVotingCredentials"],"for i in {1,...,Ne} ", int_test_pubc_i,'Ne'),
+            IterationTest(["partialPublicVotingCredentials"],"for i in {1,...,Ne} ", int_test_pubc,'Ne'),
             SignaturIntegrityTest("2.1.16","Check Full Signatur","Check if sigParam1 in Bit x Z_q",["sigParam1"]),
             SignaturIntegrityTest("2.1.17","Check Part Signatur","Check if sigParam2 in Bit x Z_q",["sigParam2"]),
             SignaturIntegrityTest("2.1.18","Check other Part Signatur","Check if sigParam3 in Bit x Z_q",["sigParam3"]),

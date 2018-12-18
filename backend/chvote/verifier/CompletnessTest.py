@@ -7,7 +7,7 @@ from chvote.Utils.VerifierHelper import test_run_decorate, completness_test
 
 class SingleCompletnessTest(SingleTest):
     """docstring for a Single CompletnessTest"""
-    
+
     @test_run_decorate
     def runTest(self,election_data):
         """
@@ -26,4 +26,7 @@ class SingleCompletnessTest(SingleTest):
 
 if __name__ == '__main__':
     import doctest
+    from chvote.verifier.TestResult import TestResult
+    from app.verifier.Report import Report
+    TestResult.setReport(Report("1"))
     doctest.testmod(extraglobs={'sct': SingleCompletnessTest("1.1","TEST","TEST",["test"])})

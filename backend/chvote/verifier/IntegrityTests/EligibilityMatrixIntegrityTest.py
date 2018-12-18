@@ -21,4 +21,7 @@ class EligibilityMatrixIntegrityTest(SingleTest):
 
 if __name__ == '__main__':
     import doctest
+    from chvote.verifier.TestResult import TestResult
+    from app.verifier.Report import Report
+    TestResult.setReport(Report("1"))
     doctest.testmod(extraglobs={'emit': EligibilityMatrixIntegrityTest("1.1","TEST","TEST",["e_i"])})
