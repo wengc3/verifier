@@ -2,7 +2,7 @@ import abc
 
 class Observer(metaclass=abc.ABCMeta):
     """docstring for Observer."""
-    def __init__(self,step,depth):
+    def __init__(self,step=None,depth=None):
         self._report = None
         self._result = None
         self._step = step

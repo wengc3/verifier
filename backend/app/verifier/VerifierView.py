@@ -7,7 +7,7 @@ class VerifierView(Observer):
 
     def update(self,state):
         id = self.result.id
-        if  ':' not in id and id.count('.') <= self.depth :
+        if  ':' not in id:
             try:
                 func = self._functions[state]
                 func(self)

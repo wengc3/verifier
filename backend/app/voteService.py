@@ -386,8 +386,8 @@ class VoteService(object):
 
     def verifyElection(self):
         report = Report(self.electionID)
-        view = VerifierView(step=6,depth=3,report=report)
-        TestResult.attach(view)
+        view = VerifierView()
+        report.attach(view)
         verify_svc = VerifyService.getInstance()
         data_dict =  dict()
         bb = self.bulletinBoard.state.toJSON()
