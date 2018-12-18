@@ -1,5 +1,5 @@
 class TestResult(object):
-    _observers = set()
+    _report = None
     """docstring for TestResult."""
     def __init__(self, test,result,data):
         self.id = test.id
@@ -91,19 +91,17 @@ class TestResult(object):
     def old_progress(self,old_prg):
         self._old_progress = old_prg
 
-    def reportCreated(self):
-        self._notify("reportCreated")
+    @property
+    def observers(self):
+        return self._report.observers
 
-#observer methods
+    @staticmethod
+    def setReport(report):
+        TestResult._report = report
+
+
+#observer method
     def _notify(self,state):
         for observer in self.observers:
             observer.result = self
             observer.update(state)
-
-    @property
-    def observers(self):
-        return self._observers
-
-    @staticmethod
-    def attach(observer):
-        TestResult._observers.add(observer)

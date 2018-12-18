@@ -2,8 +2,8 @@ import abc
 
 class Observer(metaclass=abc.ABCMeta):
     """docstring for Observer."""
-    def __init__(self,step,depth,report):
-        self._report = report
+    def __init__(self,step,depth):
+        self._report = None
         self._result = None
         self._step = step
         self._depth = depth
@@ -44,14 +44,6 @@ class Observer(metaclass=abc.ABCMeta):
     @result.setter
     def result(self,result):
         self._result = result
-
-    @property
-    def test(self):
-        return self._test
-
-    @test.setter
-    def test(self,report):
-        self._test = report
 
     @property
     def step(self):

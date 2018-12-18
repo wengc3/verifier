@@ -6,6 +6,7 @@ class Report(object):
         self._election_id = election_id
         self._json_result = None
         self._result = None
+        self._observers = set()
 
     @property
     def json_result(self):
@@ -36,5 +37,13 @@ class Report(object):
         self._notify('reportCreated')
 
     def _notify(self,state):
-        for observer in self.result.observers:
+        for observer in self.observers:
             observer.update(state)
+
+    @property
+    def observers(self):
+        return self._observers
+
+    def attach(self,observer):
+        observer._report = self
+        self._observers.add(observer)
