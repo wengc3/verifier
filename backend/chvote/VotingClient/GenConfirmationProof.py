@@ -33,7 +33,9 @@ def GenConfirmationProof(y, y_prime, y_hat, secparams):
     w = randomMpz(secparams.q_hat, secparams)
     t = gmpy2.powmod(secparams.g_hat, w, secparams.p_hat)
     c = GetNIZKPChallenge(y_hat, t, secparams.tau, secparams)
-    s = w + c * (y + y_prime) % secparams.q_hat
+    # Changed by Christian Wenger 21.12.2018 was not in q_hat because the second brackets was missed
+    # s = w + c * (y + y_prime) % secparams.q_hat
+    s = (w + c * (y + y_prime)) % secparams.q_hat
     pi = (t, s)
 
     return pi

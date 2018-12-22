@@ -26,14 +26,14 @@ def addKeyToVector(vector,key):
 def prepareShufleProofs(shuffle_proofs,e_bold,e_prime_bold,secparams):
     try:
         shuffle_proof_list = [{
-            'shuffleProof': shuffle_proofs[0],
+            'pi_j': shuffle_proofs[0],
             'e_bold': e_bold,
             'e_prime_bold': e_prime_bold[0]}]
 
         for j in range(secparams.s):
             j = j + 1
             shuffle_proof_list.append({
-                'shuffleProof': shuffle_proofs[j],
+                'pi_j': shuffle_proofs[j],
                 'e_bold': e_prime_bold[j - 1],
                 'e_prime_bold': e_prime_bold[j]})
 
@@ -45,9 +45,9 @@ def prepareDecryptenProofs(decryption_proofs,publicKeyShares,e_bold,decryptions)
     decryption_proof_list = list()
     for index in range(len(publicKeyShares)):
         decryption_dict = {
-            'decryptionProof': decryption_proofs[index],
+            'pi_j': decryption_proofs[index],
             'e_bold' : e_bold,
-            'decryption': decryptions[index]
+            'b_bold_prime_j': decryptions[index]
         }
         decryption_dict.update(publicKeyShares[index])
         decryption_proof_list.append(decryption_dict)
@@ -86,4 +86,8 @@ def prepareData(data_dict,secparams):
                                 data_dict.get('encryptions',[])[-1],
                                 data_dict.get('decryptions',[])
                                 )
+    data_dict['encryptions'] = addKeyToVector(data_dict.get('encryptions',[]),'e_bold_j')
+    data_dict['decryptions'] = addKeyToVector(data_dict.get('decryptions',[]),'b_bold_prime_j')
+    data_dict['votes'] = addKeyToVector(data_dict.get('votes',[]),'v_i',)
+    data_dict['w_bold'] = addKeyToVector(data_dict.get('w_bold',[]),'omega_i',)
     return data_dict

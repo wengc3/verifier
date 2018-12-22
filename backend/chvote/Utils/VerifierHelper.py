@@ -42,9 +42,10 @@ def completness_decorate(func):
             return "skipped"
     return func_wrapper
 
-def checkResult(res):
-    if res.test_result in {"failed","skipped"}:
-         return "failed"
+def checkResult(self):
+    result = next((res for res in self.children if res.test_result in ['skipped','failed']), None)
+    if result:
+         return result.test_result
     return "successful"
 
 def updateProgress(res,index,vector):

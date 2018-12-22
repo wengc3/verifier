@@ -33,6 +33,5 @@ class MultiTest(Test):
                 test.election_data = self.election_data
             res = test.runTest(election_data)
             self.test_result.addChild(res)
-            multi_result = checkResult(res)
             updateProgress(self.test_result,index,self.test_list)
-        return multi_result
+        return checkResult(self.test_result)

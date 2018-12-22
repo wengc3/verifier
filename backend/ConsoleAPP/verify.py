@@ -36,14 +36,14 @@ def updateData(*args):
 def getData(electionID):
     socketio.emit('requestFullSync',{'election':electionID})
 
-verify_svc = VerifyService.getInstance()
+verify_svc_1 = VerifyService.getInstance()
 socketio = SocketIO('127.0.0.1',5000)
 data_dict = dict()
 getData(electionID1)
-socketio.once('SyncBulletinBoard',updateData)
-socketio.once('syncElectionAdministrator',updateData)
-socketio.once('syncElectionAuthorities',addEBold)
-socketio.wait(seconds=3)
+socketio.on('SyncBulletinBoard',updateData)
+socketio.on('syncElectionAdministrator',updateData)
+socketio.on('syncElectionAuthorities',addEBold)
+socketio.wait(seconds=2)
 
 
 seclevel = data_dict['securityLevel']
@@ -56,9 +56,17 @@ else:
     secparams = secparams_l3
 
 report = Report(electionID1)
-console = ConsoleView(step=0.2,depth = 5,report=report)
-TestResult.attach(console)
-verify_svc.verify(data_dict,report,secparams)
+console = ConsoleView(step=0.2,depth = 0)
+report.attach(console)
+verify_svc_1.verify(data_dict,report,secparams)
+
+# getData(electionID1)
+# socketio.wait(seconds=1)
+# verify_svc_2 = VerifyService.getInstance()
+# report = Report(electionID1)
+# console = ConsoleView(step=0.2,depth = 1)
+# report.attach(console)
+# verify_svc_2.verify(data_dict,report,secparams)
 
 # data_dict['ballots'][2].pop('voterId')
 # result = report.result
@@ -71,8 +79,9 @@ verify_svc.verify(data_dict,report,secparams)
 # print(oneway)
 # print(data_dict['securityLevel'])
 # print(data_dict['publicKeyShares'][0])
+
 # data_dict = prepareData(data_dict,secparams)
-# print(data_dict['ballots'][0]['ballot'])
+# print(data_dict['eligibilityMatrix'][0])
 # print("_____________________________")
 # print(data_dict['responses'][0]['beta_j'])
 # print("_____________________________")

@@ -38,9 +38,10 @@ class VerifierView(Observer):
 
     def _newResult(self):
         result = self.result
-        if result.test_result == 'failed':
+        if result.test_result in ['skipped','failed']:
             id = result.test.id[0]
-            emitToClient('resultFailed',id,SyncType.ROOM,self.report.electionID)
+            data = json.dumps({'id': id,'value': result.test_result})
+            emitToClient('resultFailed',data,SyncType.ROOM,self.report.electionID)
 
     def _reportCreated(self):
         emitToClient('allResults',self.report.json_result,SyncType.ROOM,self.report.electionID)

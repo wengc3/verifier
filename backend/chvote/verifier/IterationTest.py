@@ -29,14 +29,12 @@ class IterationTest(SingleTest):
             rng = election_data.get(self.range_key)
         test = self.test
         test.election_data = election_data
-        iter_result = "successful"
         try:
             for index in range(rng):
                 test.id = test.id[:-1] + str(index+1)
                 res = test.runTest(vector[index])
                 self.test_result.addChild(res)
-                iter_result = checkResult(res)
                 updateProgress(self.test_result,index,vector)
-            return iter_result
+            return checkResult(self.test_result)
         except IndexError:
             return 'failed'
