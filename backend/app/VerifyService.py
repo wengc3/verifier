@@ -34,7 +34,11 @@ from chvote.verifier.IntegrityTests.ShuffleProofIntegrityTest import ShuffleProo
 from chvote.verifier.IntegrityTests.DecryptionIntegrityTest import DecryptionIntegrityTest
 from chvote.verifier.IntegrityTests.DecryptionProofIntegrityTest import DecryptionProofIntegrityTest
 
-from chvote.verifier.ConsistencyTest import LenghtEqualityConsistenyTest
+from chvote.verifier.ConsistencyTests.VectorLengthConsistenyTest import VectorLengthConsistenyTest
+from chvote.verifier.ConsistencyTests.MatrixLengthConsistenyTest import MatrixLengthConsistenyTest
+from chvote.verifier.ConsistencyTests.PrimeConsistencyTest import PrimeConsistencyTest
+from chvote.verifier.ConsistencyTests.VectorItemsConsistenyTest import VectorItemsConsistenyTest
+
 from chvote.verifier.EvidenceTests.BallotProofEvidenceTest import BallotProofEvidenceTest
 from chvote.verifier.EvidenceTests.ConfirmationProofEvidenceTest import ConfirmationProofEvidenceTest
 from chvote.verifier.EvidenceTests.DecryptionProofEvidenceTest import DecryptionProofEvidenceTest
@@ -230,20 +234,65 @@ class VerifyService(object):
         integrity_tests.addTests(int_pre_election_tests,int_election_test)
         # 3 Consistency Tests
         consistency_tests = MultiTest("3","Consistency Tests","Test which conntains all consistency tests")
-        cons_pre_election_tests = MultiTest("3.1","pre_election Tests","Test which conntains all pre_election tests")
+        cons_pre_election_tests = MultiTest("3.1","Pre Election Tests","Test which conntains all pre election tests")
         # Tests for Integrity Tests
-        cons_test_pvc = LenghtEqualityConsistenyTest("3.1.8.0","Check PartialPublicVotingCredential","Check if |d_hat_j| = Ne",["d_hat_j"],"Ne")
+        cons_test_pvc = VectorLengthConsistenyTest("3.1.8.0","Check PartialPublicVotingCredential","Check if |d_hat_j| = Ne",["d_hat_j"],"Ne")
         cons_pre_election_tests.addTests(
-            LenghtEqualityConsistenyTest("3.1.1","Check Number of Candidates","Check if |numberOfCandidates| = t",["numberOfCandidates"],"t"),
-            LenghtEqualityConsistenyTest("3.1.2","Check Number of selections","Check if |numberOfSelections| = t",["numberOfSelections"],"t"),
-            LenghtEqualityConsistenyTest("3.1.4","Check Candidates","Check if |candidates| = n",["candidates"],"n"),
-            LenghtEqualityConsistenyTest("3.1.5","Check Voters","Check if |votes| = Ne","voters","Ne"),
-            LenghtEqualityConsistenyTest("3.1.6","Check CountingCircles","Check if |countingCircles| = Ne",["countingCircles"],"Ne"),
-            LenghtEqualityConsistenyTest("3.1.7","Check PartialPublicVotingCredentials","Check if |partialPublicVotingCredentials| = s",["partialPublicVotingCredentials"],"s"),
+            VectorLengthConsistenyTest("3.1.1","Check Number of Candidates","Check if |numberOfCandidates| = t",["numberOfCandidates"],"t"),
+            VectorLengthConsistenyTest("3.1.2","Check Number of selections","Check if |numberOfSelections| = t",["numberOfSelections"],"t"),
+            MatrixLengthConsistenyTest("3.1.3","Check EligibilityMatrix","Check if |E| = (Ne,t)",["eligibilityMatrix"],["Ne","t",'e_i']),
+            VectorLengthConsistenyTest("3.1.4","Check Candidates","Check if |candidates| = n",["candidates"],"n"),
+            VectorLengthConsistenyTest("3.1.5","Check Voters","Check if |votes| = Ne","voters","Ne"),
+            VectorLengthConsistenyTest("3.1.6","Check CountingCircles","Check if |countingCircles| = Ne",["countingCircles"],"Ne"),
+            VectorLengthConsistenyTest("3.1.7","Check PartialPublicVotingCredentials","Check if |partialPublicVotingCredentials| = s",["partialPublicVotingCredentials"],"s"),
             IterationTest("partialPublicVotingCredentials","For j in {1,...,s} ",cons_test_pvc,'s'),
-            LenghtEqualityConsistenyTest("3.1.9","Check PublicKeyShares","Check if |publicKeyShares| = s",["publicKeyShares"],"s"),
+            VectorLengthConsistenyTest("3.1.9","Check PublicKeyShares","Check if |publicKeyShares| = s",["publicKeyShares"],"s"),
+            PrimeConsistencyTest("3.1.10","Check Primes","Check if p_n+w * prod(list) < p.",["numberOfSelections"])
         )
-        consistency_tests.addTests(cons_pre_election_tests)
+
+        cons_election_tests = MultiTest("3.2","Election Tests","Test which conntains all election tests")
+        cons_multi_test_response = MultiTest('3.2.2.0',"Ballots Tests","Test which conntains all ballots tests")
+        # Tests for IterationTest
+        cons_ballot_test = VectorLengthConsistenyTest('3.2.1.0','Ballot Test','Check if |a_bold| = s',['ballot','a_bold'],'s')
+        cons_multi_test_response.addTests(
+            VectorItemsConsistenyTest('3.2.2.1.0','Check Response','For Beta_bold_i = {Beta_bold_i,1,...,Beta_bold_i,s}, Check if |Beta_bold_i| = s',['voterId'],['responses','beta_j']),
+            VectorItemsConsistenyTest('3.2.2.2.0', "Check OT-Signatur",'For sigCast_i = {sigCast_i,1,...,sigCast_i,s}, Check if |sigCast_i| = s',['voterId'],['responses','sigCast'])
+        )
+
+        cons_multi_test_finalization = MultiTest("3.2.3.0","Finalization Tests","Test which conntains all finalization tests")
+        cons_multi_test_finalization.addTests(
+            VectorItemsConsistenyTest('3.2.2.1.0','Check Finalization','For delta_bold_i = {delta_bold_i,1,...,delta_bold_i,s}, Check if |delta_bold_i| = s',['voterId'],['finalizations','delta_j']),
+            VectorItemsConsistenyTest('3.2.2.2.0', "Check Finalization Signatur ",'For sigCast_i = {sigCast_i,1,...,sigCast_i,s}, Check if |sigCast_i| = s',['voterId'],['finalizations','sigConf'])
+        )
+
+        cons_election_tests.addTests(
+            IterationTest(['ballots'],"For all elements Ballots: ",cons_ballot_test,'Ne'),
+            IterationTest(['responses'],"For all elements in responses: ",cons_multi_test_response,'Ne'),
+            IterationTest(['finalizations'],"For all elements in finalizations: ",cons_multi_test_finalization,'Ne'),
+        )
+
+        cons_post_election_tests = MultiTest("3.3","Post Election Tests","Test which conntains all post election tests")
+        # Tests for IterationTests
+        cons_encryption_test = VectorLengthConsistenyTest('3.3.2.0','Check Encryption','Check if |e_bold_j| = N',['e_bold_j'],'N')
+        cons_shuffleProof_test = VectorLengthConsistenyTest('3.3.4.0','Check ShuffleProof','Check if |pi_j| = N',['pi_j'],'N')
+        cons_decryption_test = VectorLengthConsistenyTest('3.3.6.0','Check Decryption','Check if |b_bold_prime_j| = N',['b_bold_prime_j'],'N')
+        cons_decryptionProof_test = VectorLengthConsistenyTest('3.3.8.0','Check DecryptionProof','Check if |pi_j| = N',['pi_j'],'N')
+
+        cons_post_election_tests.addTests(
+            MatrixLengthConsistenyTest('3.3.1', "Check Encryptions","Check if |E_bold_prime| = (N,t)",['encryptions'],['N','t','e_bold_j']),
+            IterationTest(['encryptions'],"For j in {1,..,s}: ",cons_encryption_test,'s'),
+            VectorLengthConsistenyTest('3.3.3','Check ShuffleProofs','Check if |pi| = s',['shuffleProofs'],'s'),
+            IterationTest(['shuffleProofs'],"For j in {1,..,s}: ",cons_shuffleProof_test,'s'),
+            VectorLengthConsistenyTest('3.3.5','Check Decryptions','Check if |B_bold_prime| = s',['decryptions'],'s'),
+            IterationTest(['decryptions'],"For j in {1,..,s}: ",cons_decryption_test,'s'),
+            VectorLengthConsistenyTest('3.3.7','Check DecryptionProofs','Check if |pi| = s',['decryptionProofs'],'s'),
+            IterationTest(['decryptionProofs'],"For j in {1,..,s}: ",cons_decryptionProof_test,'s'),
+            MatrixLengthConsistenyTest('3.3.9', "Check Votes","Check if |V_bold| = (N,n)",['votes'],['N','n','v_i']),
+            MatrixLengthConsistenyTest('3.3.10', "Check Election Result","Check if |W_bold| = (N,w)",['w_bold'],['N','w','omega_i']),
+            VectorLengthConsistenyTest('3.3.11','Check Mixing Signatur','Check if |sigMix| = s',['sigMix'],'s'),
+            VectorLengthConsistenyTest('3.3.12','Check Decryption Signatur','Check if |sigDec| = s',['sigDec'],'s'),
+        )
+        consistency_tests.addTests(cons_pre_election_tests, cons_election_tests, cons_post_election_tests)
 
         evidence_tests = MultiTest("4","Evidence Tests","Test which conntains all evidence tests")
         ev_check_proofs = MultiTest("4.1","Check all Proofs","Test which conntains all proofs tests")

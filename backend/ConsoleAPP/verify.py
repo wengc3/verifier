@@ -81,7 +81,8 @@ verify_svc_1.verify(data_dict,report,secparams)
 # print(data_dict['publicKeyShares'][0])
 
 # data_dict = prepareData(data_dict,secparams)
-# print(data_dict['eligibilityMatrix'][0])
+# temp_dic = {'responses': data_dict['responses'],'s': data_dict['s']}
+# print(data_dict['ballots'][0]['ballot'])
 # print("_____________________________")
 # print(data_dict['responses'][0]['beta_j'])
 # print("_____________________________")

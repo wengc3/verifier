@@ -28,14 +28,18 @@ class DecryptionProofEvidenceTest(SingleTest):
         >>> res.test_result
         'successful'
         """
-        decryptionProof = self.test_data
-        pi_prime = generateDecryptionProof(decryptionProof)
-        pk_j = mpz(election_data.get('pk_j'))
-        e_bold = generateElgamal(election_data.get('e_bold'))
-        decryption = mpzList(election_data.get('b_bold_prime_j'))
-        secparams= self.election_data.get('secparams')
-        res = CheckDecryptionProof(pi_prime, pk_j, e_bold, decryption, secparams)
-        return 'successful' if res else 'failed'
+        try:
+            decryptionProof = self.test_data
+            pi_prime = generateDecryptionProof(decryptionProof)
+            pk_j = mpz(election_data['pk_j'])
+            e_bold = generateElgamal(election_data['e_bold'])
+            decryption = mpzList(election_data['b_bold_prime_j'])
+            secparams= self.election_data['secparams']
+            res = CheckDecryptionProof(pi_prime, pk_j, e_bold, decryption, secparams)
+            return 'successful' if res else 'failed'
+        except KeyError:
+            return 'skipped'
+
 
 if __name__ == '__main__':
     import doctest

@@ -26,16 +26,19 @@ class BallotProofEvidenceTest(SingleTest):
         >>> res.test_result
         'successful'
         """
-        ballot = self.test_data
-        pk_s = self.election_data['publicKey']
-        secparams = self.election_data['secparams']
-        self.test_result.addTestData('publicKey',pk_s)
-        pk = mpz(pk_s)
-        pi = generateBallotProof(ballot)
-        a_bold = [mpzList(item) for item in ballot['a_bold']]
-        x_hat = mpz(ballot['x_hat'])
-        res=CheckBallotProof(pi,x_hat,a_bold,pk,secparams)
-        return 'successful' if res else 'failed'
+        try:
+            ballot = self.test_data
+            pk_s = self.election_data['publicKey']
+            secparams = self.election_data['secparams']
+            self.test_result.addTestData('publicKey',pk_s)
+            pk = mpz(pk_s)
+            pi = generateBallotProof(ballot)
+            a_bold = [mpzList(item) for item in ballot['a_bold']]
+            x_hat = mpz(ballot['x_hat'])
+            res=CheckBallotProof(pi,x_hat,a_bold,pk,secparams)
+            return 'successful' if res else 'failed'
+        except KeyError:
+            return 'skipped'
 
 if __name__ == '__main__':
     import doctest

@@ -35,15 +35,19 @@ class ShuffleProofEveidenceTest(SingleTest):
         >>> res.test_result
         'successful'
         """
-        shuffle_proof = self.test_data
-        pi = generateShuffleProof(shuffle_proof)
-        e_bold = generateElgamal(election_data.get('e_bold'))
-        e_prime_bold = generateElgamal(election_data.get('e_prime_bold'))
-        pk = mpz(self.election_data.get('publicKey'))
-        self.test_result.addTestData('publicKey',pk)
-        secparams = self.election_data.get('secparams')
-        res = CheckShuffleProof(pi,e_bold,e_prime_bold,pk,secparams)
-        return 'successful' if res else 'failed'
+        try:
+            shuffle_proof = self.test_data
+            pi = generateShuffleProof(shuffle_proof)
+            e_bold = generateElgamal(election_data['e_bold'])
+            e_prime_bold = generateElgamal(election_data['e_prime_bold'])
+            pk = mpz(self.election_data['publicKey'])
+            self.test_result.addTestData('publicKey',pk)
+            secparams = self.election_data['secparams']
+            res = CheckShuffleProof(pi,e_bold,e_prime_bold,pk,secparams)
+            return 'successful' if res else 'failed'
+        except KeyError:
+            return 'skipped'
+
 
 if __name__ == '__main__':
     import doctest

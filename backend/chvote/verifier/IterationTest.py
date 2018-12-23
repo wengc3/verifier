@@ -24,9 +24,9 @@ class IterationTest(SingleTest):
     def runTest(self,election_data):
         vector = self.test_data
         if hasattr(self,'election_data'):
-            rng = self.election_data.get(self.range_key)
+            rng = self.election_data.get(self.range_key,0)
         else:
-            rng = election_data.get(self.range_key)
+            rng = election_data.get(self.range_key,0)
         test = self.test
         test.election_data = election_data
         try:
