@@ -299,7 +299,7 @@ class VerifyService(object):
         # Tests for IterationTests
         ev_test_ballot= BallotProofEvidenceTest("4.1.1.0","Check BallotProof","Check proof of Ballot",["ballot"])
         ev_test_conf = ConfirmationProofEvidenceTest("4.1.2.0","Check ConfirmationProof","Check proof of Confirmation",["confirmation"])
-        ev_test_shuffle = ShuffleProofEveidenceTest("4.1.3.0","Check ConfirmationProof","Check proof of Confirmation",["shuffleProof"])
+        ev_test_shuffle = ShuffleProofEveidenceTest("4.1.3.0","Check ShuffleProof","Check proof of shuffled encryptions",["pi_j"])
         ev_test_decrytion = DecryptionProofEvidenceTest("4.1.4.0","Check DecryptionProof","Check proof of Decryption",["pi_j"])
         ev_check_proofs.addTests(
             IterationTest(['ballots'],"For all Ballots: ",ev_test_ballot,'Ne'),
