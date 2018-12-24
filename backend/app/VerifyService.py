@@ -174,7 +174,7 @@ class VerifyService(object):
             IterationTest(['sigKgen'],"For j in {1,...,s}",int_test_sigKgen,'s')
         )
         # 2.2 election phase
-        int_election_test = MultiTest("2.2","Election Tests","Test which conntains all election tests")
+        int_election_tests = MultiTest("2.2","Election Tests","Test which conntains all election tests")
 
         int_multi_test_ballots = MultiTest('2.2.1.0',"Ballots Tests","Test which conntains all ballots tests")
         int_multi_test_ballots.addTests(
@@ -203,7 +203,7 @@ class VerifyService(object):
             SignaturIntegrityTest("2.2.4.3.0","Check Finalization Signatur","Check if sigConf in Bit^l x Z_q",["sigConf"])
         )
 
-        int_election_test.addTests(
+        int_election_tests.addTests(
             IterationTest(['ballots'],"For all elements Ballots: ",int_multi_test_ballots,'Ne'),
             IterationTest(['responses'],"For all elements in responses: ",int_multi_test_response,'Ne'),
             IterationTest(['confirmations'],"For all elements in confirmations: ",int_multi_test_confirmations,'Ne'),
@@ -231,7 +231,7 @@ class VerifyService(object):
             SignaturIntegrityTest("2.3.8.0","Check Tallying Signatur","Check if sigTally in Bit^l x Z_q",["sigTally"])
         )
 
-        integrity_tests.addTests(int_pre_election_tests,int_election_test)
+        integrity_tests.addTests(int_pre_election_tests,int_election_tests,int_post_election_tests)
         # 3 Consistency Tests
         consistency_tests = MultiTest("3","Consistency Tests","Test which conntains all consistency tests")
         cons_pre_election_tests = MultiTest("3.1","Pre Election Tests","Test which conntains all pre election tests")
@@ -340,7 +340,7 @@ class VerifyService(object):
             IterationTest(['sigMix'],"For j in {1,...s}: ",aut_test_sigMix,'s'),
             IterationTest(['sigDec'],"For j in {1,...s}: ",aut_test_sigDec,'s'),
         )
-        authenticity_tests.addTests(au_cert_tests)
+        authenticity_tests.addTests(au_cert_tests,au_sig_tests)
 
         self.root_test.addTest(completness_tests)
         self.root_test.addTest(integrity_tests)
