@@ -74,9 +74,9 @@ class VerifyService(object):
         com_pre_election_tests.addTests(
             SingleCompletnessTest("1.1.1","Check Election ID","Check if ElectionID is in election_data",['electionID']),
             SingleCompletnessTest("1.1.2","Check Number of candidates","Check if vector numberOfCandidates is in election_data",['numberOfCandidates']),
-            SingleCompletnessTest("1.1.3","Check Candidates","Check if vector candidates is in election_data",'candidates'),
+            SingleCompletnessTest("1.1.3","Check Candidates","Check if vector candidates is in election_data",['candidates']),
             SingleCompletnessTest("1.1.4","Check Number of selections","Check if vector numberOfSelections is in election_data",['numberOfSelections']),
-            SingleCompletnessTest("1.1.5","Check Voters","Check if vector voters is in election_data",'voters'),
+            SingleCompletnessTest("1.1.5","Check Voters","Check if vector voters is in election_data",['voters']),
             SingleCompletnessTest("1.1.6","Check CountingCircles","Check if vector countingCircles is in election_data",['countingCircles']),
             SingleCompletnessTest("1.1.7","Check EligibilityMatrix","Check if eligibilityMatrix is in election_data",['eligibilityMatrix']),
             SingleCompletnessTest("1.1.8","Check Public voting credentials","Check if vector partialPublicVotingCredentials is in election_data",['partialPublicVotingCredentials']),
@@ -224,10 +224,10 @@ class VerifyService(object):
             IterationTest(['shuffleProofs'],"For j in {1,..,s}: ",int_sp_test,'s'),
             IterationTest(['decryptions'],"For j in {1,..,s}: ",int_dec_test,'s'),
             IterationTest(['decryptionProofs'],"For j in {1,..,s}: ",int_dp_test,'s'),
-            IterationTest(['votes'],"For i in {1,..,N}: ",int_sp_test,'N'),
-            IterationTest(['w_bold'],"For i in {1,..,N}: ",int_sp_test,'N'),
-            IterationTest(['sigMix'],"For i in {1,..,N}: ",int_sp_test,'s'),
-            IterationTest(['sigDec'],"For i in {1,..,N}: ",int_sp_test,'s'),
+            IterationTest(['votes'],"For i in {1,..,N}: ",int_vote_test,'N'),
+            IterationTest(['w_bold'],"For i in {1,..,N}: ",int_election_result_test,'N'),
+            IterationTest(['sigMix'],"For i in {1,..,N}: ",int_sig_mix_test,'s'),
+            IterationTest(['sigDec'],"For i in {1,..,N}: ",int_sig_dec_test,'s'),
             SignaturIntegrityTest("2.3.8.0","Check Tallying Signatur","Check if sigTally in Bit^l x Z_q",["sigTally"])
         )
 
