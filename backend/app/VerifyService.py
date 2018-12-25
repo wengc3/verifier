@@ -140,26 +140,26 @@ class VerifyService(object):
         # 2.1 pre_election Tests
         int_pre_election_tests = MultiTest("2.1","Pre Election Tests","Test which conntains all pre_election tests")
         # Tests for IterationTests
-        int_test_numberOfCandidates = BiggerThanIntegrityTest("2.1.7.0","Check NumberOfCandidates","Check if n_j >= 2",['n_j'],2)
-        int_test_numberOfSelections = BiggerThanIntegrityTest("2.1.8.0","Check NumberOfSelections","Check if k_j >= 1",['k_j'],1)
-        int_multi_test_eligibilityMatrix = MultiTest("2.1.9.0","Check EligibilityMatrix","Test which conntains all eligibilityMatrix tests")
+        int_test_numberOfCandidates = BiggerThanIntegrityTest("2.1.6.0","Check NumberOfCandidates","Check if n_j >= 2",['n_j'],2)
+        int_test_numberOfSelections = BiggerThanIntegrityTest("2.1.7.0","Check NumberOfSelections","Check if k_j >= 1",['k_j'],1)
+        int_multi_test_eligibilityMatrix = MultiTest("2.1.8.0","Check EligibilityMatrix","Test which conntains all eligibilityMatrix tests")
         int_multi_test_eligibilityMatrix.addTests(
-            MatrixBitIntegrityTest("2.1.9.1.0","Check EligibilityMatrix Bit","Check if e_ij in [0,1]",['e_i'],'t'),
-            EligibilityMatrixIntegrityTest("2.1.9.2.0","Check EligibilityMatrix Vector ","Check if sum(e_ij) >= 1",["e_i"])
+            MatrixBitIntegrityTest("2.1.8.1.0","Check EligibilityMatrix Bit","Check if e_ij in [0,1]",['e_i'],'t'),
+            EligibilityMatrixIntegrityTest("2.1.8.2.0","Check EligibilityMatrix Vector ","Check if sum(e_ij) >= 1",["e_i"])
             )
-        int_test_candidate = StringIntegrityTest("2.1.11.0", "Check Candidate","Check if Candidate is in A*_ucs",["C_i"])
-        int_test_voter = StringIntegrityTest("2.1.12.0", "Check Voter","Check if Voter is in A*_ucs",["V_i"])
-        int_test_countingCircle = InRangeIntegrityTest("2.1.13.0", "Check CountingCircle","Check if w_i in {1,...,w}",["w_i"],1,"w")
-        int_test_pubc = PublicVotingCredentialIntegrityTest("2.1.14.0", "Check PublicVotingCredential","Check if d_hat_ij in G_q_hat^2",["d_hat_i"])
-        int_test_pk = MathGroupeIntegritiyTest("2.1.15.0","Check Public key","For all authority test it's Public key",['pk_j'],'p')
-        int_test_sigPrep = SignaturIntegrityTest("2.1.19.0","Check PublicVotingCredential Signatur","Check if sigPrep_j in Bit x Z_q",["sigPrep_j"])
-        int_test_sigKgen = SignaturIntegrityTest("2.1.20.0","Check PublicVoting Key Signatur","Check if sigKgen_j in Bit x Z_q",["sigKgen_j"])
+        int_test_candidate = StringIntegrityTest("2.1.9.0", "Check Candidate","Check if Candidate is in A*_ucs",["C_i"])
+        int_test_voter = StringIntegrityTest("2.1.10.0", "Check Voter","Check if Voter is in A*_ucs",["V_i"])
+        int_test_countingCircle = InRangeIntegrityTest("2.1.11.0", "Check CountingCircle","Check if w_i in {1,...,w}",["w_i"],1,"w")
+        int_test_pubc = PublicVotingCredentialIntegrityTest("2.1.12.0", "Check PublicVotingCredential","Check if d_hat_ij in G_q_hat^2",["d_hat_i"])
+        int_test_pk = MathGroupeIntegritiyTest("2.1.13.0","Check Public key","For all authority test it's Public key",['pk_j'],'p')
+        int_test_sigPrep = SignaturIntegrityTest("2.1.17.0","Check PublicVotingCredential Signatur","Check if sigPrep_j in Bit x Z_q",["sigPrep_j"])
+        int_test_sigKgen = SignaturIntegrityTest("2.1.18.0","Check PublicVoting Key Signatur","Check if sigKgen_j in Bit x Z_q",["sigKgen_j"])
         int_pre_election_tests.addTests(
             StringIntegrityTest("2.1.1", "Check electionID","Check if electionID is in A*_ucs",["electionID"]),
             BiggerThanIntegrityTest("2.1.2","Check CountingCircles lenght","Check if w >= 1",['w'],1),
             BiggerThanIntegrityTest("2.1.3","Check NumberOfCandidates lenght","Check if t >= 1",['t'],1),
             BiggerThanIntegrityTest("2.1.4","Check Voters lenght","Check if Ne >= 1",['Ne'],0),
-            BiggerThanIntegrityTest("2.1.6","Check partialPublicVotingCredentials lenght","Check if s >= 1",['s'],1),
+            BiggerThanIntegrityTest("2.1.5","Check partialPublicVotingCredentials lenght","Check if s >= 1",['s'],1),
             IterationTest(["NumberOfCandidates"],"For j in {1,...,t} ",int_test_numberOfCandidates,'t'),
             IterationTest(["NumberOfSelections"],"For j in {1,...,t} ",int_test_numberOfSelections,'t'),
             IterationTest(["eligibilityMatrix"],"for i in {1,...,Ne} ", int_multi_test_eligibilityMatrix,'Ne'),
@@ -167,9 +167,9 @@ class VerifyService(object):
             IterationTest(["voters"],"for i in {1,...,Ne} ", int_test_voter,'Ne'),
             IterationTest(["countingCircles"],"for i in {1,...,Ne} ", int_test_countingCircle,'Ne'),
             IterationTest(["partialPublicVotingCredentials"],"for i in {1,...,Ne} ", int_test_pubc,'Ne'),
-            SignaturIntegrityTest("2.1.16","Check Full Signatur","Check if sigParam1 in Bit x Z_q",["sigParam1"]),
-            SignaturIntegrityTest("2.1.17","Check Part Signatur","Check if sigParam2 in Bit x Z_q",["sigParam2"]),
-            SignaturIntegrityTest("2.1.18","Check other Part Signatur","Check if sigParam3 in Bit x Z_q",["sigParam3"]),
+            SignaturIntegrityTest("2.1.14","Check Full Signatur","Check if sigParam1 in Bit x Z_q",["sigParam1"]),
+            SignaturIntegrityTest("2.1.15","Check Part Signatur","Check if sigParam2 in Bit x Z_q",["sigParam2"]),
+            SignaturIntegrityTest("2.1.16","Check other Part Signatur","Check if sigParam3 in Bit x Z_q",["sigParam3"]),
             IterationTest(['sigPrep'],"For j in {1,...,s}",int_test_sigPrep,'s'),
             IterationTest(['sigKgen'],"For j in {1,...,s}",int_test_sigKgen,'s')
         )
@@ -178,7 +178,7 @@ class VerifyService(object):
 
         int_multi_test_ballots = MultiTest('2.2.1.0',"Ballots Tests","Test which conntains all ballots tests")
         int_multi_test_ballots.addTests(
-            InRangeIntegrityTest("2.2.1.1.0","Check Voter ID","Check if voterId is in {1,...,Ne}",['voterId'],0,'Ne'),
+            InRangeIntegrityTest("2.2.1.1.0","Check Voter ID","Check if voterId is in {0,...,Ne}",['voterId'],0,'Ne'),
             MathGroupeIntegritiyTest("2.2.1.2.0","Check PublicVotingCredential","Check if x_hat is in G_q_hat",["ballot","x_hat"],"p_hat"),
             EncrypdetSelectionIntegrityTest("2.2.1.3.0","Check Encrypted Selection","Check if a_bold is in G_q^2",['ballot',"a_bold"]),
             BallotProofIntegrityTest("2.2.1.4.0","Check BallotProof","Check if pi is in (G_q_hat x G_q^2) x (Z_q_hat x G_q x Z_q)",['ballot',"pi"])
@@ -186,19 +186,21 @@ class VerifyService(object):
 
         int_multi_test_response = MultiTest("2.2.2.0","Response Tests","Test which conntains all response tests")
         int_multi_test_response.addTests(
-            InRangeIntegrityTest("2.2.2.1.0","Check Voter ID","Check if voterId is in {1,...,Ne}",['voterId'],0,'Ne'),
-            OTResponseIntegrityTest("2.2.2.2.0","Check OT Response","Check if beta_j is in G_q^k_i x (Beta_bold^L_M)^n*k_i x G_q",['beta_j'])
+            InRangeIntegrityTest("2.2.2.1.0","Check Voter ID","Check if voterId is in {0,...,Ne}",['voterId'],0,'Ne'),
+            OTResponseIntegrityTest("2.2.2.2.0","Check OT Response","Check if beta_j is in G_q^k_i x (Beta_bold^L_M)^n*k_i x G_q",['beta_j']),
+            SignaturIntegrityTest("2.2.2.2.3.0","Check OT Signatur","Check if sigCast in Bit^l x Z_q",["sigCast"])
+
         )
 
         int_multi_test_confirmations = MultiTest("2.2.3.0","Confirmations Tests","Test which conntains all confirmations tests")
         int_multi_test_confirmations.addTests(
-            InRangeIntegrityTest("2.2.3.1.0","Check Voter ID","Check if voterId is in {1,...,Ne}",['voterId'],0,'Ne'),
+            InRangeIntegrityTest("2.2.3.1.0","Check Voter ID","Check if voterId is in {0,...,Ne}",['voterId'],0,'Ne'),
             MathGroupeIntegritiyTest("2.2.3.2.0","Check Confirmation Credential","Check if y_hat in G_q_hat","y_hat",["confirmation","p.hat"]),
             ConfProofIntegrityTest("2.2.3.3.0","Check ConfirmationProof", "Check if pi is in G_q_hat x Z_q_hat",["confirmation","pi"])
         )
         int_multi_test_finalization = MultiTest("2.2.4.0","Finalization Tests","Test which conntains all finalization tests")
         int_multi_test_finalization.addTests(
-            InRangeIntegrityTest("2.2.4.1.0","Check Voter ID","Check if voterId is in {1,...,Ne}",['voterId'],0,'Ne'),
+            InRangeIntegrityTest("2.2.4.1.0","Check Voter ID","Check if voterId is in {0,...,Ne}",['voterId'],0,'Ne'),
             FinalizationIntegrityTest("2.2.4.2.0","Check Finalization","Check if delta_j is in Beta_bold^L_F x Z_q^2",['delta_j']),
             SignaturIntegrityTest("2.2.4.3.0","Check Finalization Signatur","Check if sigConf in Bit^l x Z_q",["sigConf"])
         )
@@ -228,7 +230,7 @@ class VerifyService(object):
             IterationTest(['w_bold'],"For i in {1,..,N}: ",int_election_result_test,'N'),
             IterationTest(['sigMix'],"For i in {1,..,N}: ",int_sig_mix_test,'s'),
             IterationTest(['sigDec'],"For i in {1,..,N}: ",int_sig_dec_test,'s'),
-            SignaturIntegrityTest("2.3.8.0","Check Tallying Signatur","Check if sigTally in Bit^l x Z_q",["sigTally"])
+            SignaturIntegrityTest("2.3.9.0","Check Tallying Signatur","Check if sigTally in Bit^l x Z_q",["sigTally"])
         )
 
         integrity_tests.addTests(int_pre_election_tests,int_election_tests,int_post_election_tests)
@@ -251,9 +253,9 @@ class VerifyService(object):
         )
 
         cons_election_tests = MultiTest("3.2","Election Tests","Test which conntains all election tests")
-        cons_multi_test_response = MultiTest('3.2.2.0',"Ballots Tests","Test which conntains all ballots tests")
         # Tests for IterationTest
         cons_ballot_test = VectorLengthConsistenyTest('3.2.1.0','Ballot Test','Check if |a_bold| = s',['ballot','a_bold'],'s')
+        cons_multi_test_response = MultiTest('3.2.2.0',"Response Tests","Test which conntains all responses tests")
         cons_multi_test_response.addTests(
             VectorItemsConsistenyTest('3.2.2.1.0','Check Response','For Beta_bold_i = {Beta_bold_i,1,...,Beta_bold_i,s}, Check if |Beta_bold_i| = s',['voterId'],['responses','beta_j']),
             VectorItemsConsistenyTest('3.2.2.2.0', "Check OT-Signatur",'For sigCast_i = {sigCast_i,1,...,sigCast_i,s}, Check if |sigCast_i| = s',['voterId'],['responses','sigCast'])
@@ -261,8 +263,8 @@ class VerifyService(object):
 
         cons_multi_test_finalization = MultiTest("3.2.3.0","Finalization Tests","Test which conntains all finalization tests")
         cons_multi_test_finalization.addTests(
-            VectorItemsConsistenyTest('3.2.2.1.0','Check Finalization','For delta_bold_i = {delta_bold_i,1,...,delta_bold_i,s}, Check if |delta_bold_i| = s',['voterId'],['finalizations','delta_j']),
-            VectorItemsConsistenyTest('3.2.2.2.0', "Check Finalization Signatur ",'For sigCast_i = {sigCast_i,1,...,sigCast_i,s}, Check if |sigCast_i| = s',['voterId'],['finalizations','sigConf'])
+            VectorItemsConsistenyTest('3.2.3.1.0','Check Finalization','For delta_bold_i = {delta_bold_i,1,...,delta_bold_i,s}, Check if |delta_bold_i| = s',['voterId'],['finalizations','delta_j']),
+            VectorItemsConsistenyTest('3.2.3.2.0', "Check Finalization Signatur ",'For sigCast_i = {sigCast_i,1,...,sigCast_i,s}, Check if |sigCast_i| = s',['voterId'],['finalizations','sigConf'])
         )
 
         cons_election_tests.addTests(
@@ -276,7 +278,7 @@ class VerifyService(object):
         cons_encryption_test = VectorLengthConsistenyTest('3.3.2.0','Check Encryption','Check if |e_bold_j| = N',['e_bold_j'],'N')
         cons_shuffleProof_test = VectorLengthConsistenyTest('3.3.4.0','Check ShuffleProof','Check if |pi_j| = N',['pi_j'],'N')
         cons_decryption_test = VectorLengthConsistenyTest('3.3.6.0','Check Decryption','Check if |b_bold_prime_j| = N',['b_bold_prime_j'],'N')
-        cons_decryptionProof_test = VectorLengthConsistenyTest('3.3.8.0','Check DecryptionProof','Check if |pi_j| = N',['pi_j'],'N')
+        cons_decryptionProof_test = VectorLengthConsistenyTest('3.3.8.0','Check DecryptionProof','Check if |pi_prime_j| = N',['pi_prime_j'],'N')
 
         cons_post_election_tests.addTests(
             MatrixLengthConsistenyTest('3.3.1', "Check Encryptions","Check if |E_bold_prime| = (N,t)",['encryptions'],['N','t','e_bold_j']),
@@ -285,7 +287,7 @@ class VerifyService(object):
             IterationTest(['shuffleProofs'],"For j in {1,..,s}: ",cons_shuffleProof_test,'s'),
             VectorLengthConsistenyTest('3.3.5','Check Decryptions','Check if |B_bold_prime| = s',['decryptions'],'s'),
             IterationTest(['decryptions'],"For j in {1,..,s}: ",cons_decryption_test,'s'),
-            VectorLengthConsistenyTest('3.3.7','Check DecryptionProofs','Check if |pi| = s',['decryptionProofs'],'s'),
+            VectorLengthConsistenyTest('3.3.7','Check DecryptionProofs','Check if |pi_prime| = s',['decryptionProofs'],'s'),
             IterationTest(['decryptionProofs'],"For j in {1,..,s}: ",cons_decryptionProof_test,'s'),
             MatrixLengthConsistenyTest('3.3.9', "Check Votes","Check if |V_bold| = (N,n)",['votes'],['N','n','v_i']),
             MatrixLengthConsistenyTest('3.3.10', "Check Election Result","Check if |W_bold| = (N,w)",['w_bold'],['N','w','omega_i']),
@@ -295,7 +297,7 @@ class VerifyService(object):
         consistency_tests.addTests(cons_pre_election_tests, cons_election_tests, cons_post_election_tests)
 
         evidence_tests = MultiTest("4","Evidence Tests","Test which conntains all evidence tests")
-        ev_check_proofs = MultiTest("4.1","Check all Proofs","Test which conntains all proofs tests")
+        ev_check_proofs = MultiTest("4.1","Proof Tests","Test which conntains all proofs tests")
         # Tests for IterationTests
         ev_test_ballot= BallotProofEvidenceTest("4.1.1.0","Check BallotProof","Check proof of Ballot",["ballot"])
         ev_test_conf = ConfirmationProofEvidenceTest("4.1.2.0","Check ConfirmationProof","Check proof of Confirmation",["confirmation"])
@@ -321,8 +323,8 @@ class VerifyService(object):
         # Test for IterationTest
         aut_test_sigPrep = SignaturAuthenticityTest("5.2.5.0", "Check Public Credential","Check Signatur of public credential",["sigPrep_j"])
         aut_test_sigKgen = SignaturAuthenticityTest("5.2.6.0", "Check Public Keys","Check Signatur of public keys",["sigKgen_j"])
-        aut_test_sigCast = SignaturAuthenticityTest("5.2.7.0", "Check OT Response","Check Signatur of OT response",["sigCast_i"])
-        aut_test_sigConf = SignaturAuthenticityTest("5.2.8.0", "Check Finalization","Check Signatur of finalization",["sigConf_i"])
+        aut_test_sigCast = SignaturAuthenticityTest("5.2.7.0", "Check OT Response","Check Signatur of OT response",["sigCast_j"])
+        aut_test_sigConf = SignaturAuthenticityTest("5.2.8.0", "Check Finalization","Check Signatur of finalization",["sigConf_j"])
         aut_test_sigMix = SignaturAuthenticityTest("5.2.9.0", "Check Mixed Result","Check Signatur of mixed and re-encrypton",["sigMix_j"])
         aut_test_sigDec = SignaturAuthenticityTest("5.2.10.0", "Check Decryption","Check Signatur of decryption",["sigDec_j"])
 
@@ -333,8 +335,8 @@ class VerifyService(object):
             SignaturAuthenticityTest("5.2.4", "Check Tallying Result","Check Signatur of tallying result",["sigTally"]),
             IterationTest(['sigPrep'],"For j in {1,...s}: ",aut_test_sigPrep,'s'),
             IterationTest(['sigKgen'],"For j in {1,...s}: ",aut_test_sigKgen,'s'),
-            IterationTest(['sigCast'],"For j in {1,...s}: ",aut_test_sigCast,'s'),
-            IterationTest(['sigConf'],"For j in {1,...s}: ",aut_test_sigConf,'s'),
+            IterationTest(['responses'],"For j in {1,...s}: ",aut_test_sigCast,'s'),
+            IterationTest(['finalizations'],"For j in {1,...s}: ",aut_test_sigConf,'s'),
             IterationTest(['sigMix'],"For j in {1,...s}: ",aut_test_sigMix,'s'),
             IterationTest(['sigDec'],"For j in {1,...s}: ",aut_test_sigDec,'s'),
         )

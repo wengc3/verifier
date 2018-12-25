@@ -45,7 +45,7 @@ def prepareDecryptenProofs(decryption_proofs,publicKeyShares,e_bold,decryptions)
     decryption_proof_list = list()
     for index in range(len(publicKeyShares)):
         decryption_dict = {
-            'pi_j': decryption_proofs[index],
+            'pi_prime_j': decryption_proofs[index],
             'e_bold' : e_bold,
             'b_bold_prime_j': decryptions[index]
         }
