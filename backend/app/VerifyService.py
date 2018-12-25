@@ -324,7 +324,7 @@ class VerifyService(object):
         aut_test_sigCast = SignaturAuthenticityTest("5.2.7.0", "Check OT Response","Check Signatur of OT response",["sigCast_i"])
         aut_test_sigConf = SignaturAuthenticityTest("5.2.8.0", "Check Finalization","Check Signatur of finalization",["sigConf_i"])
         aut_test_sigMix = SignaturAuthenticityTest("5.2.9.0", "Check Mixed Result","Check Signatur of mixed and re-encrypton",["sigMix_j"])
-        aut_test_sigDec = SignaturAuthenticityTest("5.2.8.0", "Check Decryption","Check Signatur of decryption",["sigDec_j"])
+        aut_test_sigDec = SignaturAuthenticityTest("5.2.10.0", "Check Decryption","Check Signatur of decryption",["sigDec_j"])
 
         au_sig_tests.addTests(
             SignaturAuthenticityTest("5.2.1", "Check Full Params","Check Signatur of full election parameters",["sigParam1"]),
