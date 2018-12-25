@@ -321,10 +321,8 @@ class VerifyService(object):
         # Test for IterationTest
         aut_test_sigPrep = SignaturAuthenticityTest("5.2.5.0", "Check Public Credential","Check Signatur of public credential",["sigPrep_j"])
         aut_test_sigKgen = SignaturAuthenticityTest("5.2.6.0", "Check Public Keys","Check Signatur of public keys",["sigKgen_j"])
-        aut_test_sigCast_i = SignaturAuthenticityTest("5.2.7.0", "Check OT Response","Check Signatur of OT response",["sigCast_i"])
-        aut_test_sigCast_j = IterationTest('sigCast_j',"For i in {1,...Ne}: ",aut_test_sigCast_i,'Ne')
-        aut_test_sigConf_i = SignaturAuthenticityTest("5.2.8.0", "Check Finalization","Check Signatur of finalization",["sigConf_i"])
-        aut_test_sigConf_j = IterationTest('sigConf_j',"For i in {1,...Ne}: ",aut_test_sigConf_i,'Ne')
+        aut_test_sigCast = SignaturAuthenticityTest("5.2.7.0", "Check OT Response","Check Signatur of OT response",["sigCast_i"])
+        aut_test_sigConf = SignaturAuthenticityTest("5.2.8.0", "Check Finalization","Check Signatur of finalization",["sigConf_i"])
         aut_test_sigMix = SignaturAuthenticityTest("5.2.9.0", "Check Mixed Result","Check Signatur of mixed and re-encrypton",["sigMix_j"])
         aut_test_sigDec = SignaturAuthenticityTest("5.2.8.0", "Check Decryption","Check Signatur of decryption",["sigDec_j"])
 
@@ -335,8 +333,8 @@ class VerifyService(object):
             SignaturAuthenticityTest("5.2.4", "Check Tallying Result","Check Signatur of tallying result",["sigTally"]),
             IterationTest(['sigPrep'],"For j in {1,...s}: ",aut_test_sigPrep,'s'),
             IterationTest(['sigKgen'],"For j in {1,...s}: ",aut_test_sigKgen,'s'),
-            IterationTest(['sigCast'],"For j in {1,...s}: ",aut_test_sigCast_j,'s'),
-            IterationTest(['sigConf'],"For j in {1,...s}: ",aut_test_sigConf_j,'s'),
+            IterationTest(['sigCast'],"For j in {1,...s}: ",aut_test_sigCast,'s'),
+            IterationTest(['sigConf'],"For j in {1,...s}: ",aut_test_sigConf,'s'),
             IterationTest(['sigMix'],"For j in {1,...s}: ",aut_test_sigMix,'s'),
             IterationTest(['sigDec'],"For j in {1,...s}: ",aut_test_sigDec,'s'),
         )
