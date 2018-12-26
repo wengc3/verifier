@@ -32,6 +32,7 @@ class MatrixBitIntegrityTest(SingleTest):
             bit_arr = self.test_data
             rng = self.election_data[self.param]
             res = 'successful'
+            self.test_result.addTestData(self.param,rng)
             for j in range(rng):
                 if not (isinstance(bit_arr[j],bool) or int(bit_arr[j]) in range(2)):
                     res = 'failed'

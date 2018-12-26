@@ -41,6 +41,9 @@ class ShuffleProofIntegrityTest(SingleTest):
         res_c_bold = multiMathGroupeHelper(pi[2],N,param.p)
         res_c_hat_bold = multiMathGroupeHelper(pi[3],N,param.p)
         res_pi = res_pi_t and res_pi_s and res_c_bold and res_c_hat_bold
+        self.test_result.addTestData('p',param.p)
+        self.test_result.addTestData('q',param.q)
+        self.test_result.addTestData('N',N)
         return 'successful' if res_pi else 'failed'
 
 if __name__ == '__main__':

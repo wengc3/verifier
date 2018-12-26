@@ -42,6 +42,10 @@ class OTResponseIntegrityTest(SingleTest):
         res_b = multiMathGroupeHelper(mpzList(beta_j[0]),k_i,param.p)
         res_c_bold = multiByteArrayHelper(beta_j[1],n,k_i,param.L_M)
         res_d = IsMemberOfGroupe(mpz(beta_j[2]),param.p)
+        self.test_result.addTestData('p',param.p)
+        self.test_result.addTestData('L_M',param.L_M)
+        self.test_result.addTestData('n',n)
+        self.test_result.addTestData('k_i',k_i)
         return 'successful' if res_b and res_c_bold and res_d else 'failed'
 
 if __name__ == '__main__':

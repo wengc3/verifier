@@ -22,6 +22,8 @@ class InRangeIntegrityTest(SingleTest):
         """
         value = self.test_data
         max = self.election_data[self.param]
+        self.test_result.addTestData('min',self._min)
+        self.test_result.addTestData('max',max)
         return 'successful' if value in range(self._min,max + 1) else 'failed'
 
 if __name__ == '__main__':

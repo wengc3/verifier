@@ -20,6 +20,8 @@ class DecryptionIntegrityTest(SingleTest):
         b_bold_prime_j = self.test_data
         N = self.election_data['N']
         param = self.election_data['secparams']
+        self.test_result.addTestData('p',param.p)
+        self.test_result.addTestData('N',N)
         return 'successful' if multiMathGroupeHelper(b_bold_prime_j,N,param.p) else 'failed'
 
 if __name__ == '__main__':

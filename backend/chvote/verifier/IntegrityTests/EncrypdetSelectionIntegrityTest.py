@@ -20,6 +20,7 @@ class EncrypdetSelectionIntegrityTest(SingleTest):
         """
         a_bold = self.test_data
         param = self.election_data['secparams']
+        self.test_result.addTestData('p',param.p)
         for item in a_bold:
             if not multiMathGroupeHelper(item,2,param.p):
                 return 'failed'

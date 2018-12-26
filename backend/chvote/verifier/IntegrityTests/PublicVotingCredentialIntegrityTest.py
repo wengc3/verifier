@@ -29,6 +29,8 @@ class PublicVotingCredentialIntegrityTest(SingleTest):
             param = self.election_data['secparams']
             rng = self.election_data['s']
             res = 'successful'
+            self.test_result.addTestData('s',rng)
+            self.test_result.addTestData('p_hat',param.p_hat)
             for j in range(rng):
                 if not multiMathGroupeHelper(vector[j],2,param.p_hat):
                     res = 'failed'

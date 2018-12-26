@@ -21,7 +21,9 @@ from chvote.verifier.MultiTest import MultiTest
 from ConsoleView import ConsoleView
 socketio = SocketIO('localhost',5000)
 data_dict = dict()
+# electionID1="5c228607ed394c0012e2abf9" # multi election second c in beta_j is Null ?
 electionID1="5c0bb43740b1e1001273984f"
+# electionID1="5c232c1eed394c0012e2ac03" # hacked election
 
 def connect():
     print('connected')
@@ -82,7 +84,7 @@ verify_svc_1.verify(data_dict,report,secparams)
 
 # data_dict = prepareData(data_dict,secparams)
 # temp_dic = {'responses': data_dict['responses'],'s': data_dict['s']}
-# print(data_dict['ballots'][0]['ballot'])
+# print(data_dict['w_bold'])
 # print("_____________________________")
 # print(data_dict['responses'][0]['beta_j'])
 # print("_____________________________")
@@ -90,7 +92,7 @@ verify_svc_1.verify(data_dict,report,secparams)
 # print("_____________________________")
 # print(data_dict['confirmations'][0]['confirmation'])
 # print(str(data_dict['publicKey']))
-# print(len(data_dict['encryptions'][0]))
+# print(len(data_dict['shuffleProofs'][0]))
 # print(len(data_dict['n'])
 # print("_____________________________")
 

@@ -41,6 +41,10 @@ class PrimeConsistencyTest(SingleTest):
             param = election_data['secparams']
             primes = GetPrimes(n+w,param)
             p_prod = primes[-1]*prime_prod(primes,k_prime,n)
+            self.test_result.addTestData('k_prime',k_prime)
+            self.test_result.addTestData('primes',primes)
+            self.test_result.addTestData('p_prod',p_prod)
+            self.test_result.addTestData('p',param.p)
             return 'successful' if p_prod < param.p else 'failed'
         except KeyError:
             return 'skipped'

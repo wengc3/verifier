@@ -23,6 +23,9 @@ class DecryptionProofIntegrityTest(SingleTest):
         param = self.election_data['secparams']
         res_pi_t= IsMemberOfGroupe(mpz(pi[0][0]),param.p) and multiMathGroupeHelper(pi[0][1],N,param.p)
         res_pi_s = int(pi[1]) in range(param.q)
+        self.test_result.addTestData('p',param.p)
+        self.test_result.addTestData('q',param.q)
+        self.test_result.addTestData('N',N)
         return 'successful' if res_pi_t and res_pi_s else 'failed'
 
 if __name__ == '__main__':

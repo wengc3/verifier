@@ -23,6 +23,8 @@ class ConfProofIntegrityTest(SingleTest):
         pi = self.test_data
         res_pi_t = IsMemberOfGroupe(mpz(pi[0]),param.p_hat)
         res_pi_s = int(pi[1]) in range(param.q_hat)
+        self.test_result.addTestData('p_hat',param.p_hat)
+        self.test_result.addTestData('q_hat',param.q_hat)
         return 'successful' if res_pi_t and res_pi_s else 'failed'
 
 if __name__ == '__main__':

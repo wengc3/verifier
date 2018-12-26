@@ -21,6 +21,7 @@ class EncryptionIntegrityTest(SingleTest):
             e_bold_j = self.test_data
             N = self.election_data['N']
             param = self.election_data['secparams']
+            self.test_result.addTestData('p',param.p)
             for i in range(N):
                 if not multiMathGroupeHelper(e_bold_j[i],2,param.p):
                     return 'failed'

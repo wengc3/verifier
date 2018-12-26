@@ -24,6 +24,9 @@ class BallotProofIntegrityTest(SingleTest):
         pi_t = pi[1] #pi t as string array
         pi_s_res = IsMemberOfGroupe(mpz(pi_s[0]),param.p_hat) and multiMathGroupeHelper([mpz(pi_s[1]),mpz(pi_s[2])],2,param.p)
         pi_t_res = int(pi_t[0]) in range(param.q_hat) and IsMemberOfGroupe(mpz(pi_t[1]),param.p) and int(pi_t[0]) in range(param.q)
+        self.test_result.addTestData('p_hat',param.p_hat)
+        self.test_result.addTestData('p',param.p)
+        self.test_result.addTestData('q_hat',param.q_hat)
         return 'successful' if pi_s_res and pi_t_res else 'failed'
 
 

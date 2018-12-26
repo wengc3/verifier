@@ -28,6 +28,8 @@ class VectorItemsConsistenyTest(SingleTest):
             for item in self.election_data[vector_key]:
                 if item['voterId'] == id:
                     vector.append(item[item_key])
+            self.test_result.addTestData('Test Vector',vector)
+            self.test_result.addTestData('s',s)
             return 'successful' if len(vector) == s else 'failed'
         except KeyError:
             return 'skipped'
