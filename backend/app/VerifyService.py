@@ -254,7 +254,7 @@ class VerifyService(object):
 
         cons_election_tests = MultiTest("3.2","Election Tests","Test which conntains all election tests")
         # Tests for IterationTest
-        cons_ballot_test = VectorLengthConsistenyTest('3.2.1.0','Ballot Test','Check if |a_bold| = s',['ballot','a_bold'],'s')
+        cons_ballot_test = VectorLengthConsistenyTest('3.2.1.0','Ballot Test','Check if |a_bold| = s',['ballot','a_bold'],'t')
         cons_multi_test_response = MultiTest('3.2.2.0',"Response Tests","Test which conntains all responses tests")
         cons_multi_test_response.addTests(
             VectorItemsConsistenyTest('3.2.2.1.0','Check Response','For Beta_bold_i = {Beta_bold_i,1,...,Beta_bold_i,s}, Check if |Beta_bold_i| = s',['voterId'],['responses','beta_j']),
@@ -276,23 +276,19 @@ class VerifyService(object):
         cons_post_election_tests = MultiTest("3.3","Post Election Tests","Test which conntains all post election tests")
         # Tests for IterationTests
         cons_encryption_test = VectorLengthConsistenyTest('3.3.2.0','Check Encryption','Check if |e_bold_j| = N',['e_bold_j'],'N')
-        cons_shuffleProof_test = VectorLengthConsistenyTest('3.3.4.0','Check ShuffleProof','Check if |pi_j| = N',['pi_j'],'N')
-        cons_decryption_test = VectorLengthConsistenyTest('3.3.6.0','Check Decryption','Check if |b_bold_prime_j| = N',['b_bold_prime_j'],'N')
-        cons_decryptionProof_test = VectorLengthConsistenyTest('3.3.8.0','Check DecryptionProof','Check if |pi_prime_j| = N',['pi_prime_j'],'N')
+        cons_decryption_test = VectorLengthConsistenyTest('3.3.5.0','Check Decryption','Check if |b_bold_prime_j| = N',['b_bold_prime_j'],'N')
 
         cons_post_election_tests.addTests(
-            MatrixLengthConsistenyTest('3.3.1', "Check Encryptions","Check if |E_bold_prime| = (N,t)",['encryptions'],['N','t','e_bold_j']),
+            MatrixLengthConsistenyTest('3.3.1', "Check Encryptions","Check if |E_bold_prime| = (N,s)",['encryptions'],['N','s','e_bold_j']),
             IterationTest(['encryptions'],"For j in {1,..,s}: ",cons_encryption_test,'s'),
             VectorLengthConsistenyTest('3.3.3','Check ShuffleProofs','Check if |pi| = s',['shuffleProofs'],'s'),
-            IterationTest(['shuffleProofs'],"For j in {1,..,s}: ",cons_shuffleProof_test,'s'),
-            VectorLengthConsistenyTest('3.3.5','Check Decryptions','Check if |B_bold_prime| = s',['decryptions'],'s'),
+            VectorLengthConsistenyTest('3.3.4','Check Decryptions','Check if |B_bold_prime| = s',['decryptions'],'s'),
             IterationTest(['decryptions'],"For j in {1,..,s}: ",cons_decryption_test,'s'),
-            VectorLengthConsistenyTest('3.3.7','Check DecryptionProofs','Check if |pi_prime| = s',['decryptionProofs'],'s'),
-            IterationTest(['decryptionProofs'],"For j in {1,..,s}: ",cons_decryptionProof_test,'s'),
-            MatrixLengthConsistenyTest('3.3.9', "Check Votes","Check if |V_bold| = (N,n)",['votes'],['N','n','v_i']),
-            MatrixLengthConsistenyTest('3.3.10', "Check Election Result","Check if |W_bold| = (N,w)",['w_bold'],['N','w','omega_i']),
-            VectorLengthConsistenyTest('3.3.11','Check Mixing Signatur','Check if |sigMix| = s',['sigMix'],'s'),
-            VectorLengthConsistenyTest('3.3.12','Check Decryption Signatur','Check if |sigDec| = s',['sigDec'],'s'),
+            VectorLengthConsistenyTest('3.3.6','Check DecryptionProofs','Check if |pi_prime| = s',['decryptionProofs'],'s'),
+            MatrixLengthConsistenyTest('3.3.7', "Check Votes","Check if |V_bold| = (N,n)",['votes'],['N','n','v_i']),
+            MatrixLengthConsistenyTest('3.3.8', "Check Election Result","Check if |W_bold| = (N,w)",['w_bold'],['N','w','omega_i']),
+            VectorLengthConsistenyTest('3.3.9','Check Mixing Signatur','Check if |sigMix| = s',['sigMix'],'s'),
+            VectorLengthConsistenyTest('3.3.10','Check Decryption Signatur','Check if |sigDec| = s',['sigDec'],'s'),
         )
         consistency_tests.addTests(cons_pre_election_tests, cons_election_tests, cons_post_election_tests)
 

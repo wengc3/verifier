@@ -33,7 +33,7 @@ class MatrixLengthConsistenyTest(SingleTest):
             self.test_result.addTestData(key_0, size_0)
             self.test_result.addTestData(key_1 , size_1)
             res_sec_0 = len(matrix) == size_0
-            res_sec_1 = len(matrix[0]) == size_1
+            res_sec_1 = all([len(elem) == size_1 for elem in matrix])
             return 'successful' if res_sec_0 and res_sec_1 else 'failed'
         except KeyError:
             return 'skipped'

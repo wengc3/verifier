@@ -13,7 +13,10 @@ def multiByteArrayHelper(vector,n,k,param):
     try:
         for i in range(n):
             for j in range(k):
-                if not len(bytearray.fromhex(vector[i][j])) == param:
+                c = vector[i][j]
+                if not type(c) is str:
+                    return False
+                if not len(bytearray.fromhex(c)) == param:
                     return False
         return True
     except IndexError:
