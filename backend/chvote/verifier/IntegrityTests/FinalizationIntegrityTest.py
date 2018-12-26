@@ -21,10 +21,11 @@ class FinalizationIntegrityTest(SingleTest):
         try:
             delta_j = self.test_data
             param = self.election_data['secparams']
+            res_f = len(bytearray.fromhex(delta_j[0])) == param.L_F
             res_rand = int(delta_j[1][0]) in range(param.q) and int(delta_j[1][1]) in range(param.q)
             return 'successful' if res_f and res_rand else 'failed'
         except TypeError:
-            return 'false'
+            return 'failed'
 
 
 if __name__ == '__main__':
