@@ -218,7 +218,7 @@ class VerifyService(object):
         int_dec_test = DecryptionIntegrityTest("2.3.3.0", "Test Decryption",'Check if b_bold_prime_j in G_q^N',['b_bold_prime_j'])
         int_dp_test = DecryptionProofIntegrityTest("2.3.4.0", "Test DecryptionProof",'Check if pi_prime_j in (G_q x G_q^N) x Z_q',['pi_prime_j'])
         int_vote_test = MatrixBitIntegrityTest("2.3.5.0", "Test Vote",'Check if v_ij in [0,1]',['v_i'],'s')
-        int_election_result_test = MatrixBitIntegrityTest("2.3.6.0", "Test Election Result",'Check if omega_ij in [0,1]',['omega_i'],'s')
+        int_election_result_test = MatrixBitIntegrityTest("2.3.6.0", "Test Election Result",'Check if omega_ij in [0,1]',['omega_i'],'w')
         int_sig_mix_test = SignaturIntegrityTest("2.3.7.0","Check Mixing Signatur","Check if sigMix_j in Bit^l x Z_q",["sigMix_j"])
         int_sig_dec_test = SignaturIntegrityTest("2.3.8.0","Check Decryption Signatur","Check if sigDec_j in Bit^l x Z_q",["sigDec_j"])
         int_post_election_tests.addTests(
