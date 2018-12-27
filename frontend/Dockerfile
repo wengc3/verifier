@@ -1,7 +1,7 @@
 FROM nginx:alpine
 COPY nginx-vhost.conf /etc/nginx/conf.d/default.conf
 RUN apk update
-RUN apk add nodejs
+RUN apk add nodejs-npm
 ADD . /var/www
 WORKDIR /var/www
 RUN chown -R nginx /var/www
