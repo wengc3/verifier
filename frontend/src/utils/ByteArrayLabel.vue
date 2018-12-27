@@ -1,7 +1,7 @@
 <template>
   <span>
     {{ data.truncatedValue() }}
-    <v-menu offset-y :max-width="600">
+    <v-menu v-if='truncated' offset-y :max-width="600">
       <v-btn small flat icon slot="activator" style="margin-left: 0px; color: rgba(0,0,0,.54)">
         <v-icon>mdi-dots-horizontal</v-icon>
       </v-btn>
@@ -36,6 +36,9 @@ export default {
     }
   },
   computed: {
+    truncated: function () {
+      return this.value.length > 6
+    },
     data () {
       return {
         truncatedValue: () => {

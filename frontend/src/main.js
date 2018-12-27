@@ -30,7 +30,6 @@ import ElectionOverviewPage from './pages/election/ElectionOverviewPage.vue'
 import ElectionAdminPage from './pages/election/ElectionAdminPage.vue'
 import BulletinBoardPage from './pages/election/BulletinBoardPage.vue'
 import VerifierPage from './pages/election/VerifierPage.vue'
-import VerifierRunPage from './pages/election/VerifierRunPage.vue'
 import ElectionAuthorityPage from './pages/election/ElectionAuthorityPage.vue'
 import ConfirmationTaskPage from './pages/election/electionAuthoritySubpages/ConfirmationTaskPage.vue'
 import CheckBallotTaskPage from './pages/election/electionAuthoritySubpages/CheckBallotTaskPage.vue'
@@ -54,9 +53,13 @@ import TupleElement from './utils/TupleElement.vue'
 import DataCard from './utils/DataCard.vue'
 import ContentTitle from './utils/ContentTitle.vue'
 
-import VerifierCategory from './utils/VerifierCategory.vue'
-import VerifierResult from './utils/VerifierResult.vue'
-import VerifierResultCardText from './utils/VerifierResultCardText.vue'
+import VerifierCategory from './verifierPageComponents/VerifierCategory.vue'
+import ResultTree from './verifierPageComponents/ResultTree.vue'
+import DataParser from './verifierPageComponents/DataParser.vue'
+import Result from './verifierPageComponents/resultTreeComponents/Result.vue'
+import IterationResult from './verifierPageComponents/resultTreeComponents/IterationResult.vue'
+import MultiResult from './verifierPageComponents/resultTreeComponents/MultiResult.vue'
+import ResultCard from './verifierPageComponents/resultTreeComponents/ResultCard.vue'
 
 // css
 import 'vuetify/dist/vuetify.min.css'
@@ -74,7 +77,6 @@ const routes = [
   { path: '/election/:electionId/voter/:voterId', name: 'voter', component: VoterPage },
   { path: '/election/:electionId/bulletinBoard', name: 'bulletinboard', component: BulletinBoardPage },
   { path: '/election/:electionId/verifier', name: 'verifier', component: VerifierPage },
-  { path: '/election/:electionId/verifierrun', name: 'verifierrun', component: VerifierRunPage },
   { path: '/election/:electionId/electionAuthority/:authid', name: 'electionauthority', component: ElectionAuthorityPage },
   { path: '*', redirect: { name: 'home' } }
 ]
@@ -117,8 +119,12 @@ Vue.component('BallotList', BallotList)
 Vue.component('ElectionResult', ElectionResult)
 
 Vue.component('verifier-category', VerifierCategory)
-Vue.component('verifier-result', VerifierResult)
-Vue.component('verifier-result-card-text', VerifierResultCardText)
+Vue.component('result', Result)
+Vue.component('result-tree', ResultTree)
+Vue.component('result-card', ResultCard)
+Vue.component('iteration-result', IterationResult)
+Vue.component('multi-result', MultiResult)
+Vue.component('data-parser', DataParser)
 
 Vue.url.options.root = process.env.URL_ROOT
 Vue.use(VueSocketio, process.env.SOCKETIO_BASE_URL, store)
