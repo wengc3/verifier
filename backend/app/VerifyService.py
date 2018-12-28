@@ -35,7 +35,6 @@ from chvote.verifier.IntegrityTests.DecryptionIntegrityTest import DecryptionInt
 from chvote.verifier.IntegrityTests.DecryptionProofIntegrityTest import DecryptionProofIntegrityTest
 
 from chvote.verifier.ConsistencyTests.VectorLengthConsistenyTest import VectorLengthConsistenyTest
-from chvote.verifier.ConsistencyTests.MatrixLengthConsistenyTest import MatrixLengthConsistenyTest
 from chvote.verifier.ConsistencyTests.PrimeConsistencyTest import PrimeConsistencyTest
 from chvote.verifier.ConsistencyTests.VectorItemsConsistenyTest import VectorItemsConsistenyTest
 
