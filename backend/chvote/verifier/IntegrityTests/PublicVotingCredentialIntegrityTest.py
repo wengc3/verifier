@@ -27,12 +27,12 @@ class PublicVotingCredentialIntegrityTest(SingleTest):
         try:
             vector = self.test_data
             param = self.election_data['secparams']
-            rng = self.election_data['s']
+            rng = self.election_data['N']
             res = 'successful'
-            self.test_result.addTestData('s',rng)
+            self.test_result.addTestData('N',rng)
             self.test_result.addTestData('p_hat',param.p_hat)
-            for j in range(rng):
-                if not multiMathGroupeHelper(vector[j],2,param.p_hat):
+            for i in range(rng):
+                if not multiMathGroupeHelper(vector[i],2,param.p_hat):
                     res = 'failed'
             return res
         except IndexError:
@@ -45,5 +45,5 @@ if __name__ == '__main__':
     from app.verifier.Report import Report
     TestResult.setReport(Report("1"))
     pvci_test = PublicVotingCredentialIntegrityTest("1.1","TEST","TEST",["d_hat_i"])
-    pvci_test.election_data = {'secparams': secparams_l3, 's':3}
+    pvci_test.election_data = {'secparams': secparams_l3, 'N':3}
     doctest.testmod(extraglobs={'pvcit': pvci_test})

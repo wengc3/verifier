@@ -150,7 +150,7 @@ class VerifyService(object):
         int_test_candidate = StringIntegrityTest("2.1.9.0", "Check Candidate","Check if Candidate is in A*_ucs",["C_i"])
         int_test_voter = StringIntegrityTest("2.1.10.0", "Check Voter","Check if Voter is in A*_ucs",["V_i"])
         int_test_countingCircle = InRangeIntegrityTest("2.1.11.0", "Check CountingCircle","Check if w_i in {1,...,w}",["w_i"],1,"w")
-        int_test_pubc = PublicVotingCredentialIntegrityTest("2.1.12.0", "Check PublicVotingCredential","Check if d_hat_ij in G_q_hat^2",["d_hat_i"])
+        int_test_pubc = PublicVotingCredentialIntegrityTest("2.1.12.0", "Check PublicVotingCredential","Check if d_hat_ij in G_q_hat^2",["d_hat_j"])
         int_test_pk = MathGroupeIntegritiyTest("2.1.13.0","Check Public key","For all authority test it's Public key",['pk_j'],'p')
         int_test_sigPrep = SignaturIntegrityTest("2.1.17.0","Check PublicVotingCredential Signatur","Check if sigPrep_j in Bit x Z_q",["sigPrep_j"])
         int_test_sigKgen = SignaturIntegrityTest("2.1.18.0","Check PublicVoting Key Signatur","Check if sigKgen_j in Bit x Z_q",["sigKgen_j"])
@@ -166,7 +166,7 @@ class VerifyService(object):
             IterationTest(["candidates"],"for i in {1,...,n} ", int_test_candidate,'n'),
             IterationTest(["voters"],"for i in {1,...,Ne} ", int_test_voter,'Ne'),
             IterationTest(["countingCircles"],"for i in {1,...,Ne} ", int_test_countingCircle,'Ne'),
-            IterationTest(["partialPublicVotingCredentials"],"for i in {1,...,Ne} ", int_test_pubc,'Ne'),
+            IterationTest(["partialPublicVotingCredentials"],"for i in {1,...,s} ", int_test_pubc,'s'),
             SignaturIntegrityTest("2.1.14","Check Full Signatur","Check if sigParam1 in Bit x Z_q",["sigParam1"]),
             SignaturIntegrityTest("2.1.15","Check Part Signatur","Check if sigParam2 in Bit x Z_q",["sigParam2"]),
             SignaturIntegrityTest("2.1.16","Check other Part Signatur","Check if sigParam3 in Bit x Z_q",["sigParam3"]),
@@ -238,23 +238,26 @@ class VerifyService(object):
         consistency_tests = MultiTest("3","Consistency Tests","Test which conntains all consistency tests")
         cons_pre_election_tests = MultiTest("3.1","Pre Election Tests","Test which conntains all pre election tests")
         # Tests for Integrity Tests
-        cons_test_pvc = VectorLengthConsistenyTest("3.1.8.0","Check PartialPublicVotingCredential","Check if |d_hat_j| = Ne",["d_hat_i"],"Ne")
+        cons_pvc_test = VectorLengthConsistenyTest("3.1.9.0","Check PartialPublicVotingCredential","Check if |d_hat_j| = Ne",["d_hat_j"],"Ne")
+        cons_elig_test = VectorLengthConsistenyTest("3.1.4.0","Check EligibilityMatrix Element","Check if |e_i| = t",["e_i"],"t")
+
         cons_pre_election_tests.addTests(
             VectorLengthConsistenyTest("3.1.1","Check Number of Candidates","Check if |numberOfCandidates| = t",["numberOfCandidates"],"t"),
             VectorLengthConsistenyTest("3.1.2","Check Number of selections","Check if |numberOfSelections| = t",["numberOfSelections"],"t"),
-            MatrixLengthConsistenyTest("3.1.3","Check EligibilityMatrix","Check if |E| = (Ne,t)",["eligibilityMatrix"],["Ne","t",'e_i']),
-            VectorLengthConsistenyTest("3.1.4","Check Candidates","Check if |candidates| = n",["candidates"],"n"),
-            VectorLengthConsistenyTest("3.1.5","Check Voters","Check if |voters| = Ne",["voters"],"Ne"),
-            VectorLengthConsistenyTest("3.1.6","Check CountingCircles","Check if |countingCircles| = Ne",["countingCircles"],"Ne"),
-            VectorLengthConsistenyTest("3.1.7","Check PartialPublicVotingCredentials","Check if |partialPublicVotingCredentials| = s",["partialPublicVotingCredentials"],"s"),
-            IterationTest(["partialPublicVotingCredentials"],"For j in {1,...,s} ",cons_test_pvc,'s'),
-            VectorLengthConsistenyTest("3.1.9","Check PublicKeyShares","Check if |publicKeyShares| = s",["publicKeyShares"],"s"),
-            PrimeConsistencyTest("3.1.10","Check Primes","Check if p_n+w * prod(list) < p.",["numberOfSelections"])
+            VectorLengthConsistenyTest("3.1.3","Check EligibilityMatrix","Check if |E| = Ne",["eligibilityMatrix"],"Ne"),
+            IterationTest(["eligibilityMatrix"],"For i in {1,...,Ne} ",cons_elig_test,'Ne'),
+            VectorLengthConsistenyTest("3.1.5","Check Candidates","Check if |candidates| = n",["candidates"],"n"),
+            VectorLengthConsistenyTest("3.1.6","Check Voters","Check if |voters| = Ne",["voters"],"Ne"),
+            VectorLengthConsistenyTest("3.1.7","Check CountingCircles","Check if |countingCircles| = Ne",["countingCircles"],"Ne"),
+            VectorLengthConsistenyTest("3.1.8","Check PartialPublicVotingCredentials","Check if |partialPublicVotingCredentials| = s",["partialPublicVotingCredentials"],"s"),
+            IterationTest(["partialPublicVotingCredentials"],"For j in {1,...,s} ",cons_pvc_test,'s'),
+            VectorLengthConsistenyTest("3.1.10","Check PublicKeyShares","Check if |publicKeyShares| = s",["publicKeyShares"],"s"),
+            PrimeConsistencyTest("3.1.11","Check Primes","Check if p_n+w * prod(list) < p.",["numberOfSelections"])
         )
 
         cons_election_tests = MultiTest("3.2","Election Tests","Test which conntains all election tests")
         # Tests for IterationTest
-        cons_ballot_test = VectorLengthConsistenyTest('3.2.1.0','Ballot Test','Check if |a_bold| = s',['ballot','a_bold'],'t')
+        cons_ballot_test = VectorLengthConsistenyTest('3.2.1.0','Ballot Test','Check if |a_bold| = k',['ballot','a_bold'],'k')
         cons_multi_test_response = MultiTest('3.2.2.0',"Response Tests","Test which conntains all responses tests")
         cons_multi_test_response.addTests(
             VectorItemsConsistenyTest('3.2.2.1.0','Check Response','For Beta_bold_i = {Beta_bold_i,1,...,Beta_bold_i,s}, Check if |Beta_bold_i| = s',['voterId'],['responses','beta_j']),
@@ -277,18 +280,22 @@ class VerifyService(object):
         # Tests for IterationTests
         cons_encryption_test = VectorLengthConsistenyTest('3.3.2.0','Check Encryption','Check if |e_bold_j| = N',['e_bold_j'],'N')
         cons_decryption_test = VectorLengthConsistenyTest('3.3.5.0','Check Decryption','Check if |b_bold_prime_j| = N',['b_bold_prime_j'],'N')
+        cons_votes_test = VectorLengthConsistenyTest('3.3.8.0', "Check Vote Element","Check if |v_i| = n",['v_i'],'n')
+        cons_election_res_test = VectorLengthConsistenyTest('3.3.10.0', "Check Election Result Element","Check if |omega_i| = w",['omega_i'],'w')
 
         cons_post_election_tests.addTests(
-            MatrixLengthConsistenyTest('3.3.1', "Check Encryptions","Check if |E_bold_prime| = (N,s)",['encryptions'],['N','s','e_bold_j']),
+            VectorLengthConsistenyTest('3.3.1', "Check Encryptions","Check if |E_bold_prime| = s",['encryptions'],'s'),
             IterationTest(['encryptions'],"For j in {1,..,s}: ",cons_encryption_test,'s'),
             VectorLengthConsistenyTest('3.3.3','Check ShuffleProofs','Check if |pi| = s',['shuffleProofs'],'s'),
             VectorLengthConsistenyTest('3.3.4','Check Decryptions','Check if |B_bold_prime| = s',['decryptions'],'s'),
             IterationTest(['decryptions'],"For j in {1,..,s}: ",cons_decryption_test,'s'),
             VectorLengthConsistenyTest('3.3.6','Check DecryptionProofs','Check if |pi_prime| = s',['decryptionProofs'],'s'),
-            MatrixLengthConsistenyTest('3.3.7', "Check Votes","Check if |V_bold| = (N,n)",['votes'],['N','n','v_i']),
-            MatrixLengthConsistenyTest('3.3.8', "Check Election Result","Check if |W_bold| = (N,w)",['w_bold'],['N','w','omega_i']),
-            VectorLengthConsistenyTest('3.3.9','Check Mixing Signatur','Check if |sigMix| = s',['sigMix'],'s'),
-            VectorLengthConsistenyTest('3.3.10','Check Decryption Signatur','Check if |sigDec| = s',['sigDec'],'s'),
+            VectorLengthConsistenyTest('3.3.7', "Check Votes","Check if |V_bold| = N",['votes'],'N'),
+            IterationTest(['votes'],"For i in {1,..,N}: ",cons_votes_test,'N'),
+            VectorLengthConsistenyTest('3.3.9', "Check Election Result","Check if |W_bold| = N",['w_bold'],'N'),
+            IterationTest(['w_bold'],"For i in {1,..,N}: ",cons_election_res_test,'N'),
+            VectorLengthConsistenyTest('3.3.11','Check Mixing Signatur','Check if |sigMix| = s',['sigMix'],'s'),
+            VectorLengthConsistenyTest('3.3.12','Check Decryption Signatur','Check if |sigDec| = s',['sigDec'],'s'),
         )
         consistency_tests.addTests(cons_pre_election_tests, cons_election_tests, cons_post_election_tests)
 

@@ -73,7 +73,7 @@ def prepareData(data_dict,secparams):
     data_dict['publicKeyShares'] = addKeyToVector(data_dict.get('publicKeyShares',[]),'pk_j')
     data_dict['numberOfCandidates'] = addKeyToVector(data_dict.get('numberOfCandidates',[]),'n_j')
     data_dict['numberOfSelections'] = addKeyToVector(data_dict.get('numberOfSelections',[]),'k_j')
-    data_dict['partialPublicVotingCredentials'] = addKeyToVector(data_dict.get('partialPublicVotingCredentials',[]),'d_hat_i')
+    data_dict['partialPublicVotingCredentials'] = addKeyToVector(data_dict.get('partialPublicVotingCredentials',[]),'d_hat_j')
     data_dict['finalizations'] = extractValues(data_dict.get('confirmations',[]),'finalizations','delta_j')
     data_dict['shuffleProofs'] = prepareShufleProofs(
                                 data_dict.get('shuffleProofs',[]),
