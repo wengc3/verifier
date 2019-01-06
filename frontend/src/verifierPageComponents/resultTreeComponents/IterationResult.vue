@@ -27,7 +27,6 @@
 
 <script>
 import getTotalChildrenMixin from '../../mixins/getTotalChildrenMixin.js'
-
 export default{
   data: () => ({
     pagination: {

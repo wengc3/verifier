@@ -8,16 +8,15 @@
         <h3>{{category.title}}</h3>
         <verifier-category @get-info="getInfo" :category_id="category.id" :disabled="status != 'completed' "></verifier-category>
       </v-flex>
-      <v-flex mx-5 v-if="!hideBarAndStatus" xs10>
+      <v-flex mx-5 v-if="!hideBarAndStatus && status !== 'idle'" xs10>
         <v-progress-linear height="10" v-model="progress"></v-progress-linear>
         <p>{{getStatus}}</p>
       </v-flex>
       <v-flex xs12 text-xs-center >
         <v-btn flat blue v-if="status != 'completed'" @click="verify()">Start Verifier</v-btn>
-        <v-icon v-if="status === 'running'">mdi-spin mdi-loading</v-icon>
       </v-flex>
       <v-layout row wrap v-if="hideBarAndStatus">
-        <v-radio-group @change="filterChanged"xs2 v-model="filter" :mandatory="false">
+        <v-radio-group xs2 v-model="filter" :mandatory="false">
           <v-radio label="All results" value="all"></v-radio>
           <v-radio label="Succesfull results" value="successful"></v-radio>
           <v-radio label="Failed results" value="failed"></v-radio>
@@ -59,7 +58,6 @@ export default {
       this.tab = 0
       this.filter = this.$store.state.Verifier.categories[id - 1].value
       console.log('filter', this.filter)
-      this.filterChanged()
     },
     filterChanged: function () {
       this.$store.commit({
@@ -92,7 +90,12 @@ export default {
       return this.$store.state.Verifier.categories
     },
     currentResults: function () {
-      return this.$store.state.Verifier.currentResults
+      if (this.status === 'completed') {
+        return this.$store.getters.currentResults({
+          id: this.currentCategory,
+          filter: this.filter
+        })
+      }
     }
   },
   created: function () {
