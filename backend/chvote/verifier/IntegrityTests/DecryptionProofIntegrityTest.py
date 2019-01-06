@@ -10,7 +10,7 @@ from chvote.Common.IsMemberOfGroupe import IsMemberOfGroupe
 class DecryptionProofIntegrityTest(SingleTest):
     """docstring for DecryptionProofIntegrityTest."""
 
-    @completness_decorate
+    @completness_decorate()
     def runTest(self,election_data):
         """
         Test if pi_prime_j in (G_q x G_q^N) x Z_q

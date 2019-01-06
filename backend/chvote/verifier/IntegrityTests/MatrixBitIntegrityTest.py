@@ -11,7 +11,7 @@ class MatrixBitIntegrityTest(SingleTest):
         SingleTest.__init__(self, id,title,description,keys)
         self.param = param
 
-    @completness_decorate
+    @completness_decorate()
     def runTest(self,election_data):
         """
         Test if element is in [0,1]

@@ -15,14 +15,21 @@ class SingleCompletnessTest(SingleTest):
         >>> res.test_result
         'successful'
         >>> sct.test_result.test_data
-        [{'test': 123}]
+        [{'test': 'was found in election data'}]
         >>> res = sct.runTest({'bla':123})
         >>> res.test_result
         'failed'
         >>> sct.test_result.test_data
-        []
+        [{'test': 'was not found in election data'}]
         """
-        return 'successful' if completness_test(self,election_data) else 'failed'
+        result = self.test_result
+        if completness_test(self,election_data,False):
+            res = 'successful'
+            result.addTestData(self.keys[-1],'was found in election data')
+        else:
+            res = 'failed'
+            result.addTestData(self.keys[-1],'was not found in election data')
+        return res
 
 if __name__ == '__main__':
     import doctest

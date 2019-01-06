@@ -10,7 +10,7 @@ from chvote.verifier.IntegrityTests.multiMathGroupeHelper import multiMathGroupe
 
 class BallotProofIntegrityTest(SingleTest):
     """docstring for ."""
-    @completness_decorate
+    @completness_decorate()
     def runTest(self,election_data):
         """
         Test if pi is in (G_q_hat x G_q^2) x (Z_q_hat x G_q x Z_q)

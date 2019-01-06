@@ -7,7 +7,7 @@ from chvote.Utils.VerifierHelper import completness_decorate
 class CertificateAuthenticityTest(SingleTest):
     """docstring for CertificateTest."""
 
-    @completness_decorate
+    @completness_decorate()
     def runTest(self,election_data):
         """
         Certificates are not in election_data
@@ -24,7 +24,7 @@ class CertificateAuthenticityTest(SingleTest):
 class SignaturAuthenticityTest(SingleTest):
     """docstring for SignaturAuthenticityTest."""
 
-    @completness_decorate
+    @completness_decorate()
     def runTest(self,election_data):
         """
         Signatures are not in election_data

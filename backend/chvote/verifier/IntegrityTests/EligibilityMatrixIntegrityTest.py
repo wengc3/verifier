@@ -8,7 +8,7 @@ from chvote.Utils.VerifierHelper import completness_decorate
 class EligibilityMatrixIntegrityTest(SingleTest):
     """docstring for EligibilityMatrixIntegrityTest."""
 
-    @completness_decorate
+    @completness_decorate()
     def runTest(self,election_data):
         """
         Test if sum(e_ij) >= 1

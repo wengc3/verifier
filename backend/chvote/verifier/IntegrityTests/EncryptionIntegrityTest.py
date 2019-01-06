@@ -9,7 +9,7 @@ from chvote.verifier.IntegrityTests.multiMathGroupeHelper import multiMathGroupe
 class EncryptionIntegrityTest(SingleTest):
     """docstring for EncryptionIntegrityTest."""
 
-    @completness_decorate
+    @completness_decorate()
     def runTest(self,election_data):
         """
         For i in {1,..,N} Test if e_bold_j[i] is in G_q^2

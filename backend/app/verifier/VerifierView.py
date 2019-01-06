@@ -46,4 +46,6 @@ class VerifierView(Observer):
     def _reportCreated(self):
         emitToClient('allResults',self.report.json_result,SyncType.ROOM,self.report.electionID)
 
-    _functions = {'testRunning': _testRunning ,'newProgress': _newProgress, 'newResult': _newResult, 'reportCreated': _reportCreated}
+    _functions = {'testRunning': _testRunning ,
+                  'newProgress': _newProgress,
+                  'newResult': _newResult, 'reportCreated': _reportCreated}

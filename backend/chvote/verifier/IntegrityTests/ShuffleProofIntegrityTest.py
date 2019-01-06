@@ -19,7 +19,7 @@ def multiRangeTestHelper(vector,rng,param):
 class ShuffleProofIntegrityTest(SingleTest):
     """docstring for ShuffleProofIntegrityTest."""
 
-    @completness_decorate
+    @completness_decorate()
     def runTest(self,election_data):
         """
         Test if pi_j in (G_q^3 x G_q^2 x G_q^N) x (Z_q^4 x Z_q^N x Z_q^N) x G_q^N x G_q^N

@@ -20,7 +20,7 @@ class IterationTest(SingleTest):
     def range_key(self):
         return self._range_key
 
-    @completness_decorate
+    @completness_decorate(addData = False)
     def runTest(self,election_data):
         vector = self.test_data
         if hasattr(self,'election_data'):

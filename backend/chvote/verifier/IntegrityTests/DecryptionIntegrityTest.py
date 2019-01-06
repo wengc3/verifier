@@ -9,7 +9,7 @@ from chvote.Common.IsMemberOfGroupe import IsMemberOfGroupe
 
 class DecryptionIntegrityTest(SingleTest):
     """docstring for DecryptionIntegrityTest."""
-    @completness_decorate
+    @completness_decorate()
     def runTest(self,election_data):
         """
         Test if b_bold_prime_j in G_q^N

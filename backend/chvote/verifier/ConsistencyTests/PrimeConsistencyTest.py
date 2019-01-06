@@ -22,7 +22,7 @@ class PrimeConsistencyTest(SingleTest):
     docstring for PrimeConsistenyTest.
     """
 
-    @completness_decorate
+    @completness_decorate()
     def runTest(self,election_data):
         """
         Check if p_n+w * prod(list) < p.
@@ -54,4 +54,4 @@ if __name__ == '__main__':
     from chvote.verifier.TestResult import TestResult
     from app.verifier.Report import Report
     TestResult.setReport(Report("1"))
-    doctest.testmod(extraglobs={'pct': PrimeConsistenyTest("1.1","TEST","TEST",["numberOfSelections"])})
+    doctest.testmod(extraglobs={'pct': PrimeConsistencyTest("1.1","TEST","TEST",["numberOfSelections"])})

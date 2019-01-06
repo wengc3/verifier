@@ -1,4 +1,6 @@
+import os, sys
 from gmpy2 import mpz
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))))
 from chvote.Common.IsMemberOfGroupe import IsMemberOfGroupe
 
 def multiMathGroupeHelper(vector,rng,param):

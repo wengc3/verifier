@@ -10,7 +10,7 @@ from chvote.verifier.IntegrityTests.multiMathGroupeHelper import multiMathGroupe
 class EncrypdetSelectionIntegrityTest(SingleTest):
     """docstring for EncrypdetSelectionIntegrityTest."""
 
-    @completness_decorate
+    @completness_decorate()
     def runTest(self,election_data):
         """
         Test if each element is in (G_q^2)

@@ -12,7 +12,7 @@ class VectorLengthConsistenyTest(SingleTest):
         SingleTest.__init__(self, id,title,description,key)
         self.refer_key = test_key
 
-    @completness_decorate
+    @completness_decorate()
     def runTest(self,election_data):
         """
         Check if vector has required lenght.

@@ -1,4 +1,6 @@
 import abc
+import os, sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 from chvote.verifier.Test import Test
 
 class SingleTest(Test,metaclass=abc.ABCMeta):

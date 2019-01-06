@@ -12,7 +12,7 @@ class InRangeIntegrityTest(SingleTest):
         self.param = param
         self._min = min
 
-    @completness_decorate
+    @completness_decorate()
     def runTest(self,election_data):
         """
         Test if element is in range(min,max + 1)

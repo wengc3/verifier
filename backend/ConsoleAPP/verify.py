@@ -22,8 +22,8 @@ from ConsoleView import ConsoleView
 socketio = SocketIO('localhost',5000)
 data_dict = dict()
 # electionID1="5c228607ed394c0012e2abf9" # multi election second c in beta_j is Null ?
-# electionID1="5c0bb43740b1e1001273984f"
-electionID1="5c24fc25d7033400125c00b8" # multi selections
+electionID1="5c0bb43740b1e1001273984f"
+# electionID1="5c24fc25d7033400125c00b8" # multi selections
 # electionID1="5c232c1eed394c0012e2ac03" # hacked election
 
 def connect():
@@ -58,10 +58,10 @@ elif seclevel == 2:
 else:
     secparams = secparams_l3
 
-report = Report(electionID1)
-console = ConsoleView(step=0.2,depth = 3)
-report.attach(console)
-verify_svc_1.verify(data_dict,report,secparams)
+# report = Report(electionID1)
+# console = ConsoleView(step=0.2,depth = 3)
+# report.attach(console)
+# verify_svc_1.verify(data_dict,report,secparams)
 
 # getData(electionID1)
 # socketio.wait(seconds=1)
@@ -83,7 +83,7 @@ verify_svc_1.verify(data_dict,report,secparams)
 # print(data_dict['securityLevel'])
 # print(data_dict['publicKeyShares'][0])
 
-# data_dict = prepareData(data_dict,secparams)
+data_dict = prepareData(data_dict,secparams)
 # temp_dic = {'responses': data_dict['responses'],'s': data_dict['s']}
 # print(data_dict['w_bold'])
 # print("_____________________________")
@@ -92,7 +92,7 @@ verify_svc_1.verify(data_dict,report,secparams)
 # print(len(data_dict['partialPublicVotingCredentials'][2]))
 # print("_____________________________")
 # print(data_dict['confirmations'][0]['confirmation'])
-# print(str(data_dict['publicKey']))
+print(str(data_dict['eligibilityMatrix']))
 # print(len(data_dict['shuffleProofs'][0]))
 # print(len(data_dict['n'])
 # print("_____________________________")

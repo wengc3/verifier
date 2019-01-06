@@ -24,7 +24,7 @@ def multiByteArrayHelper(vector,n,k,param):
 
 class OTResponseIntegrityTest(SingleTest):
     """docstring for OTResponseIntegrityTest."""
-    @completness_decorate
+    @completness_decorate()
     def runTest(self,election_data):
         """
         Test if beta_j is in G_q^k_i x (Beta_bold^L_M)^n*k_i x G_q
@@ -55,5 +55,5 @@ if __name__ == '__main__':
     from app.verifier.Report import Report
     TestResult.setReport(Report("1"))
     ori_test = OTResponseIntegrityTest("1.1","TEST","TEST",["beta_j"])
-    ori_test.election_data = {'eligibilityMatrix': [{'e_i': [{'e_j': True}]}, {'e_i': [{'e_j': True}]}, {'e_i': [{'e_j': True}]}], 'k': 1, 'n': 3, 'secparams': secparams_l3}
+    ori_test.election_data = {'eligibilityMatrix': [{'e_i': [True]}, {'e_i': [True]}, {'e_i': [True]}], 'k': 1, 'n': 3, 'secparams': secparams_l3}
     doctest.testmod(extraglobs = {'orit': ori_test})

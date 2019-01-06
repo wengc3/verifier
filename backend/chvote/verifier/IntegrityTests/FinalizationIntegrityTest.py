@@ -10,7 +10,7 @@ from chvote.verifier.IntegrityTests.multiMathGroupeHelper import multiMathGroupe
 class FinalizationIntegrityTest(SingleTest):
     """docstring for RandomizationIntegrityTest."""
 
-    @completness_decorate
+    @completness_decorate()
     def runTest(self,election_data):
         """
         Test if delta_j is in Beta_bold^L_F x Z_q^2

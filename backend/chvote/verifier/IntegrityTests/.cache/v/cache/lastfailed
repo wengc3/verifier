@@ -1,0 +1,17 @@
+{
+  "BallotProofIntegrityTest.py::IntegrityTests.BallotProofIntegrityTest.BallotProofIntegrityTest.runTest": true,
+  "BiggerThanIntegrityTest.py::IntegrityTests.BiggerThanIntegrityTest.BiggerThanIntegrityTest.runTest": true,
+  "ConfProofIntegrityTest.py::IntegrityTests.ConfProofIntegrityTest.ConfProofIntegrityTest.runTest": true,
+  "DecryptionIntegrityTest.py::IntegrityTests.DecryptionIntegrityTest.DecryptionIntegrityTest.runTest": true,
+  "DecryptionProofIntegrityTest.py::IntegrityTests.DecryptionProofIntegrityTest.DecryptionProofIntegrityTest.runTest": true,
+  "EligibilityMatrixIntegrityTest.py::IntegrityTests.EligibilityMatrixIntegrityTest.EligibilityMatrixIntegrityTest.runTest": true,
+  "EncrypdetSelectionIntegrityTest.py::IntegrityTests.EncrypdetSelectionIntegrityTest.EncrypdetSelectionIntegrityTest.runTest": true,
+  "EncryptionIntegrityTest.py::IntegrityTests.EncryptionIntegrityTest.EncryptionIntegrityTest.runTest": true,
+  "FinalizationIntegrityTest.py::IntegrityTests.FinalizationIntegrityTest.FinalizationIntegrityTest.runTest": true,
+  "InRangeIntegrityTest.py::IntegrityTests.InRangeIntegrityTest.InRangeIntegrityTest.runTest": true,
+  "MathGroupeIntegritiyTest.py::IntegrityTests.MathGroupeIntegritiyTest.MathGroupeIntegritiyTest.runTest": true,
+  "MatrixBitIntegrityTest.py::IntegrityTests.MatrixBitIntegrityTest.MatrixBitIntegrityTest.runTest": true,
+  "OTResponseIntegrityTest.py::IntegrityTests.OTResponseIntegrityTest.OTResponseIntegrityTest.runTest": true,
+  "PublicVotingCredentialIntegrityTest.py::IntegrityTests.PublicVotingCredentialIntegrityTest.PublicVotingCredentialIntegrityTest.runTest": true,
+  "ShuffleProofIntegrityTest.py::IntegrityTests.ShuffleProofIntegrityTest.ShuffleProofIntegrityTest.runTest": true
+}

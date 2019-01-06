@@ -12,7 +12,7 @@ class VectorItemsConsistenyTest(SingleTest):
         SingleTest.__init__(self, id,title,description,key)
         self.vector_keys = vector_keys
 
-    @completness_decorate
+    @completness_decorate()
     def runTest(self,election_data):
         """
         Check if there is s values with the same voterId.

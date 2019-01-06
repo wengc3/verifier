@@ -10,7 +10,7 @@ from chvote.verifier.IntegrityTests.multiMathGroupeHelper import multiMathGroupe
 class PublicVotingCredentialIntegrityTest(SingleTest):
     """docstring for PublicVotingCredentialIntegrityTest."""
 
-    @completness_decorate
+    @completness_decorate()
     def runTest(self,election_data):
         """
         Test if x_j,y_j is in G_q_hat

@@ -11,7 +11,7 @@ class BiggerThanIntegrityTest(SingleTest):
         SingleTest.__init__(self, id,title,description,keys)
         self.min_size = min_size
 
-    @completness_decorate
+    @completness_decorate()
     def runTest(self,election_data):
         """
         >>> res = btit.runTest({'test': 1})
