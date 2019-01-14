@@ -2,11 +2,9 @@ import abc
 
 class Observer(metaclass=abc.ABCMeta):
     """docstring for Observer."""
-    def __init__(self,step=None,depth=None):
+    def __init__(self):
         self._report = None
         self._result = None
-        self._step = step
-        self._depth = depth
 
     @abc.abstractmethod
     def update(self, state):
@@ -28,11 +26,6 @@ class Observer(metaclass=abc.ABCMeta):
     def _reportCreated(self):
         pass
 
-
-    @property
-    def depth(self):
-        return self._depth
-
     @property
     def report(self):
         return self._report
@@ -44,7 +37,3 @@ class Observer(metaclass=abc.ABCMeta):
     @result.setter
     def result(self,result):
         self._result = result
-
-    @property
-    def step(self):
-        return self._step

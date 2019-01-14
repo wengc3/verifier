@@ -1,17 +1,7 @@
-from socketIO_client import SocketIO
-from pprint import pprint
 import os, sys
-import json
-from gmpy2 import mpz
-
-
-def parseResult(dict,phase,title):
-    results = list()
-    for key, result in dict.items():
-        results.append(result.getJSON(key))
-    return {'id': phase, 'title': title, 'results': results}
-
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+import argparse
+import re
 from app.utils.prepareData import prepareData
 from app.VerifyService import VerifyService
 from app.verifier.Report import Report
@@ -19,87 +9,76 @@ from chvote.Common.SecurityParams import secparams_l1,secparams_l2,secparams_l3
 from chvote.verifier.TestResult import TestResult
 from chvote.verifier.MultiTest import MultiTest
 from ConsoleView import ConsoleView
-socketio = SocketIO('localhost',5000)
-data_dict = dict()
-# electionID1="5c228607ed394c0012e2abf9" # multi election second c in beta_j is Null ?
-electionID1="5c0bb43740b1e1001273984f"
-# electionID1="5c24fc25d7033400125c00b8" # multi selections
-# electionID1="5c232c1eed394c0012e2ac03" # hacked election
+from VerifierSocket import init_socket, getData
 
-def connect():
-    print('connected')
+HOST = '127.0.0.1'
+PORT = 5000
+secparams_dict = {1: secparams_l1, 2: secparams_l2, 3: secparams_l3}
 
-def addEBold(*args):
-    json_data = json.loads(args[0])
-    data_dict.update({'e_bold': json_data[0]['encryptions']})
+def getTest(root_test,id):
+    points = id.count('.')
+    category = find_test(root_test,id[0])
+    if points == 0:
+        return category
+    phase = find_test(category,id[:3])
+    if points == 1:
+        return phase
+    else:
+        test = find_test(phase,id)
+        root_node = MultiTest("0:","Root Test","Test which conntains all Tests")
+        root_node.addTest(test)
+        return root_node
 
-def updateData(*args):
-    data_dict.update(json.loads(args[0]))
+def find_test(test,id):
+    return next(child for child in test.test_list if child.id == id)
 
-def getData(electionID):
-    socketio.emit('requestFullSync',{'election':electionID})
+def run_sub_tests(root_test,test_list,data_dict):
+    for id in test_list:
+        test = getTest(root_test,id)
+        test.runTest(data_dict)
 
-verify_svc_1 = VerifyService.getInstance()
-socketio = SocketIO('127.0.0.1',5000)
-data_dict = dict()
-getData(electionID1)
-socketio.on('SyncBulletinBoard',updateData)
-socketio.on('syncElectionAdministrator',updateData)
-socketio.on('syncElectionAuthorities',addEBold)
-socketio.wait(seconds=2)
+def getSecparams(data_dict):
+    sec_level = data_dict['securityLevel']
+    return secparams_dict[sec_level]
+
+def id_arg(value):
+    if not re.match('[1-9](\.[1-9]){0,2}',value):
+        raise argparse.ArgumentTypeError("testID has wrong format")
+    return value
+
+# Parse command line arguments
+parser = argparse.ArgumentParser(description='verify election')
+parser.add_argument('electionID', metavar='', type=str,
+                    help='Unique election event identifier')
+parser.add_argument('--step', type=float, metavar='', default=0.2,
+                    help='define in which distance the progress will printed, default every 20%%')
+parser.add_argument('--depth',type=int, metavar='', default=5,
+                    help='set the depth of tree, which will printed, default=5')
+parser.add_argument('--test',metavar='id', type=id_arg, nargs='+',
+                    help='use this for runing only a certain tests ,Format: [1-9](\.[1-9]){0,2}')
+parser.add_argument('--data',action='store_true',
+                    help='append the test_data')
+args = parser.parse_args()
 
 
-seclevel = data_dict['securityLevel']
+def main():
+    """ptionally runs only subtree,
+       start verifier and print result."""
+    init_socket(HOST,PORT,args.electionID)
+    data_dict = getData()
+    secparams = getSecparams(data_dict)
+    report = Report(args.electionID)
+    console = ConsoleView(step=args.step,depth = args.depth,data=args.data)
+    report.attach(console)
+    verify_svc = VerifyService.getInstance()
+    if args.test:
+        TestResult.setReport(report)
+        data_dict = prepareData(data_dict,secparams)
+        run_sub_tests(verify_svc.root_test,args.test,data_dict)
+    else:
+        verify_svc.verify(data_dict,report,secparams)
 
-if seclevel == 1:
-    secparams = secparams_l1
-elif seclevel == 2:
-    secparams = secparams_l2
-else:
-    secparams = secparams_l3
 
-# report = Report(electionID1)
-# console = ConsoleView(step=0.2,depth = 3)
-# report.attach(console)
-# verify_svc_1.verify(data_dict,report,secparams)
 
-# getData(electionID1)
-# socketio.wait(seconds=1)
-# verify_svc_2 = VerifyService.getInstance()
-# report = Report(electionID1)
-# console = ConsoleView(step=0.2,depth = 1)
-# report.attach(console)
-# verify_svc_2.verify(data_dict,report,secparams)
-
-# data_dict['ballots'][2].pop('voterId')
-# result = report.result
-# pre_election = result[1]['1.1']
-# election = result[1]['1.2']
-# pre_dict = parseResult(pre_election,"1.1","pre election results")
-# dict = parseResult(election,"1.2","election results")
-# import json
-# oneway = json.dumps([pre_dict, dict])
-# print(oneway)
-# print(data_dict['securityLevel'])
-# print(data_dict['publicKeyShares'][0])
-
-data_dict = prepareData(data_dict,secparams)
-# temp_dic = {'responses': data_dict['responses'],'s': data_dict['s']}
-# print(data_dict['w_bold'])
-# print("_____________________________")
-# print(data_dict['responses'][0]['beta_j'])
-# print("_____________________________")
-# print(len(data_dict['partialPublicVotingCredentials'][2]))
-# print("_____________________________")
-# print(data_dict['confirmations'][0]['confirmation'])
-print(str(data_dict['eligibilityMatrix']))
-# print(len(data_dict['shuffleProofs'][0]))
-# print(len(data_dict['n'])
-# print("_____________________________")
-
-# a_bold = data_dict['ballots'][0]['ballot']['a_bold']
-# a_bold_s = [[a_bold[x][y] for y in range(len(a_bold[0]))] for x in range(len(a_bold))]
-# for i,item in enumerate(a_bold):
-#     for j,str in enumerate(item):
-#         a_bold[i][j]= mpz(str)
-# print(a_bold_s)
+if __name__ == '__main__':
+    main()

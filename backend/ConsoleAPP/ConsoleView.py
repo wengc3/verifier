@@ -1,8 +1,29 @@
 from chvote.verifier.Observer import Observer
 import json
 
+def print_data(data):
+    for dictionry in data:
+        print(dictionry)
+
 class ConsoleView(Observer):
     """docstring for ConsoleView."""
+    def __init__(self,step,depth,data):
+        Observer.__init__(self)
+        self._step = step
+        self._depth = depth
+        self._data = data
+
+    @property
+    def depth(self):
+        return self._depth
+
+    @property
+    def step(self):
+        return self._step
+
+    @property
+    def data(self):
+        return self._data
 
     def update(self,state):
         id = self.result.test.id
@@ -29,10 +50,13 @@ class ConsoleView(Observer):
             result.old_progress = prg
             print(test.id,test.title,"is {:.0%}".format(prg),"completed")
 
+
     def _newResult(self):
         result = self.result
         test = result.test
         print(test.id,test.title,"is finished",":",result.test_result)
+        if self.data:
+            print_data(result.test_data)
 
     def _reportCreated(self):
         results = json.loads(self.report.json_result)

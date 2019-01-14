@@ -63,8 +63,12 @@ class VerifyService(object):
             raise Exception("This class is a singleton!")
         else:
             VerifyService.__instance = self
-            self.root_test = MultiTest("0:","Root Test","Test which conntains all Tests")
+            self._root_test = MultiTest("0:","Root Test","Test which conntains all Tests")
             self.setUpTests()
+
+    @property
+    def root_test(self):
+        return self._root_test
 
     def setUpTests(self):
         completness_tests = MultiTest("1","Completness Tests","Test which conntains all completness tests")
