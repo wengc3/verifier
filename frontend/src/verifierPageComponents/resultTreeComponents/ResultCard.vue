@@ -10,7 +10,7 @@
           </v-flex>
           <v-layout v-else row-wrap>
             <v-flex md3 xs3>{{key}}:</v-flex>
-            <ByteArrayLabel :value="JSON.stringify(value)"></ByteArrayLabel>
+            <p>{{JSON.stringify(value,undefined, 2)}}</p>
           </v-layout>
         </v-flex>
       </v-flex>

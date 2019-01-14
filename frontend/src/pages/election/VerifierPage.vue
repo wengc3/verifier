@@ -56,15 +56,6 @@ export default {
       this.hideBarAndStatus = true
       this.currentCategory = id
       this.tab = 0
-      this.filter = this.$store.state.Verifier.categories[id - 1].value
-      console.log('filter', this.filter)
-    },
-    filterChanged: function () {
-      this.$store.commit({
-        type: 'calcResult',
-        id: this.currentCategory,
-        filter: this.filter
-      })
     },
     verify: function () {
       this.status = 'running'

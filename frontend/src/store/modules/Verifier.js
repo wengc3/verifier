@@ -30,7 +30,6 @@ const mutations = {
     let runningState = JSON.parse(data)
     let category = state.categories[Number(runningState.id) - 1]
     category.state = runningState.value
-    console.log('newState:', runningState)
     if (runningState.value === 'running') {
       category.value = 'successful'
     }
@@ -38,7 +37,6 @@ const mutations = {
 
   SOCKET_TESTRUNNING: (state, title) => {
     state.currentTest = title
-    console.log('currentTest:', title)
   },
 
   SOCKET_ALLRESULTS: (state, data) => {
@@ -46,36 +44,16 @@ const mutations = {
     results.forEach(function (result) {
       state.categories[result.id - 1].results = result.children
     })
-    console.log('allResults:', results)
-    console.log('categories:', state.categories)
     state.completed = true
   },
 
   SOCKET_NEWPROGRESS: (state, prg) => {
     state.progress = Number(prg)
-    console.log('newProgress:', prg)
   },
 
   SOCKET_RESULTFAILED: (state, data) => {
     let failedResult = JSON.parse(data)
     state.categories[Number(failedResult.id) - 1].value = failedResult.value
-    console.log('resultFailed:', failedResult.id, failedResult.value)
-  },
-
-  calcResult: function (state, payload) {
-    state.currentResults = []
-    let results = JSON.parse(JSON.stringify(state.categories[payload.id - 1].results)) // a coppy of results
-    // let results = state.categories[payload.id - 1].results
-    if (payload.filter === 'all') {
-      state.currentResults = results
-    } else {
-      results.forEach(function (elem) {
-        elem.children = filterItems(elem, payload.filter)
-        if (elem.children.length > 0) {
-          state.currentResults.push(elem)
-        }
-      })
-    }
   },
 
   resetState: function (state) {
