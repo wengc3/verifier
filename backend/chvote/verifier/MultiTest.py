@@ -28,7 +28,8 @@ class MultiTest(Test):
         multi_result = "successful"
         for index,test in enumerate(self.test_list):
             if self.id.count('.') > 2:
-                test.id = test.id[:-1] + self.id[-1]
+                numbers = self.id.split('.')
+                test.id = test.id[:-1] + numbers[-1]
             if hasattr(self,'election_data'):
                 test.election_data = self.election_data
             res = test.runTest(election_data)
