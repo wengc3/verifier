@@ -1,3 +1,7 @@
+"""
+This python file conntains functions to prepare the Data for the verifierself.
+Here we define also the electate params table 6.2 in the specification
+"""
 import operator
 from functools import reduce
 
