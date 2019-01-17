@@ -29,7 +29,8 @@ class MultiTest(Test):
         for index,test in enumerate(self.test_list):
             if self.id.count('.') > 2:
                 numbers = self.id.split('.')
-                test.id = test.id[:-1] + numbers[-1]
+                inc = numbers[-1]
+                test.id = test.id[:-len(inc)] + inc
             if hasattr(self,'election_data'):
                 test.election_data = self.election_data
             res = test.runTest(election_data)
