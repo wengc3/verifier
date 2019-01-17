@@ -13,7 +13,7 @@ pip install -r requirements.txt # pip install flask flask-socketio flask-cors ev
 # CHVote 1.1 #
 by Christian Wenger
 
-## Doctests of Verfier ##
+## Doctests of Verifier ##
 ### run all doctests ###
 ```sh
 run_all_tests.sh

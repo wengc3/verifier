@@ -1,6 +1,6 @@
 # Next Generation E-Voting Visualizer
-This application is the result of the bachelor thesis "Universelle Verifizierung des Genfer E-Voting Systems" and has been realized by Christian Wenger
-The goal was to complete the bachelor thesis "Visualizing Geneva's Next E-Voting System", which has been realized by Kevin Häni and Yannick Denzer, with a fully developed Verifier. 
+This application is the result of the bachelor thesis "Universelle Verifizierung des Genfer E-Voting Systems" and has been realized by Christian Wenger. 
+The goal was, to complete the bachelor thesis "Visualizing Geneva's Next E-Voting System", which has been realized by Kevin Häni and Yannick Denzer, with a fully developed Verifier. 
 
 # Components
 
