@@ -32,7 +32,7 @@ class IterationTest(SingleTest):
         test.election_data = election_data
         try:
             for index in range(rng):
-                test.id = test.id[:-int(math.log(index+1,10)+1)] + str(index+1)
+                test.id = test.id[:-1)] + str(index+1)
                 res = test.runTest(vector[index])
                 self.test_result.addChild(res)
                 updateProgress(self.test_result,index,vector)
