@@ -31,7 +31,7 @@ class MultiTest(Test):
             if self.id.count('.') > 2:
                 numbers = self.id.split('.')
                 inc = numbers[-1]
-                test.id = test.id[:-cutter)] + inc
+                test.id = test.id[:-cutter] + inc
                 if int(inc) % 10 == 0:
                     cutter += 1
             if hasattr(self,'election_data'):
