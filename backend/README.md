@@ -10,6 +10,17 @@ virtualenv virtualenv
 source virtualenv/bin/activate
 pip install -r requirements.txt # pip install flask flask-socketio flask-cors eventlet pymongo gmpy2 jsonpointer
 ```
+# CHVote 1.1 #
+by Christian Wenger
+
+## Doctests of Verfier ##
+### run all doctests ###
+```sh
+run_all_tests.sh
+```
+
+# CHVote 1.0 #
+by Kevin Häni and Yannick Denzer.
 
 ## Unit tests ##
 

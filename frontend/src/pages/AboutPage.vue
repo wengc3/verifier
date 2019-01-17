@@ -10,7 +10,7 @@
       <p>The full source code of this application is available on GitHub: <a href="https://github.com/nextgenevoting">https://github.com/nextgenevoting</a></p>
 
       <h3>Version 1.1</h3>
-      <p>This application is the result of the bachelor thesis "The universal verifiability of Geneva's Next E-Voting System" and has been realized by <strong>Christian Wenger</strong>. The new feature is a fully implemented Verfier. The reason of the skipped results is because of the missing signaturs and certificates. </p>
+      <p>This application is the result of the bachelor thesis "Universelle Verifizierung des Genfer E-Voting Systems" and has been realized by <strong>Christian Wenger</strong>. The new feature is a fully implemented Verfier. The reason of the skipped results is because of the missing signaturs and certificates. </p>
       <p>The full source code of this application is available on GitHub: <a href="https://gitlab.ti.bfh.ch/chvote/verifier">https://gitlab.ti.bfh.ch/chvote/verifier</a></p>
     </v-container>
   </div>

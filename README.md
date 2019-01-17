@@ -1,40 +1,6 @@
 # Next Generation E-Voting Visualizer
-
-This application is the result of the bachelor thesis "Visualizing Geneva's Next E-Voting System" and has been realized by Kevin Häni and Yannick Denzer.
-
-The "CHVote System Specifications" (the cryptographic specifications this application is based on), can be found here: https://eprint.iacr.org/2017/325
-
-## About this application
-
-With our application, it is possible to conduct election events according to
-the protocol specifications not only from the perspective of a voter, but also
-all other participating actors such as the election administrator, printing, or
-election authority, offering a preview of how the future of voting might
-possibly look like in Switzerland.
-
-## Context
-
-Previous attempts to introduce e-voting platforms in Switzerland were limited
-to only small electorates as these platforms did only meet the basic
-requirements set up by the Swiss government. In 2017, researchers from the
-Research Institute for Security in the Information Society (RISIS) published
-their specifications for Geneva's new e-voting system, CHVote, which has the
-potential of being accepted as a large-scale, nationwide e-voting platform.
-However, one challenge that still remains is the educational problem: it is
-difficult to understand such a complex protocol without sufficient knowledge of
-cryptography. This might also result in mistrust towards e-voting.
-
-## Design and implementation
-
-For this application we implemented approximately 60 algorithms that have been
-described in the specifications. This web application is powered using a
-back-end that implements the e-voting protocol by utilizing this
-crypto-library. Both the library as well as the back-end are written in Python.
-Our front-end that visualizes all the voting phases is a single-page
-application written in JavaScript using the VueJS framework. In order to
-achieve real-time updates, we have used web sockets (socket.io) to synchronize
-a client-side copy of the database whenever the data has been altered on the
-back-end.
+This application is the result of the bachelor thesis "Universelle Verifizierung des Genfer E-Voting Systems" and has been realized by Christian Wenger
+The goal was to complete the bachelor thesis "Visualizing Geneva's Next E-Voting System", which has been realized by Kevin Häni and Yannick Denzer, with a fully developed Verifier. 
 
 # Components
 
