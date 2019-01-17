@@ -26,11 +26,14 @@ class MultiTest(Test):
     @test_run_decorate
     def runTest(self,election_data):
         multi_result = "successful"
+        cutter = 1
         for index,test in enumerate(self.test_list):
             if self.id.count('.') > 2:
                 numbers = self.id.split('.')
                 inc = numbers[-1]
-                test.id = test.id[:-len(inc)] + inc
+                test.id = test.id[:-cutter)] + inc
+                if int(inc) % 10 == 0:
+                    cutter += 1
             if hasattr(self,'election_data'):
                 test.election_data = self.election_data
             res = test.runTest(election_data)
