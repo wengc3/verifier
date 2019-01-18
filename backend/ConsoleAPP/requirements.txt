@@ -1,0 +1,4 @@
+Flask==0.12.2
+socketIO-client=0.7.2
+jsonpickle=0.9.6
+gmpy2=2.0.8
