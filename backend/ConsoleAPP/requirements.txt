@@ -1,4 +1,6 @@
 Flask==0.12.2
+Flask-Cors==3.0.3
+Flask-SocketIO==2.9.2
+gmpy2==2.0.8
 socketIO-client==0.7.2
 jsonpickle==0.9.6
-gmpy2==2.0.8
