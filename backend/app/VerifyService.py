@@ -191,7 +191,7 @@ class VerifyService(object):
         int_multi_test_response.addTests(
             InRangeIntegrityTest("2.2.2.1.0","Check Voter ID","Check if voterId is in {0,...,Ne}",['voterId'],0,'Ne'),
             OTResponseIntegrityTest("2.2.2.2.0","Check OT Response","Check if beta_j is in G_q^k_i x (Beta_bold^L_M)^n*k_i x G_q",['beta_j']),
-            SignaturIntegrityTest("2.2.2.2.3.0","Check OT Signatur","Check if sigCast in Bit^l x Z_q",["sigCast"])
+            SignaturIntegrityTest("2.2.2.3.0","Check OT Signatur","Check if sigCast in Bit^l x Z_q",["sigCast"])
 
         )
 
