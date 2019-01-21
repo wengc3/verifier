@@ -34,9 +34,9 @@ class IterationTest(SingleTest):
         try:
             for index in range(rng):
                 test.id = test.id[:-cutter] + str(index+1)
-                if index+1 % 10 == 0:
-                    cutter += 1
                 test.cutter = cutter
+                if len(str(index + 1)) > cutter:
+                    cutter += 1
                 res = test.runTest(vector[index])
                 self.test_result.addChild(res)
                 updateProgress(self.test_result,index,vector)
