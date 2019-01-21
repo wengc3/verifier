@@ -28,7 +28,7 @@ export default{
     getChildren: function (id) {
       let children = []
       this.result.children.forEach(function (result) {
-        children.push(result.children.find(child => child.id.includes(id)))
+        children.push(result.children.find(child => child.id.startsWith(id)))
       })
       return children
     },
