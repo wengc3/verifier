@@ -1,4 +1,12 @@
 # ConsoleAPP #
+
+python 3.6 installieren
+
+pip3 installieren
+
+```sh
+pip3 install -r requirements.txt
+
 ```sh
 python3 verify.py -h
 usage: verify.py [-h] [--step] [--depth] [--test id [id ...]] [--data]
