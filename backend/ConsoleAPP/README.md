@@ -7,6 +7,8 @@ pip3 installieren
 ```sh
 pip3 install -r requirements.txt
 
+Falls notwendig, kann die Variable HOST in der Datei verify.py angepasst werden.
+
 ```sh
 python3 verify.py -h
 usage: verify.py [-h] [--step] [--depth] [--test id [id ...]] [--data]
